@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  15 SEP 2020 13:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  15 SEP 2020 15:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -425,7 +425,7 @@ Package typearea Info: These are the values describing the layout:
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count266
 \l__pdf_internal_box=\box53
-) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.aux (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/abstract.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter1.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter2.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter3.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter4.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter5.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter6.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter7.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.aux))
+) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.aux)
 \openout1 = `Xuanjiao_Zhu_Master_arbeit.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 166.
@@ -481,7 +481,6 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 166.
 LaTeX Info: Redefining \pageref on input line 166.
 LaTeX Info: Redefining \nameref on input line 166.
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.out) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.out)
 \@outlinefile=\write3
 \openout3 = `Xuanjiao_Zhu_Master_arbeit.out'.
 
@@ -523,14 +522,7 @@ Package pdftex.def Info: content/images/NES_Logo.pdf  used on input line 38.
  </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/NES_Logo.pdf>]) [2
 
 
-] (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 4.
-)
+]
 \tf@toc=\write4
 \openout4 = `Xuanjiao_Zhu_Master_arbeit.toc'.
 
@@ -540,7 +532,20 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ]
 \openout2 = `content/chapters/abstract.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/abstract.tex [1
+ (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/abstract.tex
+
+LaTeX Warning: Citation `Ikeda1997' on page 1 undefined on input line 21.
+
+
+LaTeX Warning: Citation `levensthein65:_binar' on page 1 undefined on input line 21.
+
+
+LaTeX Warning: Citation `Middleton2002' on page 1 undefined on input line 21.
+
+
+LaTeX Warning: Citation `salton89' on page 1 undefined on input line 21.
+
+[1
 
 
 
@@ -552,6 +557,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter1.tex
 chapter 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -586,7 +597,30 @@ Overfull \hbox (22.00815pt too wide) in paragraph at lines 8--9
 
 ]
 chapter 3.
-) [7]
+<content/images/architecture.drawio.png, id=72, 633.36626pt x 362.35374pt>
+File: content/images/architecture.drawio.png Graphic file (type png)
+<use content/images/architecture.drawio.png>
+Package pdftex.def Info: content/images/architecture.drawio.png  used on input line 19.
+(pdftex.def)             Requested size: 250.80255pt x 143.48479pt.
+)
+
+/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.tex:195: LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.195 \include{content/chapters/chapter3}
+                                         	%Approach
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 195
+[][]
+ []
+
+[7 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/architecture.drawio.png>]
 \openout2 = `content/chapters/chapter4.aux'.
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter4.tex [8
@@ -647,16 +681,11 @@ Class scrbook Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrbook)              and replace `\begin{appendix}' by command
 (scrbook)              `\appendix' on input line 204.
 
-(/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.bbl [16
-
-
-
-]
-chapter without number
-) [17]
+No file Xuanjiao_Zhu_Master_arbeit.bbl.
 \openout2 = `content/chapters/clause.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.tex [18
+(/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.tex [16
+
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 13--14
@@ -678,7 +707,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--227
 
  []
 
-[19
+[17
 
 
 ]
@@ -687,23 +716,36 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 229.
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.aux (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/abstract.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter1.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter2.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter3.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter4.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter5.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter6.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter7.aux) (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 229.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 229.
-Package rerunfilecheck Info: File `Xuanjiao_Zhu_Master_arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+
+Package rerunfilecheck Warning: File `Xuanjiao_Zhu_Master_arbeit.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Xuanjiao_Zhu_Master_arbeit.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 229.
  ) 
 Here is how much of TeX's memory you used:
- 10324 strings out of 480608
- 183468 string characters out of 5903630
+ 10280 strings out of 480608
+ 181332 string characters out of 5903630
  582110 words of memory out of 5000000
- 25897 multiletter control sequences out of 15000+600000
- 541803 words of font info for 55 fonts, out of 8000000 for 9000
+ 25884 multiletter control sequences out of 15000+600000
+ 541156 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,8n,72p,10163b,516s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (23 pages, 269804 bytes).
+ 45i,8n,72p,10163b,409s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (21 pages, 247683 bytes).
 PDF statistics:
- 254 PDF objects out of 1000 (max. 8388607)
- 208 compressed objects within 3 object streams
- 42 named destinations out of 1000 (max. 500000)
- 94 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 179 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 
