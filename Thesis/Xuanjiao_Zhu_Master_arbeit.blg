@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Xuanjiao_Zhu_Master_arbeit.aux
+A level-1 auxiliary file: content/chapters/abstract.aux
+A level-1 auxiliary file: content/chapters/chapter1.aux
+A level-1 auxiliary file: content/chapters/chapter2.aux
+A level-1 auxiliary file: content/chapters/chapter3.aux
+A level-1 auxiliary file: content/chapters/chapter4.aux
+A level-1 auxiliary file: content/chapters/chapter5.aux
+A level-1 auxiliary file: content/chapters/chapter6.aux
+A level-1 auxiliary file: content/chapters/chapter7.aux
+The style file: geralpha.bst
+A level-1 auxiliary file: content/chapters/clause.aux
+Database file #1: content/references/references.bib
+You've used 4 entries,
+            2768 wiz_defined-function locations,
+            640 strings with 6139 characters,
+and the built_in function-call counts, 1730 in all, are:
+= -- 182
+> -- 66
+< -- 3
++ -- 22
+- -- 22
+* -- 124
+:= -- 276
+add.period$ -- 10
+call.type$ -- 4
+change.case$ -- 20
+chr.to.int$ -- 4
+cite$ -- 4
+duplicate$ -- 84
+empty$ -- 137
+format.name$ -- 28
+if$ -- 383
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 6
+newline$ -- 19
+num.names$ -- 12
+pop$ -- 28
+preamble$ -- 1
+purify$ -- 28
+quote$ -- 0
+skip$ -- 66
+stack$ -- 0
+substring$ -- 72
+swap$ -- 23
+text.length$ -- 3
+text.prefix$ -- 2
+top$ -- 0
+type$ -- 28
+warning$ -- 0
+while$ -- 14
+width$ -- 6
+write$ -- 52
