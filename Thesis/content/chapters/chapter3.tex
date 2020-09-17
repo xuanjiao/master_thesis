@@ -23,6 +23,7 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 
 \section{The System Components}
 
+
 \subsection{Robot Components}
 
 
@@ -36,9 +37,9 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 \begin{itemize}
 	\item \textsl{Robot ID.} Robot ID is a unique identification for each robot.
 	\item \textsl{Battery level.} Battery level drops as the robot moves and rotates.
-	\item \textsl{Task type.} Robots perform different tasks such as "Charging", "Execute Task", "Gather Enviroment Information". For details please refer to 
-	\item \textsl{Local task queue.} Local task queue keeps a list of tasks that a robot will run sequentially. Once the robot finish a task is finished, it would remove the from task queue. Once this queue become empty, the robot send task result to centralized pool.
-	\item \textsl{New task client.} After a robot finishing a task, the new task client send new task request to new task server.
+	\item \textsl{Task type.} Robots perform different tasks such as "Charging", " Execute Task", "Gather Enviroment Information". For details please refer to 
+	\item \textsl{Local task queue.} Local task queue keeps a list of tasks that a robot will run sequentially. Once a task is finished, it would be removed from task queue. Once this queue become empty, the robot send task result to centralized pool.
+	\item \textsl{New task client.} Once all task are finished, the new task client send request to new task server.
 	\item \textsl{Run task server.} The run task server receive tasks and send task feedback and task result.
 	\item \textsl{Timer.} To prevent robot to be hanged by one task forever, the timer check the robot moving state periodically.
 	\item \textsl{Move base client.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. The move\_base client send a goal to move\_base node to tracking their status  
@@ -62,4 +63,28 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 \end{itemize}
 
 
-\subsection{Communication Protocols}
+\section{Communication Protocols}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width = 0.45\textwidth]{content/images/ch3/communication_protocals.drawio.png}
+	\caption{Communication Protocols}
+	\label{fig:communication_protocals}
+\end{figure}
+
+Since centralized pool and robots need to share task information with each other, the communication protocals are required. Four types of message are defined: (1) task request message; (2) task goal messages (3) task feedback (4) task result. The comparation of task type is shown in Fig \ref{fig:communication_protocals}
+
+
+\section{Task allocation}
+\subsection{Type of task}
+\subsection{Cost function}
+
+\section{System Environment}
+\subsection{Map}
+
+fig: office room 
+fig: office door and charging station 
+
+
+
+
