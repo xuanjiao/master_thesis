@@ -23,6 +23,7 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 
 \section{The System Components}
 
+\subsection{Robot Components}
 
 
 \begin{figure}[htb]
@@ -41,9 +42,11 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 	\item \textsl{Run task server.} The run task server receive tasks and send task feedback and task result.
 	\item \textsl{Timer.} To prevent robot to be hanged by one task forever, the timer check the robot moving state periodically.
 	\item \textsl{Move base client.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. The move\_base client send a goal to move\_base node to tracking their status  
-	\item \textsl{Position subscriber} The position subscriber get robot current position from navigation stack. The robot send its current location to centralized pool to request a new task.
-	\item \textsl{Sensor subscriber} The Sensor subscriber listen to sensor data within the range.
+	\item \textsl{Position subscriber.} The position subscriber get robot current position from navigation stack. The robot send its current location to centralized pool to request a new task.
+	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
 \end{itemize}
+
+\subsection{Centralized Pool Components}
 
 \begin{figure}[htb]
 	\centering
@@ -52,4 +55,11 @@ The challenge is how to coordinate multiple robots to execute a set of tasks. To
 	\label{fig:centralized_pool_components}
 \end{figure}
 
+\begin{itemize}
+	\item \textsl{Map Information.} Map information contains information such as the door list that the robot will pass through when moving to target position.
+	\item \textsl{Cost calculator.} Cost calculator calculate the cost for doors, rooms and charging stations.
+	\item \textsl{Task manager.} Task manager can construct, sort and allocate tasks.
+\end{itemize}
 
+
+\subsection{Communication Protocols}
