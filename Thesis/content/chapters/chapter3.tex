@@ -1,6 +1,4 @@
 \chapter{Approach}
-
-
 % Describe the performed solution with all possible details. Define necessary parameters, inputs, outputs and context of use, possible problems and when they can be applied. 
 
 % Remember to define necessary concepts before using them, building the text from easiest definitions (not depending on previous definitions) to complex definitions (depending on previous definitions).
@@ -10,74 +8,56 @@
 %	\item Lost Communication: a lost communication occurs when the conditions of the environment are not sufficient or the distance between sender and receiver is to hight to transmit information.
 %	\item Wait until rescue: when the robot loses its communication, the pre-designed state machine will stop the motors to keep the actual position. Energy safe mode will be enabled, at the same time that a channel transceiver daemon will send SOS messages every T and wait for reply during T sec. 
 %\end{itemize}
-
-The challenge is how to coordinate multiple robots to execute a set of tasks. To tackele this problem, a communication efficient scheduler system is designed, where each robot autonomously request task from the centralized scheduler and centralized scheduler response with a set of suitable tasks. The architecture of this centralized scheduler is shown in Figure \ref{fig:system_architecture}.
-
+In our system there are a multiple robots that must handle various tasks. For example, visiting given rooms. To tackele this problem, a communication efficient task scheduling system is designed. 
+This system allicate task according to system resources, including enviroment factors and robot available battery. Once these information is attained, the task scheduling system assign robot a set of task.
+\begin{itemize}
+	\item \textsl{Robot.} The robot is responssible for executing tasks as well as listen to sensors on its way. It has a rechargeable battery. Robot battery level drops as its moves and rotates.
+	\item \textsl{Tasks.} The tasks include two part. The first part is moving to a given position and the second part is either finding a person or recharge itself.
+	\item \textsl{Enviroment.} The enviroment is an office area that contains a corridor along the central x axis and 16 rooms located around the corridor. The enviroment model is shown in Figure \ref{fig:gazebo_model}. The enviroment factors, such as room location and occupancy possibility help task allocation.
+\end{itemize}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width = 0.6\textwidth]{content/images/ch3/architecture.drawio.png}
+	\includegraphics[width = 0.7\textwidth]{content/images/ch3/gazebo_model.png}
+	\caption{Gazebo Model}
+	\label{fig:gazebo_model}
+\end{figure}
+
+\section{Architecture Design}
+
+As shown is Figure \ref{fig:system_architecture}, the architecture of the system consist of several parts: centralized pool, robot controller, navigation stack, charging station and system enviroment. 
+\begin{itemize}
+	\item \textsl{Centralized Pool.} A centralized pool consist of serveral modules: multi-robot task allocation module, system enviroment state, database, execution and mornitoring. The database contains the room information such as occupancy possible and the tasks. The multirobot task allocation module assign task to robots according to both robot status and system enviroment.
+	\item \textsl{Robot Controller.} A robot controller contains serveral modules: execute module and robot action. The execute module receive commands from centralized pool and decide when and which task the robot should perform. During performing a task,a robot can send enviroment information to centralized pool.
+	\item \textsl{Navigation stack.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. It make robot move to desired positions using the navigation stack. Its advantages includes optionally performing recovery behaviors when the robot perceives itself as stuck. 
+\end{itemize} 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{content/images/ch3/architecture.drawio.png}
 	\caption{System architecture}
 	\label{fig:system_architecture}
 \end{figure}
 
-\section{The System Components}
-
-
-\subsection{Robot Components}
-
-
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch3/system_component_robot.drawio.png}
-	\caption{Robot Components}
-	\label{fig:robot_components}
+	\includegraphics[width = 0.7\textwidth]{content/images/ch3/occupancy_grid.png}
+	\caption{Enviroment occupancy grid}
+	\label{fig:occupancy_grid}
 \end{figure}
-
-\begin{itemize}
-	\item \textsl{Robot ID.} Robot ID is a unique identification for each robot.
-	\item \textsl{Battery level.} Battery level drops as the robot moves and rotates.
-	\item \textsl{Task type.} Robots perform different tasks such as "Charging", " Execute Task", "Gather Enviroment Information". For details please refer to Section \ref{sec:task_types}
-	\item \textsl{Local task queue.} Local task queue keeps a list of tasks that a robot will run sequentially. Once a task is finished, it would be removed from task queue. Once this queue become empty, the robot send task result to centralized pool.
-	\item \textsl{New task client.} Once all task are finished, the new task client send request to new task server.
-	\item \textsl{Run task server.} The run task server receive tasks and send task feedback and task result.
-	\item \textsl{Timer.} To prevent robot to be hanged by one task forever, the timer check the robot moving state periodically.
-	\item \textsl{Move base client.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. The move\_base client send a goal to move\_base node to tracking their status  
-	\item \textsl{Position subscriber.} The position subscriber get robot current position from navigation stack. The robot send its current location to centralized pool to request a new task.
-	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
-\end{itemize}
-
-\subsection{Centralized Pool Components}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch3/system_component_centralized_pool.drawio.png}
-	\caption{Centralized Pool Components}
-	\label{fig:centralized_pool_components}
-\end{figure}
-
-\begin{itemize}
-	\item \textsl{Map Information.} Map information contains information such as the door list that the robot will pass through when moving to target position.
-	\item \textsl{Cost calculator.} Cost calculator calculate the cost for doors, rooms and charging stations.
-	\item \textsl{Task manager.} Task manager can construct, sort and allocate tasks.
-\end{itemize}
-
-
-\section{Communication Protocols}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch3/communication_protocals.drawio.png}
-	\caption{Communication Protocols}
-	\label{fig:communication_protocals}
-\end{figure}
-
-Since centralized pool and robots need to share task information with each other, the communication protocals are required. Four types of message are defined: (1) task request message; (2) task goal messages; (3) task feedback; (4) task result. 
-The comparation of task type and examples of each type are shown in Figure \ref{fig:communication_protocals}. 
 
 \section{System Environment}
-This section introduce the system enviroment. The 3D module contains a corridor along the central x axis and 16 rooms located around the corridor. The 3D module is shown in Figure \todo{Gazeobo map}  .The 2D map is shown in Figure \ref{fig:room_division}.
-
+The system enviroment is an office area. A 3D Gazebo module shown in \ref{fig:gazebo_model}, and an occupancy grid is shown in \ref{fig:occupancy_grid}. The write area is unoccupied, which is the corridor and rooms. The black line is occuppied area, which is the wall. anything else is gray.
+Following are important objects in system enviroment that interact with robot.
+\begin{itemize}
+	\item \textsl{Room.} As is shown in Fgure \ref{fig:room_division}, the restrict area(the write area in Figure \ref{fig:room_division}) is divided into rectangles. The rectangle is used to let the system clearly distinguish which room robot is in.
+	\item \textsl{Door.} In 3D Model there are no original doors. However in order to simulate an enviroment, a few simulated sensors are created. Those coordinate of sensors are the same as corresponding doors positions (D1-D17 in Figure \ref{fig:positions_door_station}).
+	Additionally one simulated door sensor is created on the door position. Each simulated door sensors brocasts door status periodically. The broadcast message are received by all robot within its range, including both robots enter the room and robots in corridor passing by the door.
+	Figure \ref{fig:positions_door_station} shows the distribution of doors.
+	\item \text{Charging Station.} The battery decrease is also considered. Three simulated charging stations are located in the corridor. Figure \ref{fig:positions_door_station} shows the distribution of charging stations. 
+	When robot get a charging task, it would move to one of the charging station and wait until fully charged. The details of robot charging is shown in Section \todo{Robot charging}.
+	
+\end{itemize}
 
 \begin{figure}[htbp]
 	\centering
@@ -86,9 +66,6 @@ This section introduce the system enviroment. The 3D module contains a corridor 
 	\label{fig:room_division}
 \end{figure}
 
-\subsection{Rooms}
-To let the system clearly distinguish which room robot is in, the restrict area(the write area in Figure \ref{fig:room_division}) is divided into rectangles.
-
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = 0.7\textwidth]{content/images/ch3/positions_door_station.png}
@@ -96,19 +73,34 @@ To let the system clearly distinguish which room robot is in, the restrict area(
 	\label{fig:positions_door_station}
 \end{figure}
 
-\subsection{Doors}
-In 3D Model there are no original doors. However in order to simulate an enviroment, a few simulated sensors are created. Those coordinate of sensors are the same as corresponding doors positions (D1-D17 in Figure \ref{fig:positions_door_station}).
-Additionally one simulated door sensor is created on the door position. Each simulated door sensors brocasts door status periodically. The broadcast message are received by all robot within its range, including both robots enter the room and robots in corridor passing by the door.
-Figure \ref{fig:positions_door_station} shows the distribution of doors.
+\section{Task allocation}
 
-\subsection{Charging Stations}
-The battery decrease is also considered. Three simulated charging stations are located in the corridor. Figure \ref{fig:positions_door_station} shows the distribution of charging stations. 
-When robot get a charging task, it would move to one of the charging station and wait until fully charged. The details of robot charging is shown in Section \todo{Robot charging}.
+\subsection{Task explanation}
+\label{sec:task_explanation}
+In order to improving overall execution efficiency. One single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
+On one hand, to make robot work long hours in office enviroment, recharging is necessary. On the other hand, a robot should gather enviroment information as much as possible, which centralized pool would learn from and make better decision. 
+Therefore, three types of task are defined, which are shown in Table \ref{fig:task_types}. 
 
-\section{Battery Model}
-\label{section:battery_model}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{content/images/ch3/task_types.drawio.png}
+	\caption{Comparision of task types }
+	\label{fig:task_types}
+\end{figure}
 
-\subsection{Robot battery decrease model}
+\begin{itemize}
+	\item \textsl{Task size.} One single robot is able to carry out one charging task or gather inviroment information task, but can carry multiple execute task, thereby 
+	These tasks with dependencies also referred to as small task. Those small tasks form a dependency chain, also referred to as a large task.
+	\item \textsl{Priority.}
+\end{itemize}
+
+\subsection{Task factor}
+
+\subsection{Enviroment factors}
+\begin{itemize}
+	\item textsl{Room occupancy.}
+\end{itemize}
+\subsection{Robot factors}
 The decrease amount of robot battery is related to robot trajectory. If a robot get a Large execute task that contains n small task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
 
 \begin{equation}
@@ -122,30 +114,6 @@ B_{large\_task} & = \sum_{task_0}^{task_n} B_{trajectory} \\
 &   + W_{angle} \times 2 \times \arccos(w_p)] 
 \end{aligned}
 \end{equation}
-
-		
-\subsection{Recharging model}
-
-
-
-\section{Task allocation}
-
-\subsection{Type of task}
-\label{sec:task_types}
-On one hand, in order to make robot work long hours in office enviroment, recharging is necessary. On the other hand, a robot should gather Enviroment information as much as possible, which centralized pool would learn from and make better decision. 
-Therefore, three types of task are defined, which are shown in Table \ref{fig:task_types}. In addition, one single robot is able to carry out one charging task or gather inviroment information task, but can carry multiple execute task, thereby improving overall delivery efficiency. These tasks with dependencies also referred to as small task. Those small tasks form a dependency chain，also referred to as a large task.
-
-%\begin{itemize}
-%	\item \textsl{Charging task.} Firstly the robot moves to charging station. Once arrive, the robot send a massage with current battery and wait for a fully charged signal. Other details of robot charging is shown in \todo{Robor charging}
-%	\item \textsl{Execute Task.} The robot get
-%\end{itemize}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width = 0.8\textwidth]{content/images/ch3/task_types.drawio.png}
-	\caption{Task types}
-	\label{fig:task_types}
-\end{figure}
 
 \subsection{Cost function}
 	A. Cost function for Execute task that contains n small tasks is shown in Equation \ref{eq:large_task_cost}.
