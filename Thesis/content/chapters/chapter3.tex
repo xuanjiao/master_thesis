@@ -25,7 +25,7 @@ This system allicate task according to system resources, including enviroment fa
 
 \section{Architecture Design}
 
-As shown is Figure \ref{fig:system_architecture}, the architecture of the system consist of several parts: centralized pool, robot controller, navigation stack, charging station and system enviroment. 
+As shown in Figure \ref{fig:system_architecture}, the architecture of the system consist of several parts: centralized pool, robot controller, navigation stack, charging station and system enviroment. 
 \begin{itemize}
 	\item \textsl{Centralized Pool.} A centralized pool consist of serveral modules: multi-robot task allocation module, system enviroment state, database, execution and mornitoring. The database contains the room information such as occupancy possible and the tasks. The multirobot task allocation module assign task to robots according to both robot status and system enviroment.
 	\item \textsl{Robot Controller.} A robot controller contains serveral modules: execute module and robot action. The execute module receive commands from centralized pool and decide when and which task the robot should perform. During performing a task,a robot can send enviroment information to centralized pool.
@@ -35,7 +35,7 @@ As shown is Figure \ref{fig:system_architecture}, the architecture of the system
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{content/images/ch3/architecture.drawio.png}
-	\caption{System architecture}
+	\caption{Multi-robot task allocation and execution system architecture}
 	\label{fig:system_architecture}
 \end{figure}
 
@@ -73,61 +73,172 @@ Following are important objects in system enviroment that interact with robot.
 	\label{fig:positions_door_station}
 \end{figure}
 
-\section{Task allocation}
+\section{Task Allocation}
 
-\subsection{Task explanation}
+\subsection{Task Explanation}
 \label{sec:task_explanation}
-In order to improving overall execution efficiency. One single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
+In order to improving overall execution efficiency, one single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
 On one hand, to make robot work long hours in office enviroment, recharging is necessary. On the other hand, a robot should gather enviroment information as much as possible, which centralized pool would learn from and make better decision. 
-Therefore, three types of task are defined, which are shown in Table \ref{fig:task_types}. 
+Therefore, three types of task are defined, which are shown in Table \ref{tab:task_attributes_difference} and Table \ref{tab:task_attributes_common}.  Task attributes includes task type, target, size, dependency, priority, generator, the way of handle task, start time, finish time.
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width = 0.8\textwidth]{content/images/ch3/task_types.drawio.png}
-	\caption{Comparision of task types }
-	\label{fig:task_types}
-\end{figure}
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+Task Arribute & Target & Dependency & Priority & Generator \\
+\hline
+GatherEnviromentInfo & Door &  No & 1 & Centralized Pool\\
+\hline
+Execute task & Any point & Dependent on execute task & 2,3,4 & User\\
+\hline
+Charging & Charging station & No & 5 & Centralized Pool\\ [1ex] 
+\hline
+\end{tabular}}
+\caption{Task arributes part 1}
+\label{tab:task_attributes_difference}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|} 
+\hline
+Task Arribute	& Start time &	Finish time \\
+\hline
+Explanation	& The time when robot start moving &	The time when robot finished interacting with the target \\ [1ex] 
+\hline
+\end{tabular}}
+\caption{Task arributes part 2}
+\label{tab:task_attributes_common}
+\end{table}
+
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+Task Id & Task Type & Start Time & Target Id & Robot Id & Priority & Status & dependency & Finish Time  & Description \\
+\hline
+1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 2 & RanToCompletion & 0 & 2020-06-01 9:00:00 & Succedded\\ [1ex] 
+\hline
+\end{tabular}}
+\caption{Task Table in Database}
+\label{tab:task_table}
+\end{table}
 
 \begin{itemize}
 	\item \textsl{Task size.} One single robot is able to carry out one charging task or gather inviroment information task, but can carry multiple execute task, thereby 
-	These tasks with dependencies also referred to as small task. Those small tasks form a dependency chain, also referred to as a large task.
-	\item \textsl{Priority.}
+	These tasks with dependencies also referred to as small task. The example of small task includes charging task and gather inviroment info task. 
+	Those small tasks form a dependency chain, also referred to as a large task. Execute task can be a large task which let the robot move to several positions continuesly.
+	\item \textsl{Target.} Targets includes door, point and charging station. When a robot run an gather inviroment information task, it moves to the front of the door and interact with a sensor in door position, without entering the door. 
+	When robot run an execute task, the robot moves to a given point ether in corridor or in the room.
+	When robot run a charging task, the robot moves to charging station and interact with charging station.
 \end{itemize}
 
-\subsection{Task factor}
+\subsection{Execute Task Allocation}
+With robot information such as positions and avaliable battery provided by robot controller, the multi-robot task allocation module in the architecture should perform multi-robot task allocation. To select a execute task, the following decision variable are considered.
+\paragraph*{Decision variable}
 
-\subsection{Enviroment factors}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{|c c c|} 
+	\hline
+	Door Id & Door Status & Date Time \\
+	\hline
+	1& 1 & 2020-06-01 09:00:01 \\ [1ex] 
+	\hline
+	\end{tabular}
+	\caption{Measurement Result}
+	\label{tab:measurement_result}
+	\end{table}
+	
+	\begin{table}[htb]
+	\centering
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{|c c c c c c|} 
+	\hline
+	Door id & Day Of Week & Start Time & End Time & Init Open Possibility &  Open Possibility Statistic \\
+	\hline
+	1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.80 \\ [1ex] 
+	\hline
+	\end{tabular}}
+	\caption{Door Open Possibility}
+	\label{tab:open_possibilities}
+	\end{table}
+	
 \begin{itemize}
-	\item textsl{Room occupancy.}
+\item \textsl{Task Priority.} Task priority. Task priority is an important factor that discribes task emergency level. The charging task has the highest priority of 5. The gather inviroment task has a lowest priority of 1. 
+	The execute task is determined by users but must be in the range of [2,4]. 
+\item \textsl{Product of Door Open Possibility.} Because of the limitation of simulation, the door open possibility is used to represent room occupancy. The door open possibility is based on the statistic of door measurement in a specific time period of each working day. 
+	The doors that the robot may pass through can be obtained from the map information module.
+	An example of door measurement result is shown in Table \ref{tab:measurement_result} , an example of door open possibility table is shown in Table \ref{tab:open_possibilities}. 
+\item \textsl{Waiting Time. } The waiting time is the difference of current system simulation time and start time of the first task to be execute. $T_{waiting} = T_{first\_task} - T_{now}$
+\item \textsl{Battery Consumption.} The Battery Consumption is related to robot trajectory. If a robot get a Large execute task that contains n small task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with lowest cost to this robot.
 \end{itemize}
-\subsection{Robot factors}
-The decrease amount of robot battery is related to robot trajectory. If a robot get a Large execute task that contains n small task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
-
 \begin{equation}
 \begin{aligned}
 \label{eq:battery_consumption}
-&B: Battery\_Consumption\\
-&W: Weight \\
+&B: Battery\_Consumption W: Weight\\
 B_{large\_task} & = \sum_{task_0}^{task_n} B_{trajectory} \\
-& = \sum_{task_0}^{task_N} \sum_{point_0}^{pont_M} [W_{position} \times position\_variation+W_{angle}  \times angle\_variation]\\
-& = \sum_{t = task_0}^{task_N} \sum_{p = point_0}^{point_M} [ W_{position} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
+& = \sum_{task_0}^{task_n} \sum_{point_0}^{pont_M} [W_{position} \times position\_variation+W_{angle}  \times angle\_variation]\\
+& = \sum_{t = task_0}^{task_n} \sum_{p = point_0}^{point_M} [ W_{position} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
 &   + W_{angle} \times 2 \times \arccos(w_p)] 
 \end{aligned}
 \end{equation}
 
-\subsection{Cost function}
-	A. Cost function for Execute task that contains n small tasks is shown in Equation \ref{eq:large_task_cost}.
+In conclution, equation \ref{eq:large_execute_task_cost} can be used to calculate cost of a large execute task.
+
 \begin{equation}
-	\label{eq:large_task_cost}
+	\label{eq:large_execute_task_cost}
 	\begin{split}
 	Cost_{Large\_execute\_task} = \frac{W_{battery} \times Battery\_consum}{n} + W_{waiting} \times Waiting\_time \\
-	+ W_{possibility} \times \prod\limits_{i=1}^n Open\_possibility  + W_{priority} \times priority
+	+ W_{possibility} \times \prod\limits_{i=1}^n Door\_open\_possibility  + W_{priority} \times Priority
 	\end{split}
 \end{equation}
-The robot 
+
+
+\subsection{Enviroment Task Allocation}
+Once robot request a task, The task allocation module select only tasks with cost below the threshold. Once either no task in in database or all tasks cost above the threshold, 
+the task allocation module should create a gather inviroment information task, in order to make more measurement result and forther more inprove the accuracy of door open possibility table.
+To create a gather inviroment information task, which door should robot visit must be considered. The following factor help task allocation module to select the door.
+
+\paragraph*{Decision variable}
+\begin{itemize}
+	\item \textsl{Door Last Update Time.} The last update time is decision variable related to gather inviroment information task.
+	\item \textsl{Battery Consumption.} Similar to execute task allocation, the battery consumption is related to trajectory from robot to the door. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
+	\item \textsl{Whether door is used.} If another robot is going to this door, the value is 0, otherwise the value is 1.
+\end{itemize}
+
+\begin{equation}
+	\label{eq:door_cost}
+	\begin{split}
+	Cost_{door} = \frac{W_{battery} \times Battery\_consum}{n} + W_{time} \times (T_{last\_update} - T_{now}) \\
+	+ W_{possibility} \times \prod\limits_{i=1}^n Door\_open\_possibility + W_{is\_used} \times Is\_used  
+	\end{split}
+\end{equation}
+
+\subsection{Charging Task Allocation}
+Once the robot send task request to the centralized pool, and the centralized pool figure out this robot need charging, it should create a charging task for robot. Since there are multiple charging station in the system enviroment (As is shown in Figure \ref{fig:positions_door_station}), the centralized pool select a charging station for this robot using the following decision variable.
+
+\paragraph*{Decision variable}
+
+\begin{itemize}
+	\item \textsl{Remain Time.} It describes how long the robot is charging now will take. 
+	\item \textsl{Battery Consumption.} Similar to execute task allocation, the battery consumption is related to trajectory from robot to the door. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
+\end{itemize}
+In conclution, equation \ref{eq:charging_station_cost} can be used to calculate cost of a charging station. The centealized pool will ganerate a charging task to charging station with lowest cost to robot which requests a task.
+
+\begin{equation}
+	\label{eq:charging_station_cost}
+	\begin{split}
+	Cost_{charging\_station} = \frac{W_{battery} \times Battery\_consum}{n} + W_{time} \times T_{remain}
+	\end{split}
+\end{equation}
 
  % + wt_wait \times waiting time + \prod\limits_{i=1}^n open possibility+wt_pri × priority
 % wt_btr × battery consumption ÷ N + wt_wait × waiting time+ 
-\section{Procedure}
-The process of 
+
 

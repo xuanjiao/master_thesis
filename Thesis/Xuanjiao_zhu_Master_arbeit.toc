@@ -8,19 +8,19 @@
 \contentsline {chapter}{\numberline {3}Approach}{7}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Architecture Design}{7}{section.3.1}%
 \contentsline {section}{\numberline {3.2}System Environment}{9}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Task allocation}{11}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Task explanation}{11}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Task factor}{11}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Enviroment factors}{11}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Robot factors}{11}{subsection.3.3.4}%
-\contentsline {subsection}{\numberline {3.3.5}Cost function}{12}{subsection.3.3.5}%
-\contentsline {section}{\numberline {3.4}Procedure}{12}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Implementation}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Program Structure}{13}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Robot Components}{13}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Centralized Pool Components}{14}{subsection.4.1.2}%
-\contentsline {section}{\numberline {4.2}Communication Protocols}{14}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Evaluation}{17}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Discussion}{19}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Acknowledgements}{21}{chapter.7}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{23}{chapter*.3}%
+\contentsline {section}{\numberline {3.3}Task Allocation}{11}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Task Explanation}{11}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Execute Task Allocation}{12}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Enviroment Task Allocation}{13}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Charging Task Allocation}{14}{subsection.3.3.4}%
+\contentsline {chapter}{\numberline {4}Implementation}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Communication Protocols}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Database structure}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Procedure}{15}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Robot}{15}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Centralized Pool}{17}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Charging Station}{18}{subsection.4.3.3}%
+\contentsline {chapter}{\numberline {5}Evaluation}{19}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Discussion}{21}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Acknowledgements}{23}{chapter.7}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{25}{chapter*.6}%

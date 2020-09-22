@@ -1,14 +1,26 @@
 \chapter{Implementation}
 
-Explain what you did to implement your solution, problems that occurred and how you fixed them. 
-If they are interesting, include some relevant parts of the implementation (most relevant pieces of code and so on). 
+%Explain what you did to implement your solution, problems that occurred and how you fixed them. 
+%If they are interesting, include some relevant parts of the implementation (most relevant pieces of code and so on). 
 
+\section{Communication Protocols}
 
-\section{Program Structure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width = 0.45\textwidth]{content/images/ch3/communication_protocals.drawio.png}
+	\caption{Communication Protocols}
+	\label{fig:communication_protocals}
+\end{figure}
 
+Since centralized pool and robots need to share task information with each other, the communication protocals are required. Four types of message are defined: (1) task request message; (2) task goal messages; (3) task feedback; (4) task result. 
+The comparation of task type and examples of each type are shown in Figure \ref{fig:communication_protocals}. 
+
+\section{Database structure}
+
+\section{Procedure}
 
 each robot autonomously request task from the centralized pool and centralized pool response with a set of suitable tasks. 
-\subsection{Robot Components}
+\subsection{Robot}
 
 
 \begin{figure}[htbp]
@@ -31,7 +43,7 @@ each robot autonomously request task from the centralized pool and centralized p
 	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
 \end{itemize}
 
-\subsection{Centralized Pool Components}
+\subsection{Centralized Pool}
 
 \begin{figure}[htbp]
 	\centering
@@ -47,15 +59,7 @@ each robot autonomously request task from the centralized pool and centralized p
 \end{itemize}
 
 
-\section{Communication Protocols}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch3/communication_protocals.drawio.png}
-	\caption{Communication Protocols}
-	\label{fig:communication_protocals}
-\end{figure}
 
-Since centralized pool and robots need to share task information with each other, the communication protocals are required. Four types of message are defined: (1) task request message; (2) task goal messages; (3) task feedback; (4) task result. 
-The comparation of task type and examples of each type are shown in Figure \ref{fig:communication_protocals}. 
 
+\subsection{Charging Station}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  20 SEP 2020 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  22 SEP 2020 11:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -666,47 +666,41 @@ File: content/images/ch3/positions_door_station.png Graphic file (type png)
 <use content/images/ch3/positions_door_station.png>
 Package pdftex.def Info: content/images/ch3/positions_door_station.png  used on input line 71.
 (pdftex.def)             Requested size: 292.59872pt x 167.71417pt.
-[9 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/occupancy_grid.png>] [10 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/room_division.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/positions_door_station.png>]
-<content/images/ch3/task_types.drawio.png, id=167, 984.67876pt x 272.01625pt>
-File: content/images/ch3/task_types.drawio.png Graphic file (type png)
-<use content/images/ch3/task_types.drawio.png>
-Package pdftex.def Info: content/images/ch3/task_types.drawio.png  used on input line 86.
-(pdftex.def)             Requested size: 334.40128pt x 92.37637pt.
- [11 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/task_types.drawio.png>]) [12]
+[9 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/occupancy_grid.png>] [10 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/room_division.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/positions_door_station.png>] [11] [12] [13]) [14]
 \openout2 = `content/chapters/chapter4.aux'.
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter4.tex
 chapter 4.
-<content/images/ch3/system_component_robot.drawio.png, id=188, 543.02875pt x 553.06625pt>
-File: content/images/ch3/system_component_robot.drawio.png Graphic file (type png)
-<use content/images/ch3/system_component_robot.drawio.png>
-Package pdftex.def Info: content/images/ch3/system_component_robot.drawio.png  used on input line 16.
-(pdftex.def)             Requested size: 188.09872pt x 191.57602pt.
-[13
-
-
-
-
- </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/system_component_robot.drawio.png>]
-
-LaTeX Warning: Reference `sec:task_types' on page 14 undefined on input line 24.
-
-<content/images/ch3/system_component_centralized_pool.drawio.png, id=195, 613.29124pt x 543.02875pt>
-File: content/images/ch3/system_component_centralized_pool.drawio.png Graphic file (type png)
-<use content/images/ch3/system_component_centralized_pool.drawio.png>
-Package pdftex.def Info: content/images/ch3/system_component_centralized_pool.drawio.png  used on input line 38.
-(pdftex.def)             Requested size: 188.09872pt x 166.5474pt.
-<content/images/ch3/communication_protocals.drawio.png, id=196, 613.29124pt x 1285.80376pt>
+<content/images/ch3/communication_protocals.drawio.png, id=210, 613.29124pt x 1285.80376pt>
 File: content/images/ch3/communication_protocals.drawio.png Graphic file (type png)
 <use content/images/ch3/communication_protocals.drawio.png>
-Package pdftex.def Info: content/images/ch3/communication_protocals.drawio.png  used on input line 54.
+Package pdftex.def Info: content/images/ch3/communication_protocals.drawio.png  used on input line 10.
 (pdftex.def)             Requested size: 188.09872pt x 394.35718pt.
-) [14] [15 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/system_component_centralized_pool.drawio.png>] [16 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/communication_protocals.drawio.png>]
+<content/images/ch3/system_component_robot.drawio.png, id=212, 543.02875pt x 553.06625pt>
+File: content/images/ch3/system_component_robot.drawio.png Graphic file (type png)
+<use content/images/ch3/system_component_robot.drawio.png>
+Package pdftex.def Info: content/images/ch3/system_component_robot.drawio.png  used on input line 28.
+(pdftex.def)             Requested size: 188.09872pt x 191.57602pt.
+
+LaTeX Warning: Reference `sec:task_types' on page 15 undefined on input line 36.
+
+[15
+
+
+
+
+] [16 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/communication_protocals.drawio.png>]
+<content/images/ch3/system_component_centralized_pool.drawio.png, id=224, 613.29124pt x 543.02875pt>
+File: content/images/ch3/system_component_centralized_pool.drawio.png Graphic file (type png)
+<use content/images/ch3/system_component_centralized_pool.drawio.png>
+Package pdftex.def Info: content/images/ch3/system_component_centralized_pool.drawio.png  used on input line 50.
+(pdftex.def)             Requested size: 188.09872pt x 166.5474pt.
+) [17 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/system_component_robot.drawio.png>] [18 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/system_component_centralized_pool.drawio.png>]
 \openout2 = `content/chapters/chapter5.aux'.
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter5.tex
 chapter 5.
-) [17
+) [19
 
 
 
@@ -714,17 +708,17 @@ chapter 5.
 ]
 \openout2 = `content/chapters/chapter6.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter6.tex [18
+ (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter6.tex [20
 
 
 
 
 ]
 chapter 6.
-) [19]
+) [21]
 \openout2 = `content/chapters/chapter7.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter7.tex [20
+ (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter7.tex [22
 
 
 
@@ -737,7 +731,7 @@ File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 4.
-) [21]
+) [23]
 
 Class scrbook Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrbook)              You should note, that `\appendix' is a mostly globally
@@ -752,16 +746,16 @@ Class scrbook Warning: You are using `\begin{appendix}...\end{appendix}'.
 (scrbook)              and replace `\begin{appendix}' by command
 (scrbook)              `\appendix' on input line 206.
 
-(/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.bbl [22
+(/Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.bbl [24
 
 
 
 ]
 chapter without number
-) [23]
+) [25]
 \openout2 = `content/chapters/clause.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.tex [24
+ (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/clause.tex [26
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 13--14
@@ -783,7 +777,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--229
 
  []
 
-[25
+[27
 
 
 ]
@@ -801,18 +795,18 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 231.
  ) 
 Here is how much of TeX's memory you used:
- 11106 strings out of 480608
- 195092 string characters out of 5903630
- 590897 words of memory out of 5000000
- 26615 multiletter control sequences out of 15000+600000
+ 11127 strings out of 480608
+ 195503 string characters out of 5903630
+ 593897 words of memory out of 5000000
+ 26626 multiletter control sequences out of 15000+600000
  543223 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,19n,72p,10163b,515s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (29 pages, 831012 bytes).
+Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (31 pages, 812100 bytes).
 PDF statistics:
- 413 PDF objects out of 1000 (max. 8388607)
- 337 compressed objects within 4 object streams
- 72 named destinations out of 1000 (max. 500000)
- 243 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 439 PDF objects out of 1000 (max. 8388607)
+ 363 compressed objects within 4 object streams
+ 83 named destinations out of 1000 (max. 500000)
+ 238 words of extra memory for PDF output out of 10000 (max. 10000000)
 
