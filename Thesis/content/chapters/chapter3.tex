@@ -143,32 +143,32 @@ With robot information such as positions and avaliable battery provided by robot
 
 
 \begin{table}[htb]
-	\centering
-	\begin{tabular}{|c c c|} 
-	\hline
-	Door Id & Door Status & Date Time \\
-	\hline
-	1& 1 & 2020-06-01 09:00:01 \\ [1ex] 
-	\hline
-	\end{tabular}
-	\caption{Measurement Result}
-	\label{tab:measurement_result}
-	\end{table}
-	
-	\begin{table}[htb]
-	\centering
-	\resizebox{\textwidth}{!}{
-	\begin{tabular}{|c c c c c c|} 
-	\hline
-	Door id & Day Of Week & Start Time & End Time & Init Open Possibility &  Open Possibility Statistic \\
-	\hline
-	1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.80 \\ [1ex] 
-	\hline
-	\end{tabular}}
-	\caption{Door Open Possibility}
-	\label{tab:open_possibilities}
-	\end{table}
-	
+\centering
+\begin{tabular}{|c| c| c|} 
+\hline
+Door Id & Door Status & Date Time \\
+\hline
+1& 1 & 2020-06-01 09:00:01 \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Measurement Result}
+\label{tab:measurement_result}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c| c| c| c| c|} 
+\hline
+Door id & Day Of Week & Start Time & End Time & Init Open Possibility &  Open Possibility Statistic \\
+\hline
+1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.80 \\ [1ex] 
+\hline
+\end{tabular}}
+\caption{Door Open Possibility}
+\label{tab:open_possibilities}
+\end{table}
+
 \begin{itemize}
 \item \textsl{Task Priority.} Task priority. Task priority is an important factor that discribes task emergency level. The charging task has the highest priority of 5. The gather inviroment task has a lowest priority of 1. 
 	The execute task is determined by users but must be in the range of [2,4]. 
