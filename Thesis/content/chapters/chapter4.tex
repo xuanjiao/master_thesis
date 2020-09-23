@@ -6,11 +6,14 @@
 \section{Communication Protocols}
 
 
-Centralized pool and robots need to share task information with each other. There are some basic requirement for communication: firstly,
-robot should initiate the communication once it have finished all task in task queue and get free. This is solve by assigning robot controlller as ROS service client and centralized pool as ROS service server.
-This mothod unnecessary communication by continuesly broadcasting robot information to everybody including centralized pool.
-Secondly, robot should forward sensor data to centralized pool while processing a task. This is solved by assigning robot controlller as ROS action server and centralized pool as ROS action client.
-As is shown in \ref{fig:comminication}, an efficent communication protocals is designed. Four types of message are defined: 
+Centralized pool and robots need to share task information with each other. There are some basic requirements for communication: firstly,
+robot should initiate the communication once it has finished all task in task queue and get free. This is solved by assigning robot controller as ROS service client and centralized pool as ROS service server.
+This method unnecessary communication by continuously broadcasting robot information to everybody including centralized pool.
+Secondly, robot should forward sensor data to centralized pool while processing a task. This is solved by assigning robot controller as ROS action server and centralized pool as ROS action client.
+As is shown in \ref{fig:comminication}, an efficient communication protocols is designed. 
+
+\subsection{Message Format}
+Four types of message are defined: 
 (1)Task request message(Table\ref{tab:request_message}); (2) Task goal messages(Table \ref{tab:goal_message}); (3) Task feedback message (Table \ref{tab:feedback_message}); (4) Task result message (Table \ref{tab:result_message}). 
 
 \begin{figure}[htbp]
@@ -39,9 +42,9 @@ Battery & Pose & Robot id\\
 \hline
 Task id[] &Task type & Target id & Goal[] \\
 \hline\hline
-1& Gather Enviroment Info & 9	& (-1.5,5.2) 2020-06-01 9:00:00 \\
+1& Gather Environment Info & 9	& (-1.5,5.2) 2020-06-01 9:00:00 \\
 \hline
-[3,4]	& Execute task & 21,22	& (-24.0,12.0), 2020-06-01 9:02:00 (-21.0,12.0) 2020-06-01 9:02:00 \\
+[3,4]	& Execute task & 21, 22	& (-24.0,12.0), 2020-06-01 9:02:00 (-21.0,12.0) 2020-06-01 9:02:00 \\
 \hline
 5	& Charging	& 17	&(0.0,5.0), 2020-06-01 9:04:00 \\ [1ex] 
 \hline
@@ -54,7 +57,7 @@ Task id[] &Task type & Target id & Goal[] \\
 \centering
 \begin{tabular}{|c|c|c|c|} 
 \hline
-Robor id & Door id & Measurement time & Measurement result \\
+Robot id & Door id & Measurement time & Measurement result \\
 \hline\hline
 1	& 3	& 2020-06-01 9:00:03 & Door open \\ [1ex] 
 \hline
@@ -82,12 +85,21 @@ Task id	& Task type	& Result\\
 
 
 
-\section{Database structure}
+\section{Database}
+F
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/database_er.png}
+    \caption{Database Entity Relationship Diagram}
+    \label{}
+\end{figure}
+
+
 
 \section{Procedure}
 Each robot autonomously request task from the centralized pool and centralized pool response with a set of suitable tasks. 
 \subsection{Robot}
-\paragraph{Robor Component} The robot component is shown in Figure \ref{fig:robot_components}. The following are explanations of some robot components.
+\paragraph{Robot Component} The robot component is shown in Figure \ref{fig:robot_components}. The following are explanations of some robot components.
 
 
 \begin{figure}[htbp]
@@ -108,7 +120,7 @@ Each robot autonomously request task from the centralized pool and centralized p
 	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
 \end{itemize}
 
-\paragraph{Robor Task Processing}
+\paragraph{Robor Task Processing} The flowchart of robot task processing is shown in Figure \ref{fig:robot_task_processing}.
 
 \begin{figure}[htbp]
     \centering
@@ -120,6 +132,13 @@ Each robot autonomously request task from the centralized pool and centralized p
 
 \subsection{Centralized Pool}
 
+
+
+\begin{itemize}
+	\item \textsl{Map Information.} Map information contains information such as the door list that the robot will pass through when moving to target position.
+	\item \textsl{Cost calculator.} Cost calculator calculate the cost for doors, rooms and charging stations.
+	\item \textsl{Task manager.} Task manager can construct, sort and allocate tasks.
+\end{itemize}
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = 0.45\textwidth]{content/images/ch4/system_component_centralized_pool.drawio.png}
@@ -127,14 +146,8 @@ Each robot autonomously request task from the centralized pool and centralized p
 	\label{fig:centralized_pool_components}
 \end{figure}
 
-\begin{itemize}
-	\item \textsl{Map Information.} Map information contains information such as the door list that the robot will pass through when moving to target position.
-	\item \textsl{Cost calculator.} Cost calculator calculate the cost for doors, rooms and charging stations.
-	\item \textsl{Task manager.} Task manager can construct, sort and allocate tasks.
-\end{itemize}
-
-
 
 
 
 \subsection{Charging Station}
+\label{sec:charging_station}

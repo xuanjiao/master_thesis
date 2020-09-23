@@ -1,0 +1,59 @@
+{
+    "ltex.ignoreRuleInSentence": [
+        {
+            "rule": "MORFOLOGIK_RULE_EN_US",
+            "sentence": "^\\QThe movebase node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot.\\E$"
+        },
+        {
+            "rule": "MORFOLOGIK_RULE_EN_US",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on execute task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on execute task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+            "sentence": "^\\QTask Attributes Start time Finish time Explanation The time when robot start moving The time when robot finished interacting with the target Task attributes part 2\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 2 10:00:00 10:59:59 0.80 2 RanToCompletion 0 2020-06-01 9:00:00 Succedded Task Table in Database\\E$"
+        },
+        {
+            "rule": "PUNCTUATION_PARAGRAPH_END",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 2 10:00:00 10:59:59 0.80 2 RanToCompletion 0 2020-06-01 9:00:00 Succeeded Task Table in Database\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QWhen robot run an execute task, the robot moves to a given point ether in corridor or in the room.\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QThe execute task is determined by users but must be in the range of [2,4].\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QThe execute module receive commands from centralized pool and decide when and which task the robot should perform.\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        }
+    ],
+    "ltex.workspaceFolderDictionary": {
+        "en-US": [
+            "RanToCompletion"
+        ]
+    },
+    "ltex.workspaceFolderDisabledRules": {
+        "en-US": [
+            "EN_CONTRACTION_SPELLING",
+            "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+            "MORFOLOGIK_RULE_EN_US",
+            "PHRASE_REPETITION",
+            "PUNCTUATION_PARAGRAPH_END",
+            "WORD_CONTAINS_UNDERSCORE"
+        ]
+    }
+}

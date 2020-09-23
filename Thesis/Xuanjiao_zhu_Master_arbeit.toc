@@ -1,5 +1,6 @@
 \babel@toc {ngerman}{}
 \babel@toc {ngerman}{}
+\babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Motivation}{3}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Problem definition}{4}{section.1.2}%
@@ -11,18 +12,19 @@
 \contentsline {section}{\numberline {3.3}Task Allocation}{11}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Task Explanation}{11}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Execute Task Allocation}{12}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Enviroment Task Allocation}{13}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}Environment Task Allocation}{13}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Charging Task Allocation}{14}{subsection.3.3.4}%
 \contentsline {chapter}{\numberline {4}Implementation}{15}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Communication Protocols}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Database structure}{16}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Procedure}{16}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Robot}{16}{subsection.4.3.1}%
-\contentsline {paragraph}{\nonumberline Robor Component}{16}{section*.6}%
-\contentsline {paragraph}{\nonumberline Robor Task Processing}{17}{figure.4.3}%
-\contentsline {subsection}{\numberline {4.3.2}Centralized Pool}{17}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Charging Station}{19}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.1.1}Message Format}{15}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Database}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Procedure}{17}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Robot}{17}{subsection.4.3.1}%
+\contentsline {paragraph}{\nonumberline Robot Component}{17}{section*.6}%
+\contentsline {paragraph}{\nonumberline Robor Task Processing}{18}{section*.7}%
+\contentsline {subsection}{\numberline {4.3.2}Centralized Pool}{18}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Charging Station}{18}{subsection.4.3.3}%
 \contentsline {chapter}{\numberline {5}Evaluation}{21}{chapter.5}%
 \contentsline {chapter}{\numberline {6}Discussion}{23}{chapter.6}%
 \contentsline {chapter}{\numberline {7}Acknowledgements}{25}{chapter.7}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{27}{chapter*.8}%
+\contentsline {chapter}{\nonumberline Bibliography}{27}{chapter*.8}%

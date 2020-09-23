@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  22 SEP 2020 13:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.9.14)  23 SEP 2020 14:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -616,7 +616,7 @@ chapter 1.
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter2.tex
 chapter 2.
 
-Overfull \hbox (22.01059pt too wide) in paragraph at lines 8--9
+Overfull \hbox (22.49481pt too wide) in paragraph at lines 8--9
 []\OT1/cmr/m/n/10.95 Definition of the con-text of use (in-door/outdoor, hu-mans/animals/robots, with/without
  []
 
@@ -635,85 +635,86 @@ Overfull \hbox (22.01059pt too wide) in paragraph at lines 8--9
 
 ]
 chapter 3.
-<content/images/ch3/gazebo_model.png, id=124, 598.73688pt x 408.02437pt>
+<content/images/ch3/gazebo_model.png, id=126, 598.73688pt x 408.02437pt>
 File: content/images/ch3/gazebo_model.png Graphic file (type png)
 <use content/images/ch3/gazebo_model.png>
 Package pdftex.def Info: content/images/ch3/gazebo_model.png  used on input line 21.
 (pdftex.def)             Requested size: 292.59872pt x 199.39825pt.
 [7]
-<content/images/ch3/architecture.drawio.png, id=133, 1014.79124pt x 492.84125pt>
+<content/images/ch3/architecture.drawio.png, id=135, 1014.79124pt x 492.84125pt>
 File: content/images/ch3/architecture.drawio.png Graphic file (type png)
 <use content/images/ch3/architecture.drawio.png>
 Package pdftex.def Info: content/images/ch3/architecture.drawio.png  used on input line 37.
 (pdftex.def)             Requested size: 334.40128pt x 162.40498pt.
-<content/images/ch3/occupancy_grid.png, id=134, 1058.95625pt x 606.265pt>
+<content/images/ch3/occupancy_grid.png, id=136, 1058.95625pt x 606.265pt>
 File: content/images/ch3/occupancy_grid.png Graphic file (type png)
 <use content/images/ch3/occupancy_grid.png>
 Package pdftex.def Info: content/images/ch3/occupancy_grid.png  used on input line 44.
 (pdftex.def)             Requested size: 292.59872pt x 167.51433pt.
  [8 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/gazebo_model.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/architecture.drawio.png>]
-Underfull \hbox (badness 3098) in paragraph at lines 58--58
-[][]\OT1/cmr/m/n/10.95 ToDo:[] Ro-bot
- []
-
-<content/images/ch3/room_division.png, id=148, 1058.95625pt x 606.265pt>
+<content/images/ch3/room_division.png, id=151, 1058.95625pt x 606.265pt>
 File: content/images/ch3/room_division.png Graphic file (type png)
 <use content/images/ch3/room_division.png>
 Package pdftex.def Info: content/images/ch3/room_division.png  used on input line 64.
 (pdftex.def)             Requested size: 292.59872pt x 167.51433pt.
-<content/images/ch3/positions_door_station.png, id=149, 1062.97125pt x 609.27625pt>
+<content/images/ch3/positions_door_station.png, id=152, 1062.97125pt x 609.27625pt>
 File: content/images/ch3/positions_door_station.png Graphic file (type png)
 <use content/images/ch3/positions_door_station.png>
 Package pdftex.def Info: content/images/ch3/positions_door_station.png  used on input line 71.
 (pdftex.def)             Requested size: 292.59872pt x 167.71417pt.
-[9 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/occupancy_grid.png>] [10 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/room_division.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/positions_door_station.png>] [11] [12] [13]) [14]
+ [9 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/occupancy_grid.png>] [10 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/room_division.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch3/positions_door_station.png>] [11] [12] [13]) [14]
 \openout2 = `content/chapters/chapter4.aux'.
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter4.tex
 chapter 4.
-<content/images/ch4/robot_pool_comminication.drawio.png, id=215, 613.29124pt x 323.2075pt>
+<content/images/ch4/robot_pool_comminication.drawio.png, id=218, 613.29124pt x 323.2075pt>
 File: content/images/ch4/robot_pool_comminication.drawio.png Graphic file (type png)
 <use content/images/ch4/robot_pool_comminication.drawio.png>
-Package pdftex.def Info: content/images/ch4/robot_pool_comminication.drawio.png  used on input line 18.
+Package pdftex.def Info: content/images/ch4/robot_pool_comminication.drawio.png  used on input line 21.
 (pdftex.def)             Requested size: 292.59872pt x 154.2008pt.
 
-Overfull \hbox (131.82231pt too wide) in paragraph at lines 38--49
+Overfull \hbox (137.90565pt too wide) in paragraph at lines 41--52
  [][] 
  []
 
+<content/images/ch4/database_er.png, id=219, 910.40125pt x 787.94376pt>
+File: content/images/ch4/database_er.png Graphic file (type png)
+<use content/images/ch4/database_er.png>
+Package pdftex.def Info: content/images/ch4/database_er.png  used on input line 92.
+(pdftex.def)             Requested size: 292.59872pt x 253.24124pt.
 [15
 
 
 
 
- </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/robot_pool_comminication.drawio.png>]
-<content/images/ch4/system_component_robot.drawio.png, id=228, 543.02875pt x 553.06625pt>
+] [16 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/robot_pool_comminication.drawio.png> </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/database_er.png>]
+<content/images/ch4/system_component_robot.drawio.png, id=237, 543.02875pt x 553.06625pt>
 File: content/images/ch4/system_component_robot.drawio.png Graphic file (type png)
 <use content/images/ch4/system_component_robot.drawio.png>
-Package pdftex.def Info: content/images/ch4/system_component_robot.drawio.png  used on input line 95.
+Package pdftex.def Info: content/images/ch4/system_component_robot.drawio.png  used on input line 107.
 (pdftex.def)             Requested size: 188.09872pt x 191.57602pt.
- [16]
-<content/images/ch4/robot_task_flow.drawio.png, id=235, 759.83875pt x 1364.09625pt>
+ [17]
+<content/images/ch4/robot_task_flow.drawio.png, id=245, 759.83875pt x 1364.09625pt>
 File: content/images/ch4/robot_task_flow.drawio.png Graphic file (type png)
 <use content/images/ch4/robot_task_flow.drawio.png>
-Package pdftex.def Info: content/images/ch4/robot_task_flow.drawio.png  used on input line 115.
+Package pdftex.def Info: content/images/ch4/robot_task_flow.drawio.png  used on input line 127.
 (pdftex.def)             Requested size: 292.59872pt x 525.29317pt.
-<content/images/ch4/system_component_centralized_pool.drawio.png, id=236, 613.29124pt x 543.02875pt>
+<content/images/ch4/system_component_centralized_pool.drawio.png, id=246, 613.29124pt x 543.02875pt>
 File: content/images/ch4/system_component_centralized_pool.drawio.png Graphic file (type png)
 <use content/images/ch4/system_component_centralized_pool.drawio.png>
-Package pdftex.def Info: content/images/ch4/system_component_centralized_pool.drawio.png  used on input line 125.
+Package pdftex.def Info: content/images/ch4/system_component_centralized_pool.drawio.png  used on input line 144.
 (pdftex.def)             Requested size: 188.09872pt x 166.5474pt.
- [17 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/system_component_robot.drawio.png>] [18 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/robot_task_flow.drawio.png>]) [19 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/system_component_centralized_pool.drawio.png>]
+) [18 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/system_component_robot.drawio.png>] [19 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/robot_task_flow.drawio.png>] [20 </Users/xuanjiaozhu/OneDrive/thesis/thesis/content/images/ch4/system_component_centralized_pool.drawio.png>]
 \openout2 = `content/chapters/chapter5.aux'.
 
- (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter5.tex [20
+ (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter5.tex
+chapter 5.
+) [21
 
 
 
 
 ]
-chapter 5.
-) [21]
 \openout2 = `content/chapters/chapter6.aux'.
 
  (/Users/xuanjiaozhu/OneDrive/thesis/thesis/content/chapters/chapter6.tex [22
@@ -799,18 +800,18 @@ Package rerunfilecheck Info: File `Xuanjiao_Zhu_Master_arbeit.out' has not chang
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 231.
  ) 
 Here is how much of TeX's memory you used:
- 11140 strings out of 480608
- 195923 string characters out of 5903630
- 593897 words of memory out of 5000000
- 26628 multiletter control sequences out of 15000+600000
+ 11160 strings out of 480608
+ 196368 string characters out of 5903630
+ 592897 words of memory out of 5000000
+ 26645 multiletter control sequences out of 15000+600000
  543223 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,19n,72p,10163b,515s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,19n,72p,10163b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (33 pages, 834997 bytes).
+Output written on /Users/xuanjiaozhu/OneDrive/thesis/thesis/Xuanjiao_Zhu_Master_arbeit.pdf (33 pages, 936997 bytes).
 PDF statistics:
- 463 PDF objects out of 1000 (max. 8388607)
- 383 compressed objects within 4 object streams
- 92 named destinations out of 1000 (max. 500000)
- 243 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 472 PDF objects out of 1000 (max. 8388607)
+ 391 compressed objects within 4 object streams
+ 94 named destinations out of 1000 (max. 500000)
+ 256 words of extra memory for PDF output out of 10000 (max. 10000000)
 
