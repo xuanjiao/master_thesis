@@ -8,7 +8,7 @@
 
 Centralized pool and robots need to share task information with each other. There are some basic requirements for communication: firstly,
 robot should initiate the communication once it has finished all task in task queue and get free. This is solved by assigning robot controller as ROS service client and centralized pool as ROS service server.
-This method unnecessary communication by continuously broadcasting robot information to everybody including centralized pool.
+This method saves unnecessary communication cost by avoiding keep tracking the current position, availability and states of all robots.
 Secondly, robot should forward sensor data to centralized pool while processing a task. This is solved by assigning robot controller as ROS action server and centralized pool as ROS action client.
 As is shown in \ref{fig:comminication}, an efficient communication protocols is designed. 
 
@@ -80,24 +80,27 @@ Task id	& Task type	& Result\\
 \end{table}
 
 
-
-
-
-
-
-\section{Database}
-F
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/database_er.png}
     \caption{Database Entity Relationship Diagram}
-    \label{}
+    \label{fig:database_er}
 \end{figure}
+
+
+\section{Database}
+The centralized pool keep information it requires, to make decisions. Figure \ref{fig:database_er} shows the relationship between entities. 
+Table doors store enviroment information. In table doors, the is\_used column will be updated when an Enviroment-task to this door is updated. The last update will be updated when the centralized pool receive a new measurement result. 
+Table open\_ossibilities is based on the statistic of door measurement in a specific time period of each working day. These two table will be updated when centralized pool receive a new measurement result. 
+Table exe\_rs stores experiment result while table exe\_weight, table door\_weight and table charging\_station\_weight stores weight values for experiment. Chapter 5 introduces the details of experiment.
+When user gives the system a task, the target point of this task will be stored in position table, and a target\_id will be generated.  This target\_id will be stored in custum\_point table. 
+Additionally, with the information in room\_range table, the system will recognize which room does the point belong to and write room\_id column in costom\_points table.
+
 
 
 
 \section{Procedure}
-Each robot autonomously request task from the centralized pool and centralized pool response with a set of suitable tasks. 
+Each robot autonomously requests tasks from the centralized pool and centralized pool response with a set of suitable tasks. 
 \subsection{Robot}
 \paragraph{Robot Component} The robot component is shown in Figure \ref{fig:robot_components}. The following are explanations of some robot components.
 

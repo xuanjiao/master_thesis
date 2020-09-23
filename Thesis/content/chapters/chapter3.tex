@@ -11,9 +11,9 @@
 In our system there are multiple robots that must handle various tasks. For example, visiting given rooms. To tackle this problem, a communication efficient task scheduling system is designed. 
 This system allocate task according to system resources, including environment factors and robot available battery. Once this information is attained, the task scheduling system assign robot a set of task.
 \begin{itemize}
-	\item \textsl{Robot.} The robot is responsible for executing tasks as well as listen to sensors on its way. It has a rechargeable battery. Robot battery level drops as its moves and rotates.
-	\item \textsl{Tasks.} The tasks include two part. The first part is moving to a given position and the second part is either finding a person or recharge itself.
-	\item \textsl{Environment.} The environment is an office area that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment model is shown in Figure \ref{fig:gazebo_model}. The environment factors, such as room locations and occupancy possibilities help task allocation.
+	\item \textsl{Robot.} The robot is responsible for moving in 2-dimensional physical space as well as listen to sensors on its way. It has a rechargeable battery. Robot battery level drops as its moves and rotates.
+	\item \textsl{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain actions.
+	\item \textsl{Environment.} We consider robots moving in an office that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment model is shown in Figure \ref{fig:gazebo_model}. The environment factors, such as room locations and occupancy possibilities help task allocation.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -47,16 +47,12 @@ As shown in Figure \ref{fig:system_architecture}, the architecture of the system
 \end{figure}
 
 \section{System Environment}
-The system environment is an office area. A 3D Gazebo module shown in \ref{fig:gazebo_model}, and an occupancy grid is shown in \ref{fig:occupancy_grid}. The white area is unoccupied, which is the corridor and rooms. The black line is occupied area, which is the wall. Anything else is gray.
-Following are important objects in system environment that interact with robot.
+A 3D Gazebo module shown in \ref{fig:gazebo_model}. It is assumed that there are no dynamic obstacles. As is shown in \ref{fig:occupancy_grid}, the black lines are occupied area, which is the wall in 3D-Model. The gray area is unknown are. 
+The white area is unoccupied. In unoccupied area there are following important area and coordinates:
 \begin{itemize}
-	\item \textsl{Room.} As is shown in Figure \ref{fig:room_division}, the occupancy grid (the white area in Figure \ref{fig:room_division}) is divided into rectangles. The rectangle is used to let the system clearly distinguish which room robot is in.
-	\item \textsl{Door.} In 3D Model there are no original doors. However, in order to simulate an environment, a few simulated sensors are created. Those coordinate of sensors are the same as corresponding doors positions (D1-D17 in Figure \ref{fig:positions_door_station}).
-	Additionally, one simulated door sensor is created on the door position. Each simulated door sensors broadcasts door status periodically. The broadcast message are received by all robot within its range, including both robots enter the room and robots in corridor passing by the door.
-	Figure \ref{fig:positions_door_station} shows the distribution of doors.
-	\item \text{Charging Station.} The battery decrease is also considered. Three simulated charging stations are located in the corridor. Figure \ref{fig:positions_door_station} shows the distribution of charging stations. 
-	When robot get a Charging-task, it would move to one of the charging station and wait until fully charged. The details of robot charging is shown in Section \ref{sec:charging_station}.
-	
+	\item \textsl{Rooms.} The rectangle areas (Figure \ref{fig:room_division}) are used to represent Rooms. Each rectangle has its upper and lower limit in x and y coordinates, in order to identify which rooms the robots or targets belong to. 
+	\item \textsl{Doors} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by ROS door simulator nodes, which broadcast thier position and door status periodically. The broadcast messages are received and filtered by robots.
+	\item \textsl{Charging Stations} The positions of charging stations are used by ROS charging station nodes. For details please refer to Section \ref{sec:charging_station}.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -183,8 +179,8 @@ Door id & Day Of Week & Start Time & End Time & Init Open Possibility &  Open Po
 \label{eq:battery_consumption}
 &B: Battery\_Consumption W: Weight\\
 B_{large\_task} & = \sum_{task_0}^{task_n} B_{trajectory} \\
-& = \sum_{task_0}^{task_n} \sum_{point_0}^{pont_M} [W_{position} \times position\_variation+W_{angle}  \times angle\_variation]\\
-& = \sum_{t = task_0}^{task_n} \sum_{p = point_0}^{point_M} [ W_{position} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
+& = \sum_{task_0}^{task_n} \sum_{waypoint_0}^{pont_M} [W_{position} \times position\_variation+W_{angle}  \times angle\_variation]\\
+& = \sum_{t = task_0}^{task_n} \sum_{p = waypoint_0}^{waypoint_M} [ W_{position} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
 &   + W_{angle} \times 2 \times \arccos(w_p)] 
 \end{aligned}
 \end{equation}
