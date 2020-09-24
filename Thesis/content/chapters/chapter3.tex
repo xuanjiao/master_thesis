@@ -71,8 +71,8 @@ The white area is unoccupied. In unoccupied area there are following important a
 
 \section{Task Allocation}
 
-\subsection{Task Explanation}
-\label{sec:task_explanation}
+\subsection{Task Specifications}
+\label{sec:task_specifications}
 In order to improve overall execution efficiency, one single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
 On one hand, to make robot work long hours in office environment, recharging is necessary. On the other hand, a robot should gather environment information as much as possible, which centralized pool would learn from and make better decision. 
 Therefore, three types of task are defined, which are shown in Table \ref{tab:task_attributes_difference} and Table \ref{tab:task_attributes_common}.  Task attributes includes task type, target, size, dependency, priority, generator, the way of handle task, start time, finish time.
@@ -134,6 +134,7 @@ Task Id & Task Type & Start Time & Target Id & Robot Id & Priority & Status & de
 \end{itemize}
 
 \subsection{Execute Task Allocation}
+\label{sec:task_allocation}
 With robot information such as positions and available battery provided by robot controller, the multi-robot task allocation module in the architecture should perform multi-robot task allocation. To select an Execute-task, the following decision variable are considered.
 \paragraph*{Decision variable}
 

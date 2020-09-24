@@ -7,10 +7,10 @@
   Intelligence in Education ({AI-ED})}, \btxpageslong{}\ 167--174, Amsterdam,
   1997. IOS Press.
 
-\bibitem[Lev65]{levensthein65:_binar}
-{\sc Levensthein, Vladimir~I.}: {\em Binary codes capable of correcting
-  spurious insertions and deletions of ones}.
-\newblock Problems of Information Transmission, 1:8--17, 1965.
+\bibitem[IGS17]{Ivan2017}
+{\sc Ivan~Gavran, Rupak~Majumdar} \btxandlong{}\ {\sc Indranil Saha}: {\em
+  Antlab: a Multi-Robot Task Server}.
+\newblock ACM Transactions on Embedded Computing Systems, 9:39--58, 2017.
 
 \bibitem[MAdR02]{Middleton2002}
 {\sc Middleton, S.~E.}, {\sc H.~Alani} \btxandlong{}\ {\sc D.~C. de~Roure}:

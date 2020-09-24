@@ -27,7 +27,7 @@ Four types of message are defined:
 \centering
 \begin{tabular}{|c|c|c|} 
 \hline
-Battery & Pose & Robot id\\
+Battery & Pose & Robot ID\\
 \hline\hline
 93	&(2,4)	&1 \\ [1ex] 
 \hline
@@ -38,6 +38,7 @@ Battery & Pose & Robot id\\
 
 \begin{table}[htb]
 \centering
+\resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|} 
 \hline
 Task id[] &Task type & Target id & Goal[] \\
@@ -48,7 +49,7 @@ Task id[] &Task type & Target id & Goal[] \\
 \hline
 5	& Charging	& 17	&(0.0,5.0), 2020-06-01 9:04:00 \\ [1ex] 
 \hline
-\end{tabular}
+\end{tabular}}
 \caption{Action Goal Message Format and Example}
 \label{tab:goal_message}
 \end{table}
@@ -89,21 +90,44 @@ Task id	& Task type	& Result\\
 
 
 \section{Database}
-The centralized pool keep information it requires, to make decisions. Figure \ref{fig:database_er} shows the relationship between entities. 
-Table doors store enviroment information. In table doors, the is\_used column will be updated when an Enviroment-task to this door is updated. The last update will be updated when the centralized pool receive a new measurement result. 
-Table open\_ossibilities is based on the statistic of door measurement in a specific time period of each working day. These two table will be updated when centralized pool receive a new measurement result. 
-Table exe\_rs stores experiment result while table exe\_weight, table door\_weight and table charging\_station\_weight stores weight values for experiment. Chapter 5 introduces the details of experiment.
-When user gives the system a task, the target point of this task will be stored in position table, and a target\_id will be generated.  This target\_id will be stored in custum\_point table. 
-Additionally, with the information in room\_range table, the system will recognize which room does the point belong to and write room\_id column in costom\_points table.
-
-
+The centralized pool keep information it requires, to make decisions. Figure \ref{fig:database_er} shows the relationship between entities. Following are explanations of some tables.
+\begin{itemize}
+	\item \textsl{Table doors.} Table doors stores enviroment information. In table doors, the is\_used column will be updated when an Enviroment-task to this door is updated. The last update will be updated when the centralized pool receive a new measurement result. 
+	\item \textsl{Table open\_ossibilities.} Table open\_ossibilities is based on the statistic of door measurement in a specific time period of each working day. These two table will be updated when centralized pool receive a new measurement result. 
+	\item \textsl{Table exe\_rs.} Table exe\_rs stores experiment result while table exe\_weight, table door\_weight and table charging\_station\_weight stores weight values for experiment. Chapter 5 introduces the details of experiment.
+	\item \textsl{Table costum\_points.} When user gives the system a task, the target point of this task will be stored in position table, and a target\_id will be generated.  This target\_id will be stored in custum\_point table. 	Additionally, with the information in room\_range table, the system will recognize which room does the point belong to and write room\_id column in costom\_points table.
+\end{itemize}
 
 
 \section{Procedure}
-Each robot autonomously requests tasks from the centralized pool and centralized pool response with a set of suitable tasks. 
-\subsection{Robot}
-\paragraph{Robot Component} The robot component is shown in Figure \ref{fig:robot_components}. The following are explanations of some robot components.
+As stated in the Chapter 3, the goal of task scheduling is finishing all tasks as soon as possible while keep the cost as low as possible. 
+The task assignment and execution happends at two level. \cite{Ivan2017} the task and the path planner solves a planning problem. It takes and occupancy grid, a specific robot and a set of task specifications, and generates trajectorys for each task. According to those trajectorys and task specifications, the task with the lowest cost is assigned to robot.
+At the dynamic level, after each robot receive a task, it runs a navigation stack to execute this task stepwise. Each robot computes a local trajectory but takes into account dynamic obstacles.
+The process of the robot task allocation system is as follows.
 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/centralized_task_select.drawio.png}
+    \caption{Task allocation in Centralized Pool}
+    \label{fig:centralized_task_allocation}
+\end{figure}
+\subsection{Centralized Pool}
+
+Once the centralized pool receives a task request from robot, it will perform task allocation. The task allocation algorithm is discussed in Section \ref{sec:task_allocation}. The process of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
+\begin{enumerate}
+	\item When the battery of robot belows 10\%, the centralized pool create a charging task to the charging staion with the lowest cost.
+	\item When the battery of robot aboves 10\%, the centralized pool loads execute-tasks in database, then combine small tasks with dependencies into large tasks, finally calculates task costs and select one large task with the lowest cost. 
+	\item If there are no suitable tasks, a gather-enviroment-task to the door with the lowest cost is generated. 
+\end{enumerate}
+The difference between task is discussed in Section \ref{sec:task_specifications}. The output of the task allocation includes: task ID, goal coodinate, timestamp and selected robot ID. The task is sent to the selected robot, and the robot performs the tasks.
+
+
+
+
+
+\subsection{Robot}
+\paragraph{Robot Structure} The structure of robot is shown in Figure \ref{fig:robot_components}. 
 
 \begin{figure}[htbp]
 	\centering
@@ -113,7 +137,6 @@ Each robot autonomously requests tasks from the centralized pool and centralized
 \end{figure}
 
 \begin{itemize}
-	\item \textsl{Battery level.} Battery level drops as the robot moves and rotates.
 	\item \textsl{Local task queue.} Local task queue keeps a list of tasks that a robot will run sequentially. Once a task is finished, it would be removed from task queue. Once this queue become empty, the robot send task result to centralized pool.
 	\item \textsl{New task client.} Once all task are finished, the new task client send request to new task server.
 	\item \textsl{Run task server.} The run task server receive tasks and send task feedback and task result.
@@ -123,7 +146,7 @@ Each robot autonomously requests tasks from the centralized pool and centralized
 	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
 \end{itemize}
 
-\paragraph{Robor Task Processing} The flowchart of robot task processing is shown in Figure \ref{fig:robot_task_processing}.
+\paragraph{Robot Task Processing} The flowchart of robot task processing is shown in Figure \ref{fig:robot_task_processing}.
 
 \begin{figure}[htbp]
     \centering
@@ -133,21 +156,6 @@ Each robot autonomously requests tasks from the centralized pool and centralized
 \end{figure}
 
 
-\subsection{Centralized Pool}
-
-
-
-\begin{itemize}
-	\item \textsl{Map Information.} Map information contains information such as the door list that the robot will pass through when moving to target position.
-	\item \textsl{Cost calculator.} Cost calculator calculate the cost for doors, rooms and charging stations.
-	\item \textsl{Task manager.} Task manager can construct, sort and allocate tasks.
-\end{itemize}
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch4/system_component_centralized_pool.drawio.png}
-	\caption{Centralized Pool Components}
-	\label{fig:centralized_pool_components}
-\end{figure}
 
 
 

@@ -10,21 +10,21 @@
 \contentsline {section}{\numberline {3.1}Architecture Design}{7}{section.3.1}%
 \contentsline {section}{\numberline {3.2}System Environment}{9}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Task Allocation}{9}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Task Explanation}{9}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}Task Specifications}{9}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Execute Task Allocation}{11}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Environment Task Allocation}{13}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}Charging Task Allocation}{14}{subsection.3.3.4}%
 \contentsline {chapter}{\numberline {4}Implementation}{15}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Communication Protocols}{15}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}Message Format}{15}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Database}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.2}Database}{17}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Procedure}{17}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Robot}{17}{subsection.4.3.1}%
-\contentsline {paragraph}{\nonumberline Robot Component}{17}{section*.6}%
-\contentsline {paragraph}{\nonumberline Robor Task Processing}{18}{section*.7}%
-\contentsline {subsection}{\numberline {4.3.2}Centralized Pool}{20}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.1}Centralized Pool}{18}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Robot}{18}{subsection.4.3.2}%
+\contentsline {paragraph}{\nonumberline Robot Structure}{18}{section*.6}%
+\contentsline {paragraph}{\nonumberline Robot Task Processing}{20}{section*.7}%
 \contentsline {subsection}{\numberline {4.3.3}Charging Station}{20}{subsection.4.3.3}%
-\contentsline {chapter}{\numberline {5}Evaluation}{21}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Discussion}{23}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Acknowledgements}{25}{chapter.7}%
-\contentsline {chapter}{\nonumberline Bibliography}{27}{chapter*.8}%
+\contentsline {chapter}{\numberline {5}Evaluation}{23}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Discussion}{25}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Acknowledgements}{27}{chapter.7}%
+\contentsline {chapter}{\nonumberline Bibliography}{29}{chapter*.8}%
