@@ -18,6 +18,11 @@
 \newblock \Btxinlong{}\ {\em Proceedings of the Semantic Web Workshop at the
   WWW Conference}, Honolulu, HI, 2002.
 
+\bibitem[mov]{move_base_node}
+{\em {Move Base Node}}.
+\newblock \url{http://wiki.ros.org/move_base}.
+\newblock accessed 2020-09-25.
+
 \bibitem[Sal89]{salton89}
 {\sc Salton, Gerard}: {\em Automatic text processing --- the transformation,
   analysis, and retrieval of information by computer}.

@@ -39,6 +39,10 @@
         {
             "rule": "ENGLISH_WORD_REPEAT_RULE",
             "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task Specifications Part 1\\E$"
         }
     ],
     "ltex.workspaceFolderDictionary": {
