@@ -12,7 +12,28 @@ This method saves unnecessary communication cost by avoiding keep tracking the c
 Secondly, robot should forward sensor data to centralized pool while processing a task. This is solved by assigning robot controller as ROS action server and centralized pool as ROS action client.
 As is shown in \ref{fig:comminication}, an efficient communication protocols is designed. 
 
-\subsection{Message Format}
+\subsection{Message about Measurement}
+\label{sec:measurement_message}
+When a robot pass by a door, it will receive messages from sensor. 
+In order to save resources, instead of a system enviroment in real life, a door simulator ROS node is used to publish all measurement result for all doors. The message formart is shown in Table \ref{tab:sensor_message} 
+The measurement results(opened and closed) are created according to the "open possible" column in the "open possibilities" table (Figure \ref{fig:database_er}).
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c|c|c|c|} 
+\hline
+Door ID  & Position& Timestamp & Measurement Result \\
+\hline\hline
+1&(-18.5,5.2) & 2020-06-01 9:00:02 & Door opened \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Measurement Message Format and Example}
+\label{tab:sensor_message}
+\end{table}
+	
+
+\subsection{Message about Task}
+\label{sec:task_message}
 Four types of message are defined: 
 (1)Task request message(Table\ref{tab:request_message}); (2) Task goal messages(Table \ref{tab:goal_message}); (3) Task feedback message (Table \ref{tab:feedback_message}); (4) Task result message (Table \ref{tab:result_message}). 
 
@@ -109,12 +130,13 @@ The process of the robot task allocation system is as follows.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/centralized_task_select.drawio.png}
-    \caption{Task allocation in Centralized Pool}
+    \caption{Centralized Pool Task allocation}
     \label{fig:centralized_task_allocation}
 \end{figure}
 \subsection{Centralized Pool}
 
-Once the centralized pool receives a task request from robot, it will perform task allocation. The task allocation algorithm is discussed in Section \ref{sec:task_allocation}. The process of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
+\paragraph{Task Allocation}
+When the centralized pool receives a task request (Table \ref{tab:request_message}) from robot, it performs task allocation. The task allocation algorithm is discussed in Section \ref{sec:task_allocation}. The process of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
 \begin{enumerate}
 	\item When the battery of robot belows 10\%, the centralized pool create a charging task to the charging staion with the lowest cost.
 	\item When the battery of robot aboves 10\%, the centralized pool loads execute-tasks in database, then combine small tasks with dependencies into large tasks, finally calculates task costs and select one large task with the lowest cost. 
@@ -122,43 +144,77 @@ Once the centralized pool receives a task request from robot, it will perform ta
 \end{enumerate}
 The difference between task is discussed in Section \ref{sec:task_specifications}. The output of the task allocation includes: task ID, goal coodinate, timestamp and selected robot ID. The task is sent to the selected robot, and the robot performs the tasks.
 
+\paragraph{Handle Task Feedback.}
+When the centralized pool receives a task feedback (Table \ref{tab:feedback_message}) that contains a new measurement result from robot, it will add a record in measurement table and update "open possibilities" table in database.
 
-
-
-
-\subsection{Robot}
-\paragraph{Robot Structure} The structure of robot is shown in Figure \ref{fig:robot_components}. 
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.45\textwidth]{content/images/ch4/system_component_robot.drawio.png}
-	\caption{Robot Components}
-	\label{fig:robot_components}
-\end{figure}
-
-\begin{itemize}
-	\item \textsl{Local task queue.} Local task queue keeps a list of tasks that a robot will run sequentially. Once a task is finished, it would be removed from task queue. Once this queue become empty, the robot send task result to centralized pool.
-	\item \textsl{New task client.} Once all task are finished, the new task client send request to new task server.
-	\item \textsl{Run task server.} The run task server receive tasks and send task feedback and task result.
-	\item \textsl{Timer.} To prevent robot to be hanged by one task forever, the timer check the robot moving state periodically.
-	\item \textsl{Move base client.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. The move\_base client send a goal to move\_base node to tracking their status  
-	\item \textsl{Position subscriber.} The position subscriber get robot current position from navigation stack. The robot send its current location to centralized pool to request a new task.
-	\item \textsl{Sensor subscriber.} The Sensor subscriber listen to sensor data within the range.
-\end{itemize}
-
-\paragraph{Robot Task Processing} The flowchart of robot task processing is shown in Figure \ref{fig:robot_task_processing}.
+\paragraph{Handle Task Result.}
+When the centralized pool receives a task result (Table \ref{tab:result_message}), it updates "tasks" table (Figure \ref{fig:database_er}). The failed "execute tasks" will be reused while the failed others will be marked as "Cancel" or "Error"(Figure \ref{fig:centralized_task_handle}).
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_task_flow.drawio.png}
-    \caption{Robot Task Processing Flowchart}
-    \label{fig:robot_task_processing}
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/centralized_task_result.drawio.png}
+    \caption{Centralized Pool Handle Task Result}
+    \label{fig:centralized_task_handle}
 \end{figure}
 
 
+\subsection{Robot}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_process_task.drawio.png}
+    \caption{Robot Process Task }
+    \label{fig:task_process_robot}
+\end{figure}
+
+\paragraph{Robot Process Tasks}
+When the task queue(Figure \ref{fig:system_architecture}) in a robot is empty, robot requests a new task. If the robot gets a "charging task", it will move to the position of charging staion(Figure \ref{fig:positions_door_station}) and interact with charging station node (Section \ref{sec:charging_station}).
+When a robot gets an "execute task" which is a large task, it will move to all goals in order.
+When a robot gets a "gather enviroment information" task, it will move to the door's position.
+During task processing, the timer checks periodically the status of navigation stack. If any errors occurs, the robot send a "failed" result with description to the centralized pool.  
+When task compltes without error, the robot will send "Succedded" result to the centralized pool.
 
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_timer.drawio.png}
+    \caption{Robot Timer}
+    \label{fig:robot_timer}
+\end{figure}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_message.drawio.png}
+    \caption{Robot Hanlde Message}
+    \label{fig:robot_handle_message}
+\end{figure}
+
+\paragraph{Robot Handle Messages}
+While a robot is processing a task, it listens to door sensors and forwards measurement result to the centralized pool. 
+Besides sensor messages, it receives messages from move\_base node. The details of robot message handling is shown in Figure \ref{fig:robot_handle_message}.
 
 \subsection{Charging Station}
 \label{sec:charging_station}
+The charging station consist of a charging station node and "charging station" table in database (Table \ref{fig:database_er}). 
+When a robot arrives the position of charging staion, it will start interacting with charging station node. Firstly it sends battery level and its robot ID to charging station. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_state_machine.drawio.png}
+    \caption{Charging Station State Machine}
+    \label{fig:charging_station_state_machine}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_charging_event.drawio.png}
+    \caption{Charging Station Scheduled Charging Event}
+    \label{fig:charging_station_event}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_message.drawio.png}
+    \caption{Charging Station Message}
+    \label{fig:charging_station_message}
+\end{figure}

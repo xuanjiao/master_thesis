@@ -49,6 +49,7 @@
     "ltex.workspaceFolderDisabledRules": {
         "en-US": [
             "EN_CONTRACTION_SPELLING",
+            "EN_QUOTES",
             "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
             "MORFOLOGIK_RULE_EN_US",
             "PHRASE_REPETITION",
