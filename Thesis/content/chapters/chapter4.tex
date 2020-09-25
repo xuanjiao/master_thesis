@@ -102,6 +102,24 @@ Task id	& Task type	& Result\\
 \end{table}
 
 
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c|c|} 
+\hline
+Robot ID & Battery Level \\
+\hline\hline
+1 & 93 \\ [1ex] 
+\hline
+\end{tabular}
+\caption{Message to Charging Station}
+\label{tab:message_to_charging_staion}
+\end{table}
+
+\subsection{Message about Charging}
+  
+Figure \ref{tab:message_to_charging_staion} shows the message a robot sends to Charging station when it arrives charging station's position.
+
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/database_er.png}
@@ -196,7 +214,8 @@ Besides sensor messages, it receives messages from move\_base node. The details 
 \subsection{Charging Station}
 \label{sec:charging_station}
 The charging station consist of a charging station node and "charging station" table in database (Table \ref{fig:database_er}). 
-When a robot arrives the position of charging staion, it will start interacting with charging station node. Firstly it sends battery level and its robot ID to charging station. 
+When a robot arrives the position of charging staion, it will start interacting with charging station node. Once the charging station receives robot's information(Figure \ref{fig:charging_station_message}), it changes its state to "charging"(Figure \ref{fig:charging_station_state_machine}) and increase on its value on "battery level"colum and increase its value on "remaining time"colum in database(Figure \ref{fig:charging_station_event}).  Once charging finished, its status will be set "charging finish". Once robot leaves charging station, its status will be set "free". 
+
 
 \begin{figure}[htbp]
     \centering
@@ -207,14 +226,18 @@ When a robot arrives the position of charging staion, it will start interacting 
 
 \begin{figure}[htbp]
     \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_message.drawio.png}
+    \caption{Charging Station Message}
+    \label{fig:charging_station_message}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_charging_event.drawio.png}
     \caption{Charging Station Scheduled Charging Event}
     \label{fig:charging_station_event}
 \end{figure}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_message.drawio.png}
-    \caption{Charging Station Message}
-    \label{fig:charging_station_message}
-\end{figure}
+\section{Unit Test}
+Unit tests test each part of the program that the individual parts are working correctly. In this program, Google test is used to test system module such as task allocation module, execution modules and so on. 
+
