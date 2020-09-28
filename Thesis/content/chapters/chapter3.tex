@@ -12,7 +12,7 @@ In our system there are multiple robots that must handle various tasks. For exam
 This system allocate task according to system resources, including environment factors, robot status and task specifications. Once this information is attained, the task scheduling system assign robot a set of task.
 
 \begin{itemize}
-	\item \textsl{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as colleting measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
+	\item \textsl{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as gathering measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
 	\item \textsl{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain actions\cite{Ivan2017}.
 	\item \textsl{Environment.} In this project, all robots are considered moving in an office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment model is shown in Figure \ref{fig:gazebo_model}. The environment factors, such as room locations and occupancy possibilities help task allocation.
 \end{itemize}
@@ -40,18 +40,13 @@ The architecture of the system consist of several parts: centralized pool, robot
 	\label{fig:system_architecture}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/occupancy_grid.png}
-	\caption{Environment Occupancy Grid}
-	\label{fig:occupancy_grid}
-\end{figure}
-
 \section{System Environment}
-In this project, it is assumed that there are no dynamic obstacles. As is shown in Figure \ref{fig:occupancy_grid}, the black lines are occupied area, which is the wall in 3D-Model(Figure \ref{fig:gazebo_model}). The gray area is unknown area. 
-The white area is unoccupied. In unoccupied area there are following important areas and coordinates:
+Same as mentioned in the previous section, the system environment is an office are without dynamic obstacles(Figure \ref{fig:gazebo_model}). The SLAM (Simultaneous Localization and Mapping) is a technique to draw a map by estimating current location in an arbitrary space \cite{slam}. Map (Figure \ref{fig:room_division}) is created by SLAM.
+
+
+There are following important areas and coordinates:
 \begin{itemize}
-	\item \textsl{Rooms.} The rectangle areas (Figure \ref{fig:room_division}) are used to represent Rooms. Each rectangle has its upper and lower limit in x and y coordinates, in order to identify which rooms the robots or targets belong to. 
+	\item \textsl{Rooms.} The rectangle areas (Figure \ref{fig:room_division}) are used to represent Rooms. Each rectangle has its upper and lower limit in x and y coordinates. The system uses those limits to determine a position in which room. 
 	\item \textsl{Doors.} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by a ROS door simulator node, which broadcasts positions and door status periodically. The broadcast messages are received and filtered by robots.
 	\item \textsl{Charging Stations.} The positions of charging stations are used by ROS charging station nodes. For details please refer to Section \ref{sec:charging_station}.
 \end{itemize}
@@ -74,41 +69,33 @@ The white area is unoccupied. In unoccupied area there are following important a
 
 \subsection{Task Specifications}
 \label{sec:task_specifications}
-In order to improve overall execution efficiency, one single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
 On one hand, recharging is necessary for robots to work long hours. On the other hand, a robot should gather environment information as much as possible, which centralized pool would learn from and make better decision. 
-Therefore, three types of task are defined. The task specifications are various for different task types (Table \ref{tab:task_specifications_difference} and Table \ref{tab:task_specifications_common}).
+Therefore, three types of task are defined. Table (Table \ref{tab:task_specifications} list task specifications. In addition, each task has a "start time" when the robot receives the task and a "finish time", which robot the sends result)
+A task can be classified into small task and large task. 
+one single robot can carry either small task, which make robot move to one position, or large task, which consist of multiple small task.
+\begin{itemize}
+	\item Small Task. A small task contains only one goal. When a robot receives a small task, it moves to the only goal. 
+	\item Large Task. A large task contains several small tasks, and each small tasks contains a goal. Those small tasks form a dependency chain. When a robot gets a large task, it moves continuously to those goals. The centralized pool can query "small execute tasks" and use them to form a "large execute tasks".
+\end{itemize}
 
 \begin{table}[htb]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} 
 \hline
-\diagbox{Task type}{Task Specifications} & Target & Dependency & Priority & Generator \\
+\diagbox{Task type}{Task Specifications} & Target & Dependency & Priority & Generator & Task Size\\
 \hline
-GatherEnvironmentInfo Task & Door &  No & 1 & Centralized Pool\\
+GatherEnvironmentInfo task & Door &  No & 1 & Centralized pool & Small task\\
 \hline
-Execute task & Any point & Dependent on Execute-task & 2,3,4 & User\\
+Execute task & Any point & Dependent on "execute task" & 2,3,4 & User & Small task (in database) or large task (in centralized pool) \\
 \hline
-Charging Task & Charging station & No & 5 & Centralized Pool\\ [1ex] 
+Charging Task & Charging station & No & 5 & Centralized Pool & small task \\ [1ex] 
 \hline
 \end{tabular}}
-\caption{Task Specifications Part 1}
-\label{tab:task_specifications_difference}
+\caption{Task Specifications}
+\label{tab:task_specifications}
 \end{table}
 
-\begin{table}[htb]
-\centering
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|c|c|c|} 
-\hline
-Task Specifications	& Start Time &	Finish Time \\
-\hline
-Explanation	& The time when robot start moving &	The time when robot finished interacting with the target \\ [1ex] 
-\hline
-\end{tabular}}
-\caption{Task Specifications Part 2}
-\label{tab:task_specifications_common}
-\end{table}
 
 
 \begin{table}[htb]
@@ -116,9 +103,13 @@ Explanation	& The time when robot start moving &	The time when robot finished in
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} 
 \hline
-Task Id & Task Type & Start Time & Target Id & Robot Id & Priority & Status & dependency & Finish Time  & Description \\
+Task ID & Task Type & Start Time & Target ID & Robot ID & Priority & Status & dependency & Finish Time  & Description \\
 \hline
-1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 2 & RanToCompletion & 0 & 2020-06-01 9:00:00 & Succeeded\\ [1ex] 
+1 &  Charging task & 2020-06-01 9:00:00 & 18 & 1 & 5 & RanToCompletion & 0 & 2020-06-01 9:00:20 & Succeeded \\
+\hline
+2 &  Execute task & 2020-06-01 9:00:50 & 22 & 2 & 2 &RanToCompletion & 0 & 2020-06-01 9:01:20 & Succeeded \\
+\hline
+3 &  Gather environment information task & 2020-06-01 9:02:00 & 2 & 2 & 1 & Running & 0 & 2020-06-01 9:02:40 & Succeeded \\ [1ex] 
 \hline
 \end{tabular}}
 \caption{Task Table in Database}
@@ -126,8 +117,6 @@ Task Id & Task Type & Start Time & Target Id & Robot Id & Priority & Status & de
 \end{table}
 
 \begin{itemize}
-	\item \textsl{Task Size.} The task in database (Table \ref{tab:task_table}) is referred to small task. The example of small task includes "charging task" and "gather environment information task". 
-	Those small tasks form a dependency chain, also referred to a large task. Execute task can be a large task which ask a robot to move continuously to several positions.
 	\item \textsl{Target.} Targets include doors, points and charging stations. When a robot run a "gather environment information task", it moves to the front of a door and interact with a sensor in the door position without entering the door. 
 	When robot run an "execute task", the robot moves to a given point ether in corridor or in the room.
 	When robot run a "charging task", the robot moves to a charging station and interact with this charging station.
@@ -143,7 +132,7 @@ With robot status such as positions and available battery provided by robot, the
 \centering
 \begin{tabular}{|c| c| c|} 
 \hline
-Door Id & Door Status & Date Time \\
+Door ID & Door Status & Date Time \\
 \hline
 1& 1 & 2020-06-01 09:00:01 \\ [1ex] 
 \hline
@@ -199,7 +188,7 @@ In conclusion, equation \ref{eq:large_execute_task_cost} can be used to calculat
 
 \subsection{Environment Task Allocation}
 Once robot request a task, The task allocation module select only tasks with cost below the threshold. Once either no task in database or all costs above the threshold, 
-the task allocation module should create a "gather environment information task", in order to collect more measurement result and further more improve the accuracy of "open possibilities" table.
+the task allocation module should create a "gather environment information task", in order to gather more measurement result and further more improve the accuracy of "open possibilities" table.
 To create a "gather environment information task", which door should the requesting robot visit must be considered. The following decision factors help task allocation module to select the door.
 
 \paragraph*{Decision variables}

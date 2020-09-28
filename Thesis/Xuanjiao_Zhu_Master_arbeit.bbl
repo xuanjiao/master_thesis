@@ -28,4 +28,10 @@
   analysis, and retrieval of information by computer}.
 \newblock Addison-Wesley series in computer science. Addison-Wesley, 1989.
 
+\bibitem[sla]{slam}
+{\em {SLAM}}.
+\newblock
+  \url{https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#ros-1-slam}.
+\newblock accessed 2020-09-28.
+
 \end{thebibliography}

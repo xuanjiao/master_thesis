@@ -43,6 +43,18 @@
         {
             "rule": "ENGLISH_WORD_REPEAT_RULE",
             "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task Specifications Part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on \"execute task\" 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 2 0.80 2 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 Task Table in Database\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 2 5 1 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 22 2 2 RanToCompletion 0 2020-06-01 9:01:20 Succeeded 3 Gather environment information task 2020-06-01 9:02:00 2 2 1 Running 0 2020-06-01 9:02:40 Succeeded Task Table in Database\\E$"
         }
     ],
     "ltex.workspaceFolderDictionary": {
