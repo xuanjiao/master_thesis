@@ -1,4 +1,33 @@
 {
+    
+        "latex-workshop.view.pdf.viewer": "external",
+        "latex-workshop.view.pdf.external.viewer.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+        "latex-workshop.view.pdf.external.viewer.args": [
+            "0",
+            "%PDF%"
+        ],
+        "latex-workshop.view.pdf.external.synctex.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+        "latex-workshop.view.pdf.external.synctex.args": [
+            "-r",
+            "-b",
+            "%LINE%",
+            "%PDF%",
+            "%TEX%",
+        ],
+    
+    "windows":{
+        "latex-workshop.view.pdf.external.synctex.command": "D:/Program Files (x86)/SumatraPDF/SumatraPDF.exe",
+        "latex-workshop.view.pdf.external.synctex.args": [
+            "-forward-search",
+            "%TEX%",
+            "%LINE%",
+            "-reuse-instance",
+            "-inverse-search",
+            "code \"D:\\Program Files (x86)\\Microsoft VS Code\\resources\\app\\out\\cli.js\" -r -g \"%f:%l\"",
+            "%PDF%",
+        ],
+    },
+
     "ltex.ignoreRuleInSentence": [
         {
             "rule": "MORFOLOGIK_RULE_EN_US",
@@ -55,6 +84,30 @@
         {
             "rule": "CD_NN",
             "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 2 5 1 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 22 2 2 RanToCompletion 0 2020-06-01 9:01:20 Succeeded 3 Gather environment information task 2020-06-01 9:02:00 2 2 1 Running 0 2020-06-01 9:02:40 Succeeded Task Table in Database\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size Gather environment infomation task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool Small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\Q())Gazebo Gazebo ()FigufigureF gafig:gazebo_model\\E$"
+        },
+        {
+            "rule": "EN_UNPAIRED_BRACKETS",
+            "sentence": "^\\QThe coorporrdinates of doors, charin different colors ())FIgurei\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask ID Task Type Start Time Target ID Robot ID Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 18 1 5 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 22 2 2 RanToCompletion 0 2020-06-01 9:01:20 Succeeded 3 Gather environment information task 2020-06-01 9:02:00 2 2 1 Running 0 2020-06-01 9:02:40 Succeeded Task Table in Database\\E$"
         }
     ],
     "ltex.workspaceFolderDictionary": {
