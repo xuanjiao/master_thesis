@@ -17,14 +17,21 @@
 %To write it, try to use the third person when describing the experiments and results. Avoid to use first person. Past tense should be the dominant conjugation (the work is done and was performed in the past).
 
 %Note: Graphics represent really well data, use them! (Matlab or Octave could be useful for that).
-Simulation experiment were conducted using a multirobot simulation enviroment(Figure \ref{fig:gazebo_model}) Gazebo. As discussed in section \ref{sec:system_enviroment}, the map (Figure \ref{fig:exp_map}) is greated by SLAM \cite{slam}. The are important coordinates: D1-D17 represent doors; C1-C3 represent charging stations; P1-P10 represent points used as goal positions in experiments.
-Followings are goals of experiments:
+
+
+
+In the system, cost functions are importent because an accurate cost function can improve the efficiency of task allocation. Followings are goals of experiments:
 
 \begin{itemize}
-	\item Evaluate the need of decition variables.
+	\item Evaluate the need of decision variables.
 	\item Find the best weight combinations in cost functions.
+	\item Evaluate the hypothesis that the more robots, the faster to complete a task set, the higher the completion rate.
 %	\item Investigate how different weight combinations in cost functions affact the performance \cite{Shiqi}. 
 \end{itemize}
+
+\paragraph{Significant physical features}
+All simulation experiments were conducted using a multirobot simulation enviroment(Figure \ref{fig:gazebo_model}) Gazebo. As discussed in section \ref{sec:system_enviroment}, the map (Figure \ref{fig:exp_map}) was greated by SLAM \cite{slam}. There were important coordinates: D1-D17 were doors; C1-C3 were charging stations; P1-P10 were points used as goal positions in ``execute task'' experiments.
+In addition, the experiment used simulation time. The simulation time was set in Gazebo world configuration file. When experiments started, the simulation time was configured as "2020-06-01 9:00:00".
 
 \begin{figure}[htbp]
 	\centering
@@ -40,12 +47,57 @@ Followings are goals of experiments:
     \label{fig:exp_map}
 \end{figure}
 
-\section{Execute Task Evaluation}
+\section{Execute Task Evaluation Experiment}
 
-\paragraph{Experiment precondition}
-There are some preconditions for every experiment. When simulation started, robots moved to corresponding charging station and started charging. For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3(Figure \ref{fig:execute_task_experiment_timeline}). 
-Once robot fully charged, the next experiment started, and 15 execute tasks are created. Especially, for each experiment, tasks with the same ID has the same start time and the same goal position. When all robot finished tasks, the experiment finished.
-These rules ensure that robot would not only start at same initial points but also process same task and not shut down because of power exhaustion.
+
+\begin{table}[]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Task ID & Task Name & Start Time    & Target ID & Robot ID &Priority & Task Status & Dependency & Finish Time & Description \\ \hline
+1 & Charging    & NULL                & 18 & 1 & 5 & Succedded & 0 & 2020-06-02 11:03:12 & Succeeded \\ \hline
+2 & Charging    & NULL                & 19 & 2 & 5 & Succedded & 0 & 2020-06-02 11:03:12 & Succeeded \\ \hline
+3 & Charging    & NULL                & 20 & 3 & 5 & Succedded & 0 & 2020-06-02 11:03:11 & Succeeded \\ \hline
+4 & ExecuteTask & 2020-06-02 11:04:17 & 21 & 3 & 2 & Succedded & 0    & 2020-06-02 11:05:16 & Succeeded \\ \hline
+5 & ExecuteTask & 2020-06-02 11:05:22 & 22 & 1 & 2 & Succedded & 0    & 2020-06-02 11:07:29 & Succeeded \\ \hline
+6 & ExecuteTask & 2020-06-02 11:06:27 & 23 & 2 & 2 & Succedded & 0    & 2020-06-02 11:08:06 & Succeeded \\ \hline
+7 & ExecuteTask & 2020-06-02 11:07:32 & 24 & 3 & 2 & Succedded & 0    & 2020-06-02 11:09:25 & Succeeded \\ \hline
+8 & ExecuteTask & 2020-06-02 11:08:37 & 25 & 1 & 2 & Succedded & 0    & 2020-06-02 11:10:46 & Succeeded \\ \hline
+9 & ExecuteTask & 2020-06-02 11:09:42 & 26 & 2 & 2 & Succedded & 0    & 2020-06-02 11:12:42 & Succeeded \\ \hline
+10 & ExecuteTask & 2020-06-02 11:10:47 & 27 & 3 & 2 & Succedded & 0    & 2020-06-02 11:12:56 & Succeeded \\ \hline
+11 & ExecuteTask & 2020-06-02 11:11:52 & 28 & 1 & 2 & Succedded & 0    & 2020-06-02 11:14:13 & Succeeded \\ \hline
+12 & ExecuteTask & 2020-06-02 11:12:57 & 29 & 2 & 2 & Succedded & 0    & 2020-06-02 11:14:20 & Succeeded \\ \hline
+13 & ExecuteTask & 2020-06-02 11:14:02 & 30 & 3 & 2 & Succedded & 0    & 2020-06-02 11:15:36 & Succeeded \\ \hline
+14 & ExecuteTask & 2020-06-02 11:15:07 & 21 & 1 & 2 & Succedded & 0    & 2020-06-02 11:18:07 & Succeeded \\ \hline
+15 & ExecuteTask & 2020-06-02 11:16:12 & 22 & 2 & 2 & Succedded & 0    & 2020-06-02 11:18:49 & Succeeded \\ \hline
+16 & ExecuteTask & 2020-06-02 11:17:17 & 23 & 3 & 2 & Succedded & 0    & 2020-06-02 11:18:58 & Succeeded \\ \hline
+17 & ExecuteTask & 2020-06-02 11:18:22 & 24 & 1 & 2 & Succedded & 0    & 2020-06-02 11:20:14 & Succeeded \\ \hline
+18 & ExecuteTask & 2020-06-02 11:19:27 & 25 & 2 & 2 & Succedded & 0    & 2020-06-02 11:21:36 & Succeeded \\ \hline
+19 & Charging    & NULL                & 18 & 1 & 5 & Succedded & 0 & 2020-06-02 11:23:08 & Succeeded \\ \hline
+20 & Charging    & NULL                & 19 & 2 & 5 & Succedded & 0 & 2020-06-02 11:23:08 & Succeeded \\ \hline
+21 & Charging    & NULL                & 20 & 3 & 5 & Succedded & 0 & 2020-06-02 11:23:08 & Succeeded \\ \hline
+22 & ExecuteTask & 2020-06-02 11:24:13 & 21 & 3 & 2 & Succedded & 0 & 2020-06-02 11:25:12 & Succeeded \\ \hline
+23 & ExecuteTask & 2020-06-02 11:25:18 & 22 & 2 & 2 & Succedded & 0 & 2020-06-02 11:26:54 & Succeeded \\ \hline
+24 & ExecuteTask & 2020-06-02 11:26:23 & 23 & 1 & 2 & Succedded & 0 & 2020-06-02 11:28:35 & Succeeded \\ \hline
+25 & ExecuteTask & 2020-06-02 11:27:28 & 24 & 3 & 2 & Succedded & 0 & 2020-06-02 11:29:23 & Succeeded \\ \hline
+26 & ExecuteTask & 2020-06-02 11:28:33 & 25 & 2 & 2 & Succedded & 0    & 2020-06-02 11:30:41 & Succeeded \\ \hline
+27 & ExecuteTask & 2020-06-02 11:29:38 & 26 & 1 & 2 & Succedded & 0    & 2020-06-02 11:32:37 & Succeeded \\ \hline
+28 & ExecuteTask & 2020-06-02 11:30:43 & 27 & 3 & 2 & Succedded & 0    & 2020-06-02 11:32:54 & Succeeded \\ \hline
+29 & ExecuteTask & 2020-06-02 11:31:48 & 28 & 2 & 2 & Succedded & 0    & 2020-06-02 11:34:09 & Succeeded \\ \hline
+30 & ExecuteTask & 2020-06-02 11:32:53 & 29 & 1 & 2 & Succedded & 0    & 2020-06-02 11:34:15 & Succeeded \\ \hline
+31 & ExecuteTask & 2020-06-02 11:33:58 & 30 & 3 & 2 & Succedded & 0    & 2020-06-02 11:35:32 & Succeeded \\ \hline
+32 & ExecuteTask & 2020-06-02 11:35:03 & 21 & 2 & 2 & Succedded & 0    & 2020-06-02 11:38:03 & Succeeded \\ \hline
+33 & ExecuteTask & 2020-06-02 11:36:08 & 22 & 1 & 2 & Succedded & 0    & 2020-06-02 11:38:45 & Succeeded \\ \hline
+34 & ExecuteTask & 2020-06-02 11:37:13 & 23 & 3 & 2 & Succedded & 0    & 2020-06-02 11:38:54 & Succeeded \\ \hline
+35 & ExecuteTask & 2020-06-02 11:38:18 & 24 & 2 & 2 & Succedded & 0    & 2020-06-02 11:40:11 & Succeeded \\ \hline
+36 & ExecuteTask & 2020-06-02 11:39:23 & 25 & 1 & 2 & Succedded & 0    & 2020-06-02 11:41:40 & Succeeded \\ \hline
+37 & Charging    & NULL                & 18 & 1 & 5 & Succedded & 0 & 2020-06-02 11:43:45 & Succeeded \\ \hline
+38 & Charging    & NULL                & 19 & 2 & 5 & Succedded & 0 & 2020-06-02 11:43:45 & Succeeded \\ \hline
+39 & Charging    & NULL                & 20 & 3 & 5 & Succedded & 0 & 2020-06-02 11:43:45 & Succeeded \\ \hline
+\end{tabular}}
+\caption{Task Table}
+\label{tab:exp_task_table}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
@@ -54,38 +106,348 @@ These rules ensure that robot would not only start at same initial points but al
     \label{fig:execute_task_experiment_timeline}
 \end{figure}
 
-\subsection{Experiment: Need of decision variables}
-As discussed in Section \ref{sec:exe_task_allocation}, there are four decision variables: battery consumption, waiting time, product of door open possibility and priority. 
-The first set of experiments evaluated the need of decition variables in cost function. 
-The experiment result (Table \ref{tab:exp_decision_variables}) shows that the experiment 1 used the minimum time and all 15 task are completed.
-The experiment with decision variables cost function with multiple decision variables has better performance than a cost function with single decition variable.
+\subsection{Experiment: Impact of Decision Variables}
+
+\paragraph{Experiment Introduction} 
+This set of experiments evaluated the need of four decision variables: battery consumption, waiting time, product of door open possibility and priority (Section \ref{sec:exe_task_allocation}). 
+
+\paragraph{Sampling design}
+Table \ref{tab:task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, 3 robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
+    When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same (Table )\ref{tab:task_table}). In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+    When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
+    These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+
+\paragraph{Analysis design}
+As is discussed in last paragraph, in each experiemnts, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+Table \ref{tab:exp_decision_variables} is an example of experiment result. 
+
+\paragraph{Experiment Result} 
+The experiment result (Table \ref{tab:exp_decision_variables}.) shows that in experiment 1, all 15 task were succesfully finsihed with mininal experiment duraion. In experiment 2, 4, 5 mores than half of the task were expired. In experiment 3, all tasks were successfully finished but it took more time than experiment 1. 
+The experiment 6-24 (Table \ref{tab:only_one_desition_variable_changed} and Figure \ref{tab:only_one_desition_variable_changed}) evaluated each decision variable sepratelly. 
+
+\paragraph{Experiment Analysis.} 
+Comparing experiment 1-5, it was concluded that the cost function with multiple decision variables had better performance than a cost function with single decition variable. However, according to experiment 6-24, the ``experiment duration'' changed very little when only one desition variable changed others unchanged, therefore how each decision variable affect the task allocation is still unknown.
 
 \begin{table}[htb]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} 
 \hline
-&\multicolumn{4}{|c|}{Weight Combination} & \multirow{2}{*}{Experiment Duration}& \multicolumn{3}{|c|}{Task Statistic}\\
-\cline{1-5}\cline{7-9}
-Experiment ID	& 	 Battery Consumption & Waiting Time & Door Open Possibility	&  Priority & ~	& Total	 & Completed &	 Expired	 \\
+Experiment & $W_{\mbox{battery consumption}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	 \\
 \hline
-1	& 1.00 &	 1.00 &	 -1.00&  -1.00&	 00:18:23 &	 15 &	 15 &	 0	 \\
-\hline
-2	& 1.00 &	 0.00 &	 0.00 &	 0.00 &	 00:17:23 &	 15 &	 7 &	 8	\\ 
-\hline
-3	& 0.00 &	 1.00 &	 0.00 &	 0.00 &	 00:18:56 &	 15 &	 15 &	 0	 \\
-\hline
-4	& 0.00 &	 0.00 &	 -1.00 & 0.00 &	 00:18:41 &	 15 &	 5 &	 10	\\
-\hline	 
-5	& 0.00 &	 0.00 &	 0.00 &	 -1.00&	 00:17:21 &	 15 &	  3 &	 12	 \\	 
-\hline
+1	& 1.00 &	 1.00 &	 -1.00&  -1.00&	 00:18:23 &	 15 &	 15 &	 0 & 0	 \\\hline
+2	& 1.00 &	 0.00 &	 0.00 &	 0.00 &	 00:17:23 &	 15 &	 7 &	 8 & 0	\\ \hline
+3	& 0.00 &	 1.00 &	 0.00 &	 0.00 &	 00:18:56 &	 15 &	 15 &	 0 & 0	 \\\hline
+4	& 0.00 &	 0.00 &	 -1.00 & 0.00 &	 00:18:41 &	 15 &	 5 &	 10 & 0	\\\hline	 
+5	& 0.00 &	 0.00 &	 0.00 &	 -1.00&	 00:17:21 &	 15 &	  3 &	 12 & 0	 \\	 \hline
 \end{tabular}}
 \caption{Runing execute task with single decision variable and multiple decision variables}
 \label{tab:exp_decision_variables}
 \end{table}
 
-\subsection{Experiment: Find the best weight combinations}
+\begin{table}[]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Experiment & $W_{\mbox{battery consumption}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	  \\ \hline
+6       & 20      & 1        & -1      & -1      & 00:09:26 & 15    & 10        & 5       & 0        \\ \hline
+7       & 40      & 1        & -1      & -1      & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
+8       & 60      & 1        & -1      & -1      & 00:09:50 & 15    & 10        & 5       & 0        \\ \hline
+9       & 80      & 1        & -1      & -1      & 00:09:47 & 15    & 10        & 5       & 0        \\ \hline
+10       & 100     & 1        & -1      & -1      & 00:09:06 & 15    & 10        & 5       & 0        \\ \hline
+11      & 1       & 20       & -1      & -1      & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
+12       & 1       & 40       & -1      & -1      & 00:09:38 & 15    & 9         & 5       & 0        \\ \hline
+13       & 1       & 60       & -1      & -1      & 00:10:09 & 15    & 10        & 5       & 0        \\ \hline
+14       & 1       & 80       & -1      & -1      & 00:09:46 & 15    & 10        & 5       & 0        \\ \hline
+15      & 1       & 100      & -1      & -1      & 00:10:01 & 15    & 10        & 5       & 0        \\ \hline
+16      & 1       & 1        & -20     & -1      & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
+17      & 1       & 1        & -40     & -1      & 00:09:50 & 15    & 10        & 5       & 0        \\ \hline
+18      & 1       & 1        & -60     & -1      & 00:10:24 & 15    & 10        & 5       & 0        \\ \hline
+19      & 1       & 1        & -80     & -1      & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
+20      & 1       & 1        & -100    & -1      & 00:09:35 & 15    & 10        & 5       & 0        \\ \hline
+21      & 1       & 1        & -1      & -20     & 00:10:22 & 15    & 10        & 5       & 0        \\ \hline
+22      & 1       & 1        & -1      & -40     & 00:10:02 & 15    & 10        & 5       & 0        \\ \hline
+23      & 1       & 1        & -1      & -60     & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
+24      & 1       & 1        & -1      & -80     & 00:09:51 & 15    & 10        & 5       & 0        \\ \hline
+\end{tabular}}
+\caption{only one desition variable changed others unchanged}
+\label{tab:only_one_desition_variable_changed}
+\end{table}
 
-The 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch5/one_decision_variable.png}
+    \caption{Only one desition variable changed others unchanged}
+    \label{fig:only_one_desition_variable_changed}
+\end{figure}
+
+\subsection{Experiment: Find the Best Weight Combinations}
+\paragraph{Experiment Introduction}
+In addition to cost function, the task interval may affect experiment duration and experiment succeeded rate. Therefore, three set experiment are generated to find the best weight combinations. 
+ 
+\paragraph{Sampling design}
+Table \ref{tab:task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
+    When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same. In Table \ref{tab:task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+    When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
+    These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+
+\paragraph{Analysis design}
+In each experiemnt, 3 robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+Table \ref{tab:exp_decision_variables} is an example of experiment result. 
+
+\paragraph{Experiment Result} 
+The first set of experiment uses ``execute tasks'' with 30 seconds interval. Its best weight combinations is shown in (Table \ref{tab:exp_task_30s}).
+The second set of experiments used ``execute tasks'' with 45 seconds interval. Its best weight combinations is shown in (Table \ref{tab:exp_task_30s}).
+The third set of experiments used ``execute tasks'' with 65 seconds interval. Its best weight combinations is shown in (Table \ref{tab:exp_task_65s}).    
+
+\paragraph{Analysis.} 
+It was concluded that the longer the task interval, the higher the task completion rate.
 
 
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+$W_{\mbox{battery consumption}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	 \\
+\hline
+1 &	1 &	-1 &	-3 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
+1 &	1 &	-30 &	-1 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
+1 &	20&	-20 &	-1 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
+1 &	25&	-1 &	-1 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
+5 &	1 &	-5 &	-5 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
+\end{tabular}}
+\caption{Best weight combinations with task interval 30s}
+\label{tab:exp_task_30s}
+\end{table}
+
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+$W_{\mbox{battery consumption}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	 \\
+\hline
+1  & 1  & -1  & -10 & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+1  & 50 & -50 & -50 & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+25 & 20 & 0   & 0   & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+35 & 30 & 0   & 0   & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+40 & 10 & 0   & 0   & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+45 & 1  & -1  & -1  & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+50 & 50 & -50 & -1  & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
+\end{tabular}}
+\caption{Best weight combinations with task interval 45s}
+\label{tab:exp_task_45s}
+\end{table}
+
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+$W_{\mbox{battery consumption}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	 \\
+\hline
+10.00    & 1.00     & -1.00   & 0.00    & 00:18:23 & 15    & 15  & 0  & 0     \\ \hline
+1.00    & 1.00     & -1.00   & 0.00    & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 1.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 5.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 5.00     & -1.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 10.00    & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 5.00     & -5.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 5.00     & -10.00  & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 5.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 20.00    & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0   \\ \hline
+1.00    & 1.00     & -1.00   & -30.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+1.00    & 1.00     & -1.00   & -35.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 1.00     & -1.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 10.00    & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 1.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 1.00     & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 5.00     & -5.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 1.00     & -10.00  & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 10.00    & -10.00  & -10.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+10.00   & 1.00     & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+25.00   & 1.00     & -1.00   & -25.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+30.00   & 30.00    & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+45.00   & 1.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+45.00   & 1.00     & -45.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+5.00    & 10.00    & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+5.00    & 5.00     & -1.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0   \\ \hline
+5.00    & 10.00    & -5.00   & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+5.00    & 5.00     & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0   \\ \hline
+5.00    & 10.00    & -10.00  & -1.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+5.00    & 5.00     & -1.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+5.00    & 10.00    & -5.00   & -10.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
+\end{tabular}}
+\caption{Best weight combinations with task interval 65s}
+\label{tab:exp_task_65s}
+\end{table}
+
+
+\subsection{Experiment: Impact of the Number of Robots}
+
+\paragraph{Experiment Introduction} 
+In this set of experiments, how the number of robots affected task allocation was evaluated. One of the best weight combination was selected: $ W_{\mbox{battery}} = 10,W_{\mbox{waiting time}} = 1,  W_{\mbox{possibility}} = -1, W_{\mbox{priority}} = -10 $. 
+    
+\paragraph{Sampling design}
+When simulation started, robots ran charging task (Task 1-3 in Table \ref{tab:task_table}) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
+When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same. In Table \ref{tab:task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
+These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+
+\paragraph{Analysis design}
+As is discussed in last paragraph, in each experiemnts, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+Table \ref{tab:exp_decision_variables} is an example of experiment result. 
+
+\paragraph{Result} The experiment result (Table \ref{tab:exp_robot_number}) showed that when one robot processed tasks, only 7 tasks were finished successfully; when two robots processed the same task set, 11 tasks were finished succesfully. Compared with experiment 1, experiment 2 tooks 102 seconds more but 2 more tasks were completed; when three robots processed the same task set, all 15 tasks were finished succesfully. Compared with experiment 2, the experiment duration is slightly increased but 4 more tasks were finished succesfully.
+
+\paragraph{Analysis} It was concluded that as the number of robots increased, the task completion rate increased. However, the relationship between the number of robots and the speed of completing the task set cannot be obtained.
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} 
+\hline
+Experiment & Robot number & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	 \\
+\hline
+1 &1 &   00:16:56 & 15 & 7	& 8	& 0 \\ \hline
+2 &1 &   00:16:52 & 15 & 7	& 8	& 0 \\ \hline
+3 &1 &   00:17:02 & 15 & 7	& 8	& 0 \\ \hline
+Average & 1 & 00:16:56 & 15	 &7	& 8 & 0\\ \hline
+4 &2 &   00:19:06	& 15 & 11 & 4 & 0 \\ \hline
+5 &2 &   00:18:24	& 15 & 11 & 4 & 0 \\ \hline
+6 &2 &   00:18:24	& 15 & 11 & 4 & 0 \\ \hline
+Average & 2 & 00:18:38 & 15	 &11	& 4	& 0 \\ \hline
+7 &3 &   00:18:23	& 15 & 15 & 0 & 0 \\ \hline
+8 &3 &   00:18:55	& 15 & 15 & 0 & 0 \\ \hline
+9 &3 &   00:18:57	& 15 & 15 & 0 & 0 \\ \hline
+Average &3 &   00:18:45	& 15 & 15 & 0 & 0 \\ \hline
+\end{tabular}}
+\caption{Result 4: Different number of robot processing the same task set}
+\label{tab:exp_robot_number}
+\end{table}
+
+
+\section{Enviroment Task Evaluation Experiment}
+
+
+\subsection{Experiment: Find the Best Weight Combinations}
+
+\paragraph{Experiment Introduction} The Goal of this set of experiment was to find the best combinations in 30 weight combinations. In addition, the conditions $W_{\mbox{update}}=0$ was not testable, because during the experiment centralized pool generate the same ``gather enviroment information tasks``, which let robots not moving and measuring their nearest door.
+
+\paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. When robot fully charged, the first experiment started (Figure \ref{tab:env_exp_timeline}). After that, the task allocation module in centralized pool created a ``gather enviroment information task'' to each robot requested a task. After a constant time T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering enviroment information.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch5/env_exp_timeline.drawio.png}
+    \caption{Enviroment Task Experiment Timeline}
+    \label{tab:env_exp_timeline}
+\end{figure}
+
+\paragraph{Analysis design} The experiment start time was when all robot finshed charging and started request task (Figure \ref{tab:env_exp_timeline}). The experiment duraion is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
+
+\begin{itemize}
+    \item \textsl{Minial last update.} The ``minial last update'' factor is the time difference between experiment start time and minial value in ``last update'' column in door table (Table \ref{tab:db_doors}) when an experiment finished. For example, ``mininal last update'' factor in experiment 1 (Table \ref{tab:enviroment_experiment_result}) is ``00:02:57''. It means that the door in the worst case not be measured since 2 minites 57 seconds after experiment start.
+    \item \textsl{Average Update Interal} The ``Average update Interal'' means the average interval of door update. For example, ``Average Update interal'' factor in experiment 1 (Table \ref{tab:enviroment_experiment_result}) is ``00:01:00''. It means that on average, every door is updated every minute.
+    \item \textsl{Succedded task.} The ``Number of task'' factor  means the number of succeeded ``gather enviroment information'' task.
+\end{itemize}
+
+
+\paragraph{Experiemnt Result} The experiment result was shown in Table \ref{tab:enviroment_experiment_result}. 
+
+\paragraph{Expariment Analysis} As shown in experiment result, the ``Minial Last Update'' value is much less than experiment duraion. It means some doors were not timely updated information. One possible reason is that the velocity of robot is small (about 0.2 per second), the simulation time was not long enough to let three robot pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The idealy solution was to give both task to one robot. 
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c| c| c|} 
+\hline
+Door ID & Door Status & Date Time \\
+\hline
+9 & 1 & 2020-06-01 09:05:39 \\ \hline
+1 & 0 & 2020-06-01 09:05:49 \\ \hline
+7 & 1 & 2020-06-01 09:05:49 \\ \hline
+9 & 1 & 2020-06-01 09:05:49 \\ \hline
+1 & 1 & 2020-06-01 09:05:59 \\ \hline
+7 & 1 & 2020-06-01 09:05:59 \\ \hline
+9 & 1 & 2020-06-01 09:05:59 \\ \hline
+7 & 1 & 2020-06-01 09:06:09 \\ \hline
+16 & 0 & 2020-06-01 09:06:29 \\ \hline
+7 & 1 & 2020-06-01 09:06:39 \\ \hline
+16 & 1 & 2020-06-01 09:06:39 \\ \hline
+9 & 1 & 2020-06-01 09:06:49 \\ \hline
+8 & 0 & 2020-06-01 09:06:59 \\ \hline
+... & ...& ... \\ \hline
+\end{tabular}
+\caption{Measurement Result Table}
+\label{tab:db_measurement_result}
+\end{table}
+
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c|c|} 
+\hline
+Door ID & Last Update & Is Used \\ \hline
+1 & 2020-06-01 15:15:26 & 0 \\ \hline
+2 & 2020-06-01 15:15:06 & 0 \\ \hline
+3 & 2020-06-01 15:12:36 & 0 \\ \hline
+4 & 2020-06-01 15:15:16 & 0 \\ \hline
+5 & 2020-06-01 15:11:46 & 0 \\ \hline
+6 & 2020-06-01 15:11:36 & 1 \\ \hline
+7 & 2020-06-01 15:14:26 & 0 \\ \hline
+...& ...& ... \\ \hline
+\end{tabular}
+\caption{Doors Table}
+\label{tab:db_doors}
+\end{table}
+
+\begin{table}[]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+Experiment  & $W_{\mbox{battery consumption}}$ & $W_{\mbox{update}}$ & $W_{\mbox{possibility}}$ & Experiment Duration & Minial Last Update & Average Update Interal & Succedded Task \\ \hline
+1          & 1.00    & -1.00      & -1.00   & 00:10:00 & 00:02:57     & 00:01:00      & 19         \\ \hline
+2          & 1.00    & -1.00      & 0.00    & 00:10:00 & 00:03:46     & 00:01:08      & 28         \\ \hline
+3          & 0.00    & -1.00      & -1.00   & 00:10:00 & 00:01:52     & 00:00:50      & 15         \\ \hline
+4          & 0.00    & -1.00      & 0.00    & 00:10:00 & 00:01:11     & 00:00:47      & 14         \\ \hline
+5          & 1.00    & -1.00      & -5.00   & 00:10:00 & 00:03:13     & 00:00:50      & 20         \\ \hline
+6          & 1.00    & -1.00      & 10.00   & 00:10:00 & 00:04:06     & 00:01:15      & 15         \\ \hline
+7          & 1.00    & -5.00      & -1.00   & 00:10:00 & 00:03:20     & 00:01:02      & 21         \\ \hline
+8          & 1.00    & -5.00      & -5.00   & 00:10:00 & 00:02:52     & 00:00:58      & 21         \\ \hline
+9          & 1.00    & -5.00      & -10.00  & 00:10:00 & 00:01:31     & 00:00:57      & 22         \\ \hline
+10         & 1.00    & -10.00     & -1.00   & 00:10:00 & 00:03:04     & 00:01:21      & 22         \\ \hline
+11         & 1.00    & -10.00     & -5.00   & 00:10:00 & 00:03:55     & 00:01:30      & 22         \\ \hline
+12         & 1.00    & -10.00     & -10.00  & 00:10:00 & 00:03:22     & 00:01:12      & 21         \\ \hline
+13         & 5.00    & -1.00      & -1.00   & 00:10:00 & 00:02:54     & 00:00:59      & 27         \\ \hline
+14         & 5.00    & -1.00      & -5.00   & 00:10:00 & 00:01:46     & 00:00:56      & 21         \\ \hline
+15         & 5.00    & -1.00      & -10.00  & 00:10:00 & 00:04:05     & 00:01:14      & 23         \\ \hline
+16         & 5.00    & -5.00      & -1.00   & 00:10:00 & 00:03:08     & 00:00:55      & 26         \\ \hline
+17         & 5.00    & -5.00      & -5.00   & 00:10:00 & 00:02:58     & 00:00:54      & 24         \\ \hline
+18         & 5.00    & -5.00      & -10.00  & 00:10:00 & 00:04:48     & 00:01:17      & 23         \\ \hline
+19         & 5.00    & -10.00     & -1.00   & 00:10:00 & 00:03:52     & 00:01:01      & 31         \\ \hline
+20         & 5.00    & -10.00     & -5.00   & 00:10:00 & 00:02:06     & 00:00:47      & 20         \\ \hline
+21         & 5.00    & -10.00     & -10.00  & 00:10:00 & 00:02:18     & 00:00:48      & 19         \\ \hline
+22         & 10.00   & -1.00      & -1.00   & 00:10:00 & 00:03:53     & 00:01:10      & 29         \\ \hline
+23         & 10.00   & -1.00      & -5.00   & 00:10:00 & 00:03:01     & 00:01:06      & 26         \\ \hline
+24         & 10.00   & -1.00      & -10.00  & 00:10:00 & 00:04:31     & 00:01:04      & 23         \\ \hline
+25         & 10.00   & -5.00      & -1.00   & 00:10:00 & 00:02:58     & 00:01:08      & 25         \\ \hline
+26         & 10.00   & -5.00      & -5.00   & 00:10:00 & 00:03:37     & 00:01:08      & 26         \\ \hline
+27         & 10.00   & -5.00      & -10.00  & 00:10:00 & 00:02:22     & 00:00:55      & 20         \\ \hline
+28         & 10.00   & -10.00     & -1.00   & 00:10:00 & 00:04:39     & 00:01:07      & 29         \\ \hline
+29         & 10.00   & -10.00     & -5.00   & 00:10:00 & 00:02:40     & 00:00:55      & 23         \\ \hline
+30         & 10.00   & -10.00     & -10.00  & 00:10:00 & 00:04:03     & 00:01:07      & 30         \\ \hline
+\end{tabular}}
+\caption{Enviroment Experiment Result Table}
+\label{tab:enviroment_experiment_result}
+\end{table}

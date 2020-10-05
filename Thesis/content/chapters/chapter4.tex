@@ -119,70 +119,30 @@ Robot ID & Battery Level \\
 When a robot arrives charging station's position, it sends a message to Charging station(Figure \ref{tab:message_to_charging_staion}). The details of charging station is discussed in Section \ref{sec:charging_station}. 
 
 \section{Database}
-The centralized pool keep environment information in database to make decisions. The structure of database is shown in Figure \ref{fig:database_er}. Following are explanations of some tables.
-\begin{itemize}
-    \item \textsl{Table measurements} Table ``measurements'' (Figure \ref{tab:db_measurement_result}) stores measurement result.
-    \item \textsl{Table doors.} Table ``doors'' stores environment information. In table ``doors'', the ``is used'' column will be updated when the centralized pool gives a robot a task to the corresponding door. The ``last update'' column will be updated when the centralized pool receives a new measurement result of the corresponding door. 
-	\item \textsl{Table open\_ossibilities.} Table ``open possibilities'' (Figure \ref{tab:db_open_possibilities}) is based on the statistic of measurement result in ``measurement'' table in a specific time period of each working day. These two table will be updated when centralized pool receive a new measurement result. 
-	\item \textsl{Table exe\_rs.} Table ``exe rs'' stores experiment result while table ``exe weight'', table ``door weight'' and table ``charging station weight'' store weight values for experiment. Chapter 5 introduces the details of experiment.
-	\item \textsl{Table costum\_points.} When a task is created, the target point of this task will be stored in ``position'' table, and a ``target ID'' will be generated.  This ``target ID'' will be stored in ``custom points'' table. Additionally, with the information in ``room range'' table, the system will recognize which room does the point belong to and write ``room ID'' column in ``custom points'' table.
-\end{itemize}
+The centralized pool keep environment information in database to make decisions. The structure of database is shown in Figure \ref{fig:database_er}.
 
-\begin{table}[htb]
-    \centering
-    \begin{tabular}{|c|c|c|} 
-    \hline
-    Table Name & Column Name & Explanation \\
-    \hline
-    \multirow{3}*{Measurements} &  door ID & door ID\\
-    \cline{2-3}  
-    ~ &  door status & measurement "door opened" or "door close" \\
-    \cline{2-3}
-    ~ &  date time & measurement timestamp\\
-    \hline
-    \end{tabular}
-    \caption{}
-    \label{tab:}
-    \end{table}
 \begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.8\textwidth]{content/images/ch4/database_er.png}
-    \caption{Database Entity Relationship Diagram}
-    \label{fig:database_er}
+\centering
+\includegraphics[width = 0.8\textwidth]{content/images/ch4/database_er.png}
+\caption{Database Entity Relationship Diagram}
+\label{fig:database_er}
 \end{figure}
 
-
 \begin{table}[htb]
 \centering
-\begin{tabular}{|c| c| c|} 
+\begin{tabular}{|c|c|c|} 
 \hline
-Door ID & Door Status & Date Time \\
-\hline
-1& 1 & 2020-06-01 09:00:01 \\ [1ex] 
-\hline
+Table Name & Example & Explaination \\ \hline
+measurements & Table \ref{tab:db_measurement_result}  & measurement result with timestamp \\ \hline
+doors   & Table \ref{tab:db_doors} & door information \\ \hline
+exe\_rs  & Table \ref{tab:exp_decision_variables} & ``execute task'' experiment result \\ \hline
+env\_rs & Table \ref{tab:enviroment_experiment_result} & ``gather enviroment information task'' experiment result \\ \hline
+open\_possibilities & Table \ref{tab:db_open_possibilities} & open possibilities table for different time slots and weekdays \\ \hline
+... & ... & ... \\ \hline
 \end{tabular}
-\caption{Measurement Result}
-\label{tab:db_measurement_result}
+\caption{Tables in Database}
+\label{tab:tables_in_database}
 \end{table}
-
-\begin{table}[htb]
-\centering
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|c|c| c| c| c| c|} 
-\hline
-Door id & Day Of Week & Start Time & End Time & Initialized Open Possibility &  Open Possibility Statistic \\
-\hline
-1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.80 \\ [1ex] 
-\hline
-1 & 2 & 11:00:00 & 11:59:59 & 0.20 & 0.18 \\ [1ex] 
-\hline
-2 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.82 \\ [1ex] 
-\hline
-\end{tabular}}
-\caption{Door Open Possibility}
-\label{tab:db_open_possibilities}
-\end{table}
-
 
 \section{Procedure}
 As stated in the Chapter 3, the goal of task scheduling is finishing all tasks as soon as possible while keep the cost as low as possible. 
@@ -253,21 +213,15 @@ Besides messages from sensor, it also receives messages from ``move\_base'' node
 \subsection{Charging Station}
 \label{sec:charging_station}
 The charging station consists of a charging station node and ``charging station'' table in database (Table \ref{fig:database_er}). 
-When a robot arrives the position of charging station, it will start interacting with charging station node. Once the charging station receives robot information(Figure \ref{fig:charging_station_message}), its state will be changed to ``charging''(Figure \ref{fig:charging_station_state_machine}) and its ``battery level'' will be increased and its ``remaining time'' will be decreased(Figure \ref{fig:charging_station_event}).  
-Once finishing charging, its status will be set ``charging finish''. When robot leaves charging station, its status will be set to ``free''. 
 
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_state_machine.drawio.png}
-    \caption{Charging Station State Machine}
-    \label{fig:charging_station_state_machine}
-\end{figure}
+A charging station has four states : ``Fre'', ``Charging'' and ``Charging finishe''. Its initial state is "Free". When a robot arrives the position of charging station, it will start interacting with charging station node (Figure \ref{fig:charging_station_message}). 
+Once the charging station receives robot information, its state will be changed to ``Charging'' and its ``battery level'' will be increased and its ``remaining time'' will be decreased(Figure \ref{fig:charging_station_event}).  
+Once finishing charging, its status will be set to ``Charging finished''. When robot leaves charging station, its status will be set to ``Free''. 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/charging_station_charging_event.drawio.png}
-    \caption{Charging Station Scheduled Charging Event}
+    \caption{Charging Station Scheduled Charging Event in Database}
     \label{fig:charging_station_event}
 \end{figure}
 
@@ -279,15 +233,17 @@ Once finishing charging, its status will be set ``charging finish''. When robot 
 \end{figure}
 
 \subsection{Sensor Simulator}
-
-
-
 \label{sec:sensor_simulatior}
-The simulator \todo{sensor simulator}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/sensor_simulator.drawio.png}
-    \caption{Sensor Simulator}
-    \label{}
+\paragraph{Sensor Message Publish}
+In this project, a sensor simulator node is used to publish measurement results. The door simulator publish one messages for each door periodically to a ROS topic ``sensor data''. The message contains door id, sensor position and door status(Table \ref{sec:measurement_message}). The door status are created according to open possibilities table (Table \ref{tab:db_open_possibilities}). For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on timeslot 10:00:00-10:59:59), in 80\% possibility a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
+
+\paragraph{Sensor Message Subscribe}
+The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with position outside the comminication range and keep sensor messages within the communication range. With this process, the sensor simulatior sends instant measurement result to robots within communication range. However, if the system is applied to the real world, instead of sending instant measurement result, the real world sensor could send a record with history measurement.
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.7\textwidth]{content/images/ch4/sensor_simulator.drawio.png}
+\caption{Sensor Simulator}
+\label{fig:sensor_simulator}
 \end{figure}

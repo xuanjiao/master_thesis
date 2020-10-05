@@ -139,8 +139,23 @@ To select an ``execute task'', the following decision variables are considered.
 	An example of ``measurement result'' table is shown in Table \ref{tab:db_measurement_result}, an example of ``open possibility'' table is shown in Table \ref{tab:db_open_possibilities}. 
 \item \textsl{Waiting Time. } The waiting time is the difference between the current simulation time and start time of the first task to be executed. $T_{waiting} = T_{first\_task} - T_{now}$
 \item \textsl{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``execute task'' that contains n small task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
-
 \end{itemize}
+
+
+\begin{table}[htb]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c| c| c| c| c|} 
+\hline
+Door id & Day Of Week & Start Time & End Time & Initialized Open Possibility &  Open Possibility Statistic \\ \hline
+1 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.80 \\ \hline
+1 & 2 & 11:00:00 & 11:59:59 & 0.20 & 0.18 \\ \hline
+2 & 2 & 10:00:00 & 10:59:59 & 0.80 & 0.82 \\ \hline
+...&...& ...&...&...&...\\ \hline
+\end{tabular}}
+\caption{Door Open Possibility}
+\label{tab:db_open_possibilities}
+\end{table}
 
 Equation \ref{eq:large_execute_task_cost} shows how these decition variables are used to calculate the cost of a large ``execute task''.
 

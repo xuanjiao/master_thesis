@@ -282,9 +282,6 @@ INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/robot_timer.d
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/robot_message.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/robot_message.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/robot_message.drawio.png
-INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_state_machine.drawio.png
-INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_state_machine.drawio.png
-INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_state_machine.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_charging_event.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_charging_event.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch4/charging_station_charging_event.drawio.png
@@ -306,6 +303,12 @@ INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/door_station_
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/exe_exp_timeline.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/exe_exp_timeline.drawio.png
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/exe_exp_timeline.drawio.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/one_decision_variable.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/one_decision_variable.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/one_decision_variable.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/env_exp_timeline.drawio.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/env_exp_timeline.drawio.png
+INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/images/ch5/env_exp_timeline.drawio.png
 OUTPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/chapters/chapter6.aux
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/chapters/chapter6.tex
 INPUT /Users/xuanjiaozhu/OneDrive/thesis/Thesis/content/chapters/chapter6.tex
