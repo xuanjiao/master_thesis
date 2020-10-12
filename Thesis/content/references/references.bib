@@ -40,22 +40,87 @@
    Title = {{SLAM}}
 }
 
-@ARTICLE{Ivan2017,
-  author = {Ivan Gavran, Rupak Majumdar and Indranil Saha},
-  title = {Antlab: a Multi-Robot Task Server},
-  journal = {ACM Transactions on Embedded Computing Systems},
-  year = {2017},
-  volume = {9},
-  pages = {39--58},
+@article{Ivan2017,
+author = {Gavran, Ivan and Majumdar, Rupak and Saha, Indranil},
+title = {Antlab: A Multi-Robot Task Server},
+year = {2017},
+issue_date = {October 2017},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {16},
+number = {5s},
+issn = {1539-9087},
+url = {https://doi.org/10.1145/3126513},
+doi = {10.1145/3126513},
+abstract = {We present Antlab, an end-to-end system that takes streams of user task requests and executes them using collections of robots. In Antlab, each request is specified declaratively in linear temporal logic extended with quantifiers over robots. The user does not program robots individually, nor know how many robots are available at any time or the precise state of the robots. The Antlab runtime system manages the set of robots, schedules robots to perform tasks, automatically synthesizes robot motion plans from the task specification, and manages the co-ordinated execution of the plan.We provide a constraint-based formulation for simultaneous task assignment and plan generation for multiple robots working together to satisfy a task specification. In order to scalably handle multiple concurrent tasks, we take a separation of concerns view to plan generation. First, we solve each planning problem in isolation, with an “ideal world” hypothesis that says there are no unspecified dynamic obstacles or adversarial environment actions. Second, to deal with imprecisions of the real world, we implement the plans in receding horizon fashion on top of a standard robot navigation stack. The motion planner dynamically detects environment actions or dynamic obstacles from the environment or from other robots and locally corrects the ideal planned path. It triggers a re-planning step dynamically if the current path deviates from the planned path or if planner assumptions are violated.We have implemented Antlab as a C++ and Python library on top of robots running on ROS, using SMT-based and AI planning-based implementations for task and path planning. We evaluated Antlab both in simulation as well as on a set of TurtleBot robots. We demonstrate that it can provide a scalable and robust infrastructure for declarative multi-robot programming.},
+journal = {ACM Trans. Embed. Comput. Syst.},
+month = sep,
+articleno = {190},
+numpages = {19},
+keywords = {Cyber-physical systems, planning, multi-robot systems, programming abstractions for robotics}
+}
+@ARTICLE{Korsah13,
+author = {G. Ayorkor Korsah and Anthony Stentz and M. Bernardine Dias},
+title ={A comprehensive taxonomy for multi-robot task allocation},
+journal = {The International Journal of Robotics Research},
+volume = {32},
+number = {12},
+pages = {1495-1512},
+year = {2013},
+doi = {10.1177/0278364913496484},
+URL = {  https://doi.org/10.1177/0278364913496484    },
+eprint = { https://doi.org/10.1177/0278364913496484},
+abstract = { Task allocation is an important aspect of many multi-robot systems. The features and complexity of multi-robot task allocation (MRTA) problems are dictated by the requirements of the particular domain under consideration. These problems can range from those involving instantaneous distribution of simple, independent tasks among members of a homogenous team, to those requiring the time-extended scheduling of complex interrelated multi-step tasks for members of a heterogenous team related by several constraints. The existing widely used taxonomy for task allocation in multi-robot systems was designed for problems with independent tasks and does not deal with problems with interrelated utilities and constraints. While that taxonomy was a ground-breaking contribution to the MRTA literature, a survey of recent work in MRTA reveals that it is no longer a sufficient taxonomy, due to the increasing importance of interrelated utilities and constraints in realistic MRTA problems under consideration. Thus, in this paper, we present a new, comprehensive taxonomy, iTax, that explicitly takes into consideration the issues of interrelated utilities and constraints. Our taxonomy maps categories of MRTA problems to existing mathematical models from combinatorial optimization and operations research, and hence draws important parallels between robotics and these fields. }
 }
 
-@ARTICLE{Shiqi,
-  author = {Shiqi Zhang, Yuqian Jiang, Guni Sharon, and Peter Stone},
-  title = {Multirobot Symbolic Planning under Temporal Uncertainty},
-  journal = {AMAS '17: Proceedings of the 16th Conference on Autonomous Agents and MultiAgent Systems},
-  year = {2017},
-  pages = {501–510},
+
+@ARTICLE{retire2017, 
+ author={K. E. C. {Booth} and S. C. {Mohamed} and S. {Rajaratnam} and G. {Nejat} and J. C. {Beck}}, 
+ journal={IEEE Intelligent Systems},   
+ title={Robots in Retirement Homes: Person Search and Task Planning for a Group of Residents by a Team of Assistive Robots},   
+ year={2017},  
+ volume={32},  
+ number={6},  
+ pages={14-21},
+ }
+
+ @ARTICLE{NUNES201755,
+title = "A taxonomy for task allocation problems with temporal and ordering constraints",
+journal = "Robotics and Autonomous Systems",
+volume = "90",
+pages = "55 - 70",
+year = "2017",
+note = "Special Issue on New Research Frontiers for Intelligent Autonomous Systems",
+issn = "0921-8890",
+doi = "https://doi.org/10.1016/j.robot.2016.10.008",
+url = "http://www.sciencedirect.com/science/article/pii/S0921889016306157",
+author = "Ernesto Nunes and Marie Manner and Hakim Mitiche and Maria Gini",
+keywords = "Task allocation, Taxonomy, Multi-robot coordination, Temporal constraints, Time-extended assignments",
+abstract = "Previous work on assigning tasks to robots has proposed extensive categorizations of allocation of tasks with and without constraints. The main contribution of this paper is a specific categorization of problems that have temporal and ordering constraints. We propose a novel taxonomy that emphasizes the differences between temporal and ordering constraints, and organizes the current literature according to the nature of those constraints. We summarize widely used models and methods from the task allocation literature and related areas, such as vehicle routing and scheduling problems, showing similarities and differences."
 }
+@article{Jia2013ASA,
+  title={A survey and analysis of task allocation algorithms in multi-robot systems},
+  author={Xiao Jia and M. Meng},
+  journal={2013 IEEE International Conference on Robotics and Biomimetics (ROBIO)},
+  year={2013},
+  pages={2280-2285}
+}
+
+
+@ARTICLE{Dong2015,  author={D. {Lee} and S. A. {Zaheer} and J. {Kim}},  journal={IEEE Transactions on Automation Science and Engineering},   title={A Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task Allocation},   year={2015},  volume={12},  number={4},  pages={1469-1481},}
+
+
+@INPROCEEDINGS{Shah07, 
+  author={K. {Shah} and Y. {Meng}}, 
+  booktitle={2007 International Symposium on Computational Intelligence in Robotics and Automation},   
+  title={Communication-Efficient Dynamic Task Scheduling for Heterogeneous Multi-Robot Systems},   
+  year={2007},  
+  volume={},  number={},  
+  pages={230-235},}
+
+
+
+
 
 
 

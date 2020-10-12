@@ -1,14 +1,28 @@
 \chapter{Materials and Methods}
 
-This section is to clarify the pre-existing tools, defining what was developed in this field until now, and why this tool was used instead of others.
+%This section is to clarify the pre-existing tools, defining what was developed in this field until now, and why this tool was used instead of others.
 
-The general structure is the following:
-\begin{itemize}
-	\item Definition of the specific tool(s) studied (robots, sensor nodes, smart-phones). When relevant, pre-existing experiments.
-	\item Definition of the context of use (indoor/outdoor, humans/animals/robots, with/without connection).
-	\item Definition of used protocols (How the data are collected, when, etc.)
-\end{itemize}
-
-
+%The general structure is the following:
+%\begin{itemize}
+%	\item Definition of the specific tool(s) studied (robots, sensor nodes, smart-phones). When relevant, pre-existing experiments.
+%	\item Definition of the context of use (indoor/outdoor, humans/animals/robots, with/without connection).
+%	\item Definition of used protocols (How the data are collected, when, etc.)
+%\end{itemize}
 
 
+\section{Centralized Methods}
+Centralized methods rely on a centralized controller that allocates tasks to robots. There are varies of centralized methods. 
+Booth proposed a multi-robot system that support elderly residents in a retirement home setting in  \cite{retire2017}. The robots search for elderly residents in the enviroment in the morning, eliciting their availability and preferences for activities. The centralized scheduler then use constraint programming method to allocate these assistive activities over the day. Those problem-specific constrains includes robot energy consumption, activity priority, robot-user activity synchronization, user location, and user availability carlendar that identifies their busy intervals. Once this information is attained, the system allocate and schedule activities to robots for the day before executing the plan.
+In addition to constraint programming, there are other centralized methods including centralized mixed-integer programming \cite{Korsah13} and 
+The autonomy of the robots in pure centralized method is limited becaued they only execute the dispatched oders not determine what tasks to do \cite{NUNES201755}. 
+
+\section{Decentralized Methods}
+When system perform a long-term task alloacation process, the communication link between costumer agent and robots may be disconnected. This may couse a conflict or failed assignment. Decentralized methods are more suitable in this case as distribute the computation to individual agents \cite{NUNES201755}.  Dong-Hyun Lee proposed a resource-oriented, decentralized auction algorithm \cite{Dong2015}. 
+The customer agents and robots with limited communication ranges construct an ad-hoc network tree. The customer agent becomes auctioneer and broadcasts an auction call to the task. The robots become bidders and submit their bid values to the customer agent. The bid values consider local information such as the tasks in robot task queue, robot's resource levels and estimated travel distance and time for multiple path. 
+Since each path consists of different charging stations, the robot's resource levels after completing a task and estimated travel time depends on the path. 
+After receiving all bid values, the agent assigns the task to the robot with the lowest bid value. Decentralized methods
+This senario has many advantages. It is more efficient communication overhead and energy efficiency. To be more precise, it not only avoids unexpected battery drain while robot processing task, but also let robots maintain high capacities. In addition, in decentralized method, robots don't need to broadcast its information such as current position and battery levels frequently. Therefore, compared to centralized methods, decentralized method not only avoids unnecessary communication but also improves robot autonomy \cite{Shah07}.
+
+\section{Cost Function}
+One of the most important steps when designing a multi-robot task allocation algorithm is determin the costs of tasks. Jia summaries several physical quantities used in algorithm's cost in \cite{Jia2013ASA}. In their study it can be concluded that the most common used decision variables are estimated travel distance and time, as proposed in \cite{Dong2015}. Other kinds of decision variables involved are the number of traversals and energy consumed. 
+In addition, Korsah proposed a comprehensive taxonnomy of multi-robot task allocation problems that explicitly takes into consideration the issues of interrelated utilities and constraints. In this taxonnomy, tasks are distinguished by decomposability and multi-[agent-]-allocatable \cite{Korsah13}.

@@ -47,6 +47,30 @@ In addition, the experiment used simulation time. The simulation time was set in
     \label{fig:exp_map}
 \end{figure}
 
+
+
+\section{Sensor Simulator}
+\label{sec:sensor_simulatior}
+
+\paragraph{Sensor Message Publish}
+In this project, a sensor simulator node is used to publish measurement results. The door simulator publish one messages for each door periodically to a ROS topic ``sensor data''. The message contains door id, sensor position and door status(Table \ref{sec:measurement_message}). The door status are created according to open possibilities table (Table \ref{tab:db_open_possibilities}). 
+
+
+\paragraph{Door Status Generation}
+For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on timeslot 10:00:00-10:59:59), in 80\% possibility a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
+
+
+\paragraph{Sensor Message Subscribe}
+The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with position outside the comminication range and keep sensor messages within the communication range. With this process, the sensor simulatior sends instant measurement result to robots within communication range. However, if the system is applied to the real world, instead of sending instant measurement result, the real world sensor could send a record with history measurement.
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.7\textwidth]{content/images/ch4/sensor_simulator.drawio.png}
+\caption{Sensor Simulator}
+\label{fig:sensor_simulator}
+\end{figure}
+
+
 \section{Execute Task Evaluation Experiment}
 
 
@@ -109,13 +133,13 @@ Task ID & Task Name & Start Time    & Target ID & Robot ID &Priority & Task Stat
 \subsection{Experiment: Impact of Decision Variables}
 
 \paragraph{Experiment Introduction} 
-This set of experiments evaluated the need of four decision variables: battery consumption, waiting time, product of door open possibility and priority (Section \ref{sec:exe_task_allocation}). 
+This set of experiments evaluated the need of four decision variables: battery consumption, waiting time, product of door open possibility and priority. 
 
 \paragraph{Sampling design}
-Table \ref{tab:task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, 3 robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
-    When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same (Table )\ref{tab:task_table}). In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
-    When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
-    These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+Table \ref{tab:db_task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, 3 robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
+When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same (Table \ref{tab:db_task_table}). In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
+These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
 
 \paragraph{Analysis design}
 As is discussed in last paragraph, in each experiemnts, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
@@ -368,31 +392,6 @@ Average &3 &   00:18:45	& 15 & 15 & 0 & 0 \\ \hline
 
 \paragraph{Expariment Analysis} As shown in experiment result, the ``Minial Last Update'' value is much less than experiment duraion. It means some doors were not timely updated information. One possible reason is that the velocity of robot is small (about 0.2 per second), the simulation time was not long enough to let three robot pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The idealy solution was to give both task to one robot. 
 
-\begin{table}[htb]
-\centering
-\begin{tabular}{|c| c| c|} 
-\hline
-Door ID & Door Status & Date Time \\
-\hline
-9 & 1 & 2020-06-01 09:05:39 \\ \hline
-1 & 0 & 2020-06-01 09:05:49 \\ \hline
-7 & 1 & 2020-06-01 09:05:49 \\ \hline
-9 & 1 & 2020-06-01 09:05:49 \\ \hline
-1 & 1 & 2020-06-01 09:05:59 \\ \hline
-7 & 1 & 2020-06-01 09:05:59 \\ \hline
-9 & 1 & 2020-06-01 09:05:59 \\ \hline
-7 & 1 & 2020-06-01 09:06:09 \\ \hline
-16 & 0 & 2020-06-01 09:06:29 \\ \hline
-7 & 1 & 2020-06-01 09:06:39 \\ \hline
-16 & 1 & 2020-06-01 09:06:39 \\ \hline
-9 & 1 & 2020-06-01 09:06:49 \\ \hline
-8 & 0 & 2020-06-01 09:06:59 \\ \hline
-... & ...& ... \\ \hline
-\end{tabular}
-\caption{Measurement Result Table}
-\label{tab:db_measurement_result}
-\end{table}
-
 
 \begin{table}[htb]
 \centering
@@ -450,4 +449,18 @@ Experiment  & $W_{\mbox{battery consumption}}$ & $W_{\mbox{update}}$ & $W_{\mbox
 \end{tabular}}
 \caption{Enviroment Experiment Result Table}
 \label{tab:enviroment_experiment_result}
+\end{table}
+
+
+\begin{table}[]
+\begin{tabular}{|l|l|l|l|}
+\hline
+wt\_btr & wt\_update & wt\_psb & avg\_last\_update \\ \hline
+1       & -0.1       & 0       & 00:11:28.33       \\ \hline
+5       & -0.1       & 0       & 00:13:05.67       \\ \hline
+10      & -0.1       & 0       & 00:13:27.00       \\ \hline
+15      & -0.1       & 0       & 00:14:11.00       \\ \hline
+20      & -0.1       & 0       & 00:13:31.33       \\ \hline
+25      & -0.1       & 0       & 00:13:16.00       \\ \hline
+\end{tabular}
 \end{table}

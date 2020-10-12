@@ -1,4 +1,17 @@
-\begin{thebibliography}{MAdR02}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{NMMG17}
+
+\bibitem[BMR{\etalchar{+}}17]{retire2017}
+{\sc {Booth}, K. E.~C.}, {\sc S.~C. {Mohamed}}, {\sc S.~{Rajaratnam}}, {\sc
+  G.~{Nejat}} \btxandlong{}\ {\sc J.~C. {Beck}}: {\em Robots in Retirement
+  Homes: Person Search and Task Planning for a Group of Residents by a Team of
+  Assistive Robots}.
+\newblock IEEE Intelligent Systems, 32(6):14--21, 2017.
+
+\bibitem[GMS17]{Ivan2017}
+{\sc Gavran, Ivan}, {\sc Rupak Majumdar} \btxandlong{}\ {\sc Indranil Saha}:
+  {\em Antlab: A Multi-Robot Task Server}.
+\newblock ACM Trans. Embed. Comput. Syst., 16(5s), \btxmonseplong{} 2017.
 
 \bibitem[IGM97]{Ikeda1997}
 {\sc Ikeda, Mitsuru}, {\sc Shogo Go} \btxandlong{}\ {\sc Riichiro Mizoguchi}:
@@ -7,10 +20,25 @@
   Intelligence in Education ({AI-ED})}, \btxpageslong{}\ 167--174, Amsterdam,
   1997. IOS Press.
 
-\bibitem[IGS17]{Ivan2017}
-{\sc Ivan~Gavran, Rupak~Majumdar} \btxandlong{}\ {\sc Indranil Saha}: {\em
-  Antlab: a Multi-Robot Task Server}.
-\newblock ACM Transactions on Embedded Computing Systems, 9:39--58, 2017.
+\bibitem[JM13]{Jia2013ASA}
+{\sc Jia, Xiao} \btxandlong{}\ {\sc M.~Meng}: {\em A survey and analysis of
+  task allocation algorithms in multi-robot systems}.
+\newblock 2013 IEEE International Conference on Robotics and Biomimetics
+  (ROBIO), \btxpageslong{}\ 2280--2285, 2013.
+
+\bibitem[KSD13]{Korsah13}
+{\sc Korsah, G.~Ayorkor}, {\sc Anthony Stentz} \btxandlong{}\ {\sc
+  M.~Bernardine Dias}: {\em A comprehensive taxonomy for multi-robot task
+  allocation}.
+\newblock The International Journal of Robotics Research, 32(12):1495--1512,
+  2013.
+
+\bibitem[LZK15]{Dong2015}
+{\sc {Lee}, D.}, {\sc S.~A. {Zaheer}} \btxandlong{}\ {\sc J.~{Kim}}: {\em A
+  Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task
+  Allocation}.
+\newblock IEEE Transactions on Automation Science and Engineering,
+  12(4):1469--1481, 2015.
 
 \bibitem[MAdR02]{Middleton2002}
 {\sc Middleton, S.~E.}, {\sc H.~Alani} \btxandlong{}\ {\sc D.~C. de~Roure}:
@@ -23,6 +51,14 @@
 \newblock \url{http://wiki.ros.org/move_base}.
 \newblock accessed 2020-09-25.
 
+\bibitem[NMMG17]{NUNES201755}
+{\sc Nunes, Ernesto}, {\sc Marie Manner}, {\sc Hakim Mitiche} \btxandlong{}\
+  {\sc Maria Gini}: {\em A taxonomy for task allocation problems with temporal
+  and ordering constraints}.
+\newblock Robotics and Autonomous Systems, 90:55 -- 70, 2017.
+\newblock Special Issue on New Research Frontiers for Intelligent Autonomous
+  Systems.
+
 \bibitem[Sal89]{salton89}
 {\sc Salton, Gerard}: {\em Automatic text processing --- the transformation,
   analysis, and retrieval of information by computer}.
@@ -33,5 +69,11 @@
 \newblock
   \url{https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#ros-1-slam}.
 \newblock accessed 2020-09-28.
+
+\bibitem[SM07]{Shah07}
+{\sc {Shah}, K.} \btxandlong{}\ {\sc Y.~{Meng}}: {\em Communication-Efficient
+  Dynamic Task Scheduling for Heterogeneous Multi-Robot Systems}.
+\newblock \Btxinlong{}\ {\em 2007 International Symposium on Computational
+  Intelligence in Robotics and Automation}, \btxpageslong{}\ 230--235, 2007.
 
 \end{thebibliography}
