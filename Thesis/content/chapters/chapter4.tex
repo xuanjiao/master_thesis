@@ -13,6 +13,8 @@ To improve the communication efficiency, communication protocols are designed.
 \label{sec:measurement_message}
 When a robot passes by a door, it should receive messages from a sensor. In this project, we use a ROS node "sensor simulator" to simulate door sensors (Section \ref{sec:sensor_simulatior}) to publish instant measurement result (Table \ref{tab:sensor_message}).
 
+These Communication protocols save unnecessary communication cost by avoiding keep tracking the current position, availability and states of all robots (Figure \ref{fig:comminication}).
+
 \begin{table}[htb]
 \centering
 \begin{tabular}{|c|c|c|c|c|} 
@@ -29,10 +31,8 @@ Door ID  & Position& Timestamp & Measurement Result \\
 
 \subsection{Message about Task}
 \label{sec:task_message}
-There are some basic requirements for communication between robot and centralized pool: firstly,
-robot should initiate the communication once it has finished all task in task queue and get free. 
-Secondly, robot should forward sensor data to centralized pool while processing a task. 
-These Communication protocols save unnecessary communication cost by avoiding keep tracking the current position, availability and states of all robots (Figure \ref{fig:comminication}).
+There are some basic requirements for communication between robot and centralized pool: firstly, robot should initiate the communication once task queue becomes empty. 
+Secondly, robot should forward sensor data to centralized pool immediately after interacting with snesors. 
 Four types of message are defined: 
 (1)Task request message(Table\ref{tab:request_message}); (2) Task goal messages(Table \ref{tab:goal_message}); (3) Task feedback message (Table \ref{tab:feedback_message}); (4) Task result message (Table \ref{tab:result_message}). 
 
@@ -121,29 +121,141 @@ When a robot arrives charging station's position, it sends a message to Charging
 \section{Database}
 The centralized pool keep environment information in database to make decisions. The structure of database is shown in Figure \ref{fig:database_er}.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width = 0.8\textwidth]{content/images/ch4/database_er.png}
-\caption{Database Entity Relationship Diagram}
-\label{fig:database_er}
-\end{figure}
+\subsection*{Table tasks}
+\begin{itemize}
+    \label{sec:task_table}
+    \item \textsl{Column Task ID.} A unique task identification.
+    \item \textsl{Column Task Name.} Tasks names are ``gather enviroment information task '', ``execute task'' or ``charging task''.
+    \item \textsl{Column Start Time.} The start time refers to when the robot should move towards the target. A starting time is given when the task is created. This time can be a time in the future or empty (no time limit). 
+    \item \textsl{Column Finish Time.} The default value is empty. When the centralized pool receives task result, this column will be updated to the time when the centralized pool received the result.
+    \item \textsl{Column Target ID.} Targets include doors, points and charging stations. When a robot run a ``gather environment information task'', it moves to the front of a door and interact with a sensor in the door position without entering the door. 
+    When robot run an ``execute task'', the robot moves to a given point ether in corridor or in the room. When robot run a ``charging task'', the robot moves to a charging station and interact with this charging station.
+    \item \textsl{Column Robot ID.} A unique robot identification.
+    \item \textsl{Column Priority.} Task priorities allow user to easily prioritize tasks to clearly plan what to do next. The ``charging tasks'' are given the highest priority of 5. The ``gather environment information tasks'' are given the lowest priority of 1. The ``execute tasks'' has priority between 2-4 in the ``created'' status. Once this task failed once, its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' (Figure \ref{fig:centralized_task_handle}).
+    \item \textsl{Column Task Status.} Task status are ``Created'', ``Succeeded'', ``Failed'', ``To rerun'', ``Error''. The difference between task status is discussed in Figure \ref{fig:centralized_task_handle}
+    \item \textsl{Column Dependency.} If task B has a dependency of task A, task A needs to be preceded by tasks B. Those dependent tasks should be composed in the centralized pool.
+    \item \textsl{Column Description.} The describtion of a succedded task is ``succedded''.  The describtion of a failed task is its failure reason.
+    \begin{table}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} 
+    \hline
+    Task ID & Task Type & Start Time & Target ID & Robot ID & Priority & Status & dependency & Finish Time  & Description \\
+    \hline
+    1 &  Charging task & 2020-06-01 9:00:00 & 18 & 1 & 5 & RanToCompletion & 0 & 2020-06-01 9:00:20 & Succeeded \\
+    \hline
+    2 &  Execute task & 2020-06-01 9:00:50 & 22 & 2 & 2 &RanToCompletion & 0 & 2020-06-01 9:01:20 & Succeeded \\
+    \hline
+    3 &  Gather environment information task & 2020-06-01 9:02:00 & 2 & 2 & 1 & Running & 0 & 2020-06-01 9:02:40 & Succeeded \\ [1ex] 
+    \hline
+    \end{tabular}}
+    \caption{Task Table in Database}
+    \label{tab:db_task_table}
+    \end{table}
+\end{itemize}
 
-\begin{table}[htb]
-\centering
-\begin{tabular}{|c|c|c|} 
-\hline
-Table Name & Example & Explaination \\ \hline
-measurements & Table \ref{tab:db_measurement_result}  & measurement result with timestamp \\ \hline
-doors   & Table \ref{tab:db_doors} & door information \\ \hline
-tasks & Table \ref{tab:db_task_table} & task specifications  \\ \hline 
-exe\_rs  & Table \ref{tab:exp_decision_variables} & ``execute task'' experiment result \\ \hline
-env\_rs & Table \ref{tab:enviroment_experiment_result} & ``gather enviroment information task'' experiment result \\ \hline
-open\_possibilities & Table \ref{tab:db_open_possibilities} & open possibilities table for different time slots and weekdays \\ \hline
-... & ... & ... \\ \hline
-\end{tabular}
-\caption{Tables in Database}
-\label{tab:tables_in_database}
-\end{table}
+\subsection*{Table measurements}
+\begin{itemize}
+    \item \textsl{Column Door ID.} Unique identification of the door.
+    \item \textsl{Column Door Status.} Value 0 represent door closed. Value 1 represent door opened.
+    \item \textsl{Column Date Time.} Measuring time.
+    \begin{table}[htb]
+    \centering
+    \begin{tabular}{|c| c| c|} 
+    \hline
+    Door ID & Door Status & Date Time \\
+    \hline
+    9 & 1 & 2020-06-01 09:05:39 \\ \hline
+    1 & 0 & 2020-06-01 09:05:49 \\ \hline
+    7 & 1 & 2020-06-01 09:05:49 \\ \hline
+    9 & 1 & 2020-06-01 09:05:49 \\ \hline
+    1 & 1 & 2020-06-01 09:05:59 \\ \hline
+    7 & 1 & 2020-06-01 09:05:59 \\ \hline
+    9 & 1 & 2020-06-01 09:05:59 \\ \hline
+    7 & 1 & 2020-06-01 09:06:09 \\ \hline
+    16 & 0 & 2020-06-01 09:06:29 \\ \hline
+    7 & 1 & 2020-06-01 09:06:39 \\ \hline
+    16 & 1 & 2020-06-01 09:06:39 \\ \hline
+    9 & 1 & 2020-06-01 09:06:49 \\ \hline
+    8 & 0 & 2020-06-01 09:06:59 \\ \hline
+    ... & ...& ... \\ \hline
+    \end{tabular}
+    \caption{Table measurements}
+    \label{tab:db_measurement_result}
+    \end{table}
+\end{itemize}
+
+\subsection*{Table door open possibilities}
+\begin{itemize}
+    \item \textsl{Column Door ID.} Unique identification of the door. 
+    \item \textsl{Column Day of Week} a weekday.
+    \item \textsl{Column Start Time and End Time} a time slot between start time and end time.
+    \item \textsl{Column Initialized Open Possibility} Predefined value to used to simulate door sensors (Section \ref{sec:sensor_simulatior}).
+    \item \textsl{Column Open Possibility Statistic} Statistics of measurement result in the weekday and time slot.
+    \begin{table}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c| c| c| c| c|} 
+    \hline
+    Door ID & Day Of Week & Start Time & End Time & Initialized Open Possibility &  Open Possibility Statistic \\ \hline
+    1 & 2 & 9:00:00 & 9:59:59 & 0.90 & 0.85 \\ \hline
+    1 & 2 & 10:00:00 & 10:59:59 & 0.90 & 0.92 \\ \hline
+    1 & 2 & 11:00:00 & 11:59:59 & 0.10 & 0.05 \\ \hline
+    ...&...& ...&...&...&...\\ \hline
+    \end{tabular}}
+    \caption{Door Open Possibility}
+    \label{tab:db_open_possibilities}
+    \end{table}
+\end{itemize}
+
+\subsection*{Table doors}
+\begin{itemize}
+    \item \textsl{Column Door ID} Unique identification of door.
+    \item \textsl{Column Last Update} The timestamp of last measurement result on the door.
+    \item \textsl{Column Is Used} Value 1 represent at least one other robot is moving to this door. Value 0 represents no robot is moving to this door.
+    \begin{table}[htb]
+    \centering
+    \begin{tabular}{|c|c|c|} 
+    \hline
+    Door ID & Last Update & Is Used \\ \hline
+    1 & 2020-06-01 15:15:26 & 0 \\ \hline
+    2 & 2020-06-01 15:15:06 & 0 \\ \hline
+    3 & 2020-06-01 15:12:36 & 0 \\ \hline
+    4 & 2020-06-01 15:15:16 & 0 \\ \hline
+    5 & 2020-06-01 15:11:46 & 0 \\ \hline
+    6 & 2020-06-01 15:11:36 & 1 \\ \hline
+    7 & 2020-06-01 15:14:26 & 0 \\ \hline
+    ...& ...& ... \\ \hline
+    \end{tabular}
+    \caption{Doors Table}
+    \label{tab:db_doors}
+    \end{table}
+\end{itemize}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.8\textwidth]{content/images/ch4/database_er.png}
+    \caption{Database Entity Relationship Diagram}
+    \label{fig:database_er}
+    \end{figure}    
+
+%\begin{table}[htb]
+%\centering
+%\begin{tabular}{|c|c|c|} 
+%\hline
+%Table Name & Example & Explaination \\ \hline
+%measurements & Table \ref{tab:db_measurement_result}  & measurement result with timestamp \\ \hline
+%doors   & Table \ref{tab:db_doors} & door information \\ \hline
+%tasks & Table \ref{tab:db_task_table} & task specifications  \\ \hline 
+%exe\_rs  & Table \ref{tab:exp_decision_variables} & ``execute task'' experiment result \\ \hline
+%env\_rs & Table \ref{tab:enviroment_experiment_result} & ``gather enviroment information task'' experiment result \\ \hline
+%open\_possibilities & Table \ref{tab:db_open_possibilities} & open possibilities table for different time slots and weekdays \\ \hline
+%... & ... & ... \\ \hline
+%\end{tabular}
+%\caption{Tables in Database}
+%\label{tab:tables_in_database}
+%\end{table}
 
 
 
@@ -154,89 +266,26 @@ The task assignment and execution has at two level. \cite{Ivan2017} the task and
 At the dynamic level, after each robot receive a task, it runs a navigation stack to execute this task stepwise. Each robot computes a local trajectory but takes into account dynamic obstacles.
 The process of the robot task allocation system is as follows.
 
+\subsection{Centralized Pool}
+
+\paragraph{Handle task Request}
+With robot status such as positions and available battery provided by robot, the multi-robot task allocation module in the architecture should perform multi-robot task allocation. 
+When the centralized pool receives a task request (Table \ref{tab:request_message}) from robot,  the multi-robot task allocation module in the architecture. The implementation of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/centralized_task_select.drawio.png}
+    \includegraphics[width = 0.6\textwidth]{content/images/ch4/centralized_task_select.drawio.png}
     \caption{Centralized Pool Task Allocation}
     \label{fig:centralized_task_allocation}
 \end{figure}
 
-\subsection{Centralized Pool}
-With robot status such as positions and available battery provided by robot, the multi-robot task allocation module in the architecture should perform multi-robot task allocation. 
-When the centralized pool receives a task request (Table \ref{tab:request_message}) from robot,  the multi-robot task allocation module in the architecture. The implementation of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
-
-The process of task allocation is shown in Figure \ref{fig:centralized_task_allocation}. 
-
 \paragraph{Handle Task Feedback.}
 When the centralized pool receives a task feedback (Table \ref{tab:feedback_message}) that contains a new measurement result from robot, it will add a record in ``measurement table'' and update ``open possibilities table'' in database (Table \ref{tab:db_open_possibilities}).
 
-\begin{table}[htb]
-\centering
-\begin{tabular}{|c| c| c|} 
-\hline
-Door ID & Door Status & Date Time \\
-\hline
-9 & 1 & 2020-06-01 09:05:39 \\ \hline
-1 & 0 & 2020-06-01 09:05:49 \\ \hline
-7 & 1 & 2020-06-01 09:05:49 \\ \hline
-9 & 1 & 2020-06-01 09:05:49 \\ \hline
-1 & 1 & 2020-06-01 09:05:59 \\ \hline
-7 & 1 & 2020-06-01 09:05:59 \\ \hline
-9 & 1 & 2020-06-01 09:05:59 \\ \hline
-7 & 1 & 2020-06-01 09:06:09 \\ \hline
-16 & 0 & 2020-06-01 09:06:29 \\ \hline
-7 & 1 & 2020-06-01 09:06:39 \\ \hline
-16 & 1 & 2020-06-01 09:06:39 \\ \hline
-9 & 1 & 2020-06-01 09:06:49 \\ \hline
-8 & 0 & 2020-06-01 09:06:59 \\ \hline
-... & ...& ... \\ \hline
-\end{tabular}
-\caption{Measurement Result Table}
-\label{tab:db_measurement_result}
-\begin{itemize}
-    \item \textsl{Column Door ID.} Unique identification of the door.
-    \item \textsl{Column Door Status.} Value 0 represent door closed. Value 1 represent door opened.
-    \item \textsl{Column Date Time.} Measuring time.
-\end{itemize}
-
-\end{table}
-
-\begin{table}[htb]
-\centering
-\resizebox{\textwidth}{!}{
-\begin{tabular}{|c|c| c| c| c| c|} 
-\hline
-Door ID & Day Of Week & Start Time & End Time & Initialized Open Possibility &  Open Possibility Statistic \\ \hline
-1 & 2 & 9:00:00 & 9:59:59 & 0.90 & 0.85 \\ \hline
-1 & 2 & 10:00:00 & 10:59:59 & 0.90 & 0.92 \\ \hline
-1 & 2 & 11:00:00 & 11:59:59 & 0.10 & 0.05 \\ \hline
-...&...& ...&...&...&...\\ \hline
-\end{tabular}}
-\caption{Door Open Possibility}
-\label{tab:db_open_possibilities}
-\begin{itemize}
-    \item \textsl{Column Door ID.} Unique identification of the door. 
-    \item \textsl{Column Day of Week} a weekday.
-    \item \textsl{Column Start Time and End Time} a time slot between start time and end time.
-    \item \textsl{Column Initialized Open Possibility} Predefined value to used to simulate door sensors (Section \ref{sec:sensor_simulatior}).
-    \item \textsl{Column Open Possibility Statistic} Statistics of measurement result in the weekday and time slot.
-\end{itemize}
-\end{table}
-
-
 \paragraph{Handle Task Result.}
-When the centralized pool receives a task result (Table \ref{tab:result_message}), it updates status column in ``tasks'' table in database. Figure explaination of task status:
-
-\begin{itemize}
-    \item \textsl{Succedded.} Robot successfully moved to the goal position and complted the task.
-    \item \textsl{Error.} An error that cannot be corrected by itself occurred and the system requires manual restart. For example, a robot failed charging.
-    \item \textsl{Failed.} A Task failed. Reasons of task failure includes: The robot was not able to move to goal positions or process robot action(\ref{fig:system_architecture}). 
-    \item \textsl{To rerun.} If an ``execute task'' failed, its priority was increased. The task is marked as ``to rerun task''  for a future allocation by task allocation module.
-\end{itemize}
-
-
-The failed ``execute tasks'' will be reused while others will be marked as ``Cancel'' or ``Error''(Figure \ref{fig:centralized_task_handle}).
-
+When the centralized pool receives a task result (Table \ref{tab:result_message}), it updates status column in ``tasks'' table in database. 
+In order to make the robot complete the task as much as possible, everytime when an ``execute task'' failed, its start time will be delayed and its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' 
+(Figure \ref{fig:centralized_task_handle}).
 
 
 \begin{figure}[htbp]
@@ -244,17 +293,17 @@ The failed ``execute tasks'' will be reused while others will be marked as ``Can
     \includegraphics[width = 0.7\textwidth]{content/images/ch4/centralized_task_result.drawio.png}
     \caption{Centralized Pool Handle Task Result}
     \label{fig:centralized_task_handle}
+    \paragraph{Task Status Explanation}
+    \begin{itemize}     
+        \item \textsl{Succedded.} Robot successfully moved to the goal position and complted the task.
+        \item \textsl{Error.} An error that cannot be corrected by itself occurred and the system requires manual restart. For example, a robot failed charging.
+        \item \textsl{Failed.} A Task failed. Reasons of task failure includes: The robot was not able to move to goal positions or process robot action(\ref{fig:system_architecture}). 
+        \item \textsl{To rerun.} If an ``execute task'' failed, its priority was increased. The task is marked as ``to rerun task''  for a future allocation by task allocation module.
+    \end{itemize}   
 \end{figure}
 
 
 \subsection{Robot}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_process_task.drawio.png}
-    \caption{Robot Process Task }
-    \label{fig:task_process_robot}
-\end{figure}
 
 \paragraph{Robot Process Tasks}
 When the task queue(Figure \ref{fig:system_architecture}) in a robot is empty, the robot requests a new task. If the robot gets a ``charging task'', it will move to the position of charging staion(Figure \ref{fig:positions_door_station}) and interact with charging station node (Section \ref{sec:charging_station}).
@@ -262,6 +311,14 @@ When a robot gets an ``execute task'' which is a complex task, it will move to a
 When a robot gets a ``gather environment information'' task, it will move to the door's position.
 During task processing, the timer checks periodically the status of navigation stack. If any errors occurs, the robot send a ``failed'' result with description to the centralized pool.  
 When all tasks are complted without error, the robot will send ``Succedded'' result to the centralized pool.
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{content/images/ch4/robot_process_task.drawio.png}
+    \caption{Robot Process Task }
+    \label{fig:task_process_robot}
+\end{figure}
 
 
 \begin{figure}[htbp]
@@ -286,8 +343,8 @@ Besides messages from sensor, it also receives messages from ``move\_base'' node
 \label{sec:charging_station}
 The charging station consists of a charging station node and ``charging station'' table in database (Table \ref{fig:database_er}). 
 
-A charging station has four states : ``Fre'', ``Charging'' and ``Charging finishe''. Its initial state is "Free". When a robot arrives the position of charging station, it will start interacting with charging station node (Figure \ref{fig:charging_station_message}). 
-Once the charging station receives robot information, its state will be changed to ``Charging'' and its ``battery level'' will be increased and its ``remaining time'' will be decreased(Figure \ref{fig:charging_station_event}).  
+A charging station has four states : ``Free'', ``Charging'' and ``Charging finished''. Its initial state is ``Free''. When a robot arrives the charging station, it will start interacting with charging station node (Figure \ref{fig:charging_station_message}). 
+Once the charging station receives robot information, its state will be changed to ``Charging'' and its ``battery level'' will be increased and its ``remaining time'' will be decreased (Figure \ref{fig:charging_station_event}).  
 Once finishing charging, its status will be set to ``Charging finished''. When robot leaves charging station, its status will be set to ``Free''. 
 
 \begin{figure}[htbp]

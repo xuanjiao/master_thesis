@@ -59,6 +59,13 @@
 \newblock Special Issue on New Research Frontiers for Intelligent Autonomous
   Systems.
 
+\bibitem[PNK{\etalchar{+}}15]{PYO2015148}
+{\sc Pyo, Yoonseok}, {\sc Kouhei Nakashima}, {\sc Shunya Kuwahata}, {\sc Ryo
+  Kurazume}, {\sc Tokuo Tsuji}, {\sc Ken’ichi Morooka} \btxandlong{}\ {\sc
+  Tsutomu Hasegawa}: {\em Service robot system with an informationally
+  structured environment}.
+\newblock Robotics and Autonomous Systems, 74:148 -- 165, 2015.
+
 \bibitem[Sal89]{salton89}
 {\sc Salton, Gerard}: {\em Automatic text processing --- the transformation,
   analysis, and retrieval of information by computer}.
