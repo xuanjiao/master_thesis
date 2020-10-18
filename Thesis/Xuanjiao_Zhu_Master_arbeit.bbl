@@ -1,6 +1,21 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{NMMG17}
 
+\bibitem[ASE]{ASEARCH}
+{\em {A* search algorithm}}.
+\newblock \url{https://en.wikipedia.org/wiki/A*_search_algorithm}.
+\newblock accessed 2020-10-17.
+
+\bibitem[ASM15]{Afanasyev2015}
+{\sc Afanasyev, Ilya}, {\sc Artur Sagitov} \btxandlong{}\ {\sc Evgeni Magid}:
+  {\em ROS-Based SLAM for a Gazebo-Simulated Mobile Robot in Image-Based 3D
+  Model of Indoor Environment}.
+\newblock \Btxinlong{}\ {\sc Battiato, Sebastiano}, {\sc Jacques Blanc-Talon},
+  {\sc Giovanni Gallo}, {\sc Wilfried Philips}, {\sc Dan Popescu}
+  \btxandlong{}\ {\sc Paul Scheunders}\ (\btxeditorslong{}): {\em Advanced
+  Concepts for Intelligent Vision Systems}, \btxpageslong{}\ 273--283, Cham,
+  2015. Springer International Publishing.
+
 \bibitem[BMR{\etalchar{+}}17]{retire2017}
 {\sc {Booth}, K. E.~C.}, {\sc S.~C. {Mohamed}}, {\sc S.~{Rajaratnam}}, {\sc
   G.~{Nejat}} \btxandlong{}\ {\sc J.~C. {Beck}}: {\em Robots in Retirement
@@ -8,10 +23,32 @@
   Assistive Robots}.
 \newblock IEEE Intelligent Systems, 32(6):14--21, 2017.
 
+\bibitem[CSMV09]{CHRISTODOULOPOULOS20091172}
+{\sc Christodoulopoulos, K.}, {\sc V.~Sourlas}, {\sc I.~Mpakolas}
+  \btxandlong{}\ {\sc E.~Varvarigos}: {\em A comparison of centralized and
+  distributed meta-scheduling architectures for computation and communication
+  tasks in Grid networks}.
+\newblock Computer Communications, 32(7):1172 -- 1184, 2009.
+
+\bibitem[DEA]{DEADRECKONING}
+{\em {Dead reckoning}}.
+\newblock \url{https://en.wikipedia.org/wiki/Dead_reckoning}.
+\newblock accessed 2020-10-14.
+
 \bibitem[GMS17]{Ivan2017}
 {\sc Gavran, Ivan}, {\sc Rupak Majumdar} \btxandlong{}\ {\sc Indranil Saha}:
   {\em Antlab: A Multi-Robot Task Server}.
 \newblock ACM Trans. Embed. Comput. Syst., 16(5s), \btxmonseplong{} 2017.
+
+\bibitem[GZ]{GZ}
+{\em {Gazebo Main Page}}.
+\newblock \url{http://gazebosim.org/}.
+\newblock accessed 2020-10-14.
+
+\bibitem[HC17]{Pyo17}
+{\sc Hancheol~Cho, Leon~Jung, Darby~Lim}: {\em ROS Robot Programming
+  (English)}.
+\newblock ROBOTIS, 12 2017.
 
 \bibitem[IGM97]{Ikeda1997}
 {\sc Ikeda, Mitsuru}, {\sc Shogo Go} \btxandlong{}\ {\sc Riichiro Mizoguchi}:
@@ -25,6 +62,14 @@
   task allocation algorithms in multi-robot systems}.
 \newblock 2013 IEEE International Conference on Robotics and Biomimetics
   (ROBIO), \btxpageslong{}\ 2280--2285, 2013.
+
+\bibitem[KM16]{KIM2016386}
+{\sc Kim, Yongho} \btxandlong{}\ {\sc Eric~T. Matson}: {\em A Realistic
+  Decision Making for Task Allocation in Heterogeneous Multi-agent Systems}.
+\newblock Procedia Computer Science, 94:386 -- 391, 2016.
+\newblock The 11th International Conference on Future Networks and
+  Communications (FNC 2016) / The 13th International Conference on Mobile
+  Systems and Pervasive Computing (MobiSPC 2016) / Affiliated Workshops.
 
 \bibitem[KSD13]{Korsah13}
 {\sc Korsah, G.~Ayorkor}, {\sc Anthony Stentz} \btxandlong{}\ {\sc
@@ -46,7 +91,7 @@
 \newblock \Btxinlong{}\ {\em Proceedings of the Semantic Web Workshop at the
   WWW Conference}, Honolulu, HI, 2002.
 
-\bibitem[mov]{move_base_node}
+\bibitem[MOV]{MOVEBASE}
 {\em {Move Base Node}}.
 \newblock \url{http://wiki.ros.org/move_base}.
 \newblock accessed 2020-09-25.
@@ -59,6 +104,11 @@
 \newblock Special Issue on New Research Frontiers for Intelligent Autonomous
   Systems.
 
+\bibitem[PAR]{PARTICLE}
+{\em {Potential field}}.
+\newblock \url{https://en.wikipedia.org/wiki/Particle_filter}.
+\newblock accessed 2020-10-17.
+
 \bibitem[PNK{\etalchar{+}}15]{PYO2015148}
 {\sc Pyo, Yoonseok}, {\sc Kouhei Nakashima}, {\sc Shunya Kuwahata}, {\sc Ryo
   Kurazume}, {\sc Tokuo Tsuji}, {\sc Ken’ichi Morooka} \btxandlong{}\ {\sc
@@ -66,21 +116,47 @@
   structured environment}.
 \newblock Robotics and Autonomous Systems, 74:148 -- 165, 2015.
 
+\bibitem[POT]{POTENTIAL}
+{\em {potential field}}.
+\newblock
+  \url{http://www.cs.cmu.edu/~./motionplanning/lecture/Chap4-Potential-Field_howie.pdf}.
+\newblock accessed 2020-10-17.
+
+\bibitem[ros]{ros}
+{\em {ROS}}.
+\newblock \url{https://www.ros.org}.
+\newblock accessed 2020-10-14.
+
+\bibitem[RRT]{RRT}
+{\em {RRT (Rapidly-exploring Random Tree)}}.
+\newblock \url{https://en.wikipedia.org/wiki/Rapidly-exploring_random_tree}.
+\newblock accessed 2020-10-17.
+
+\bibitem[RVI]{RVIZ}
+{\em {Rviz}}.
+\newblock \url{http://wiki.ros.org/rviz}.
+\newblock accessed 2020-10-17.
+
 \bibitem[Sal89]{salton89}
 {\sc Salton, Gerard}: {\em Automatic text processing --- the transformation,
   analysis, and retrieval of information by computer}.
 \newblock Addison-Wesley series in computer science. Addison-Wesley, 1989.
 
-\bibitem[sla]{slam}
-{\em {SLAM}}.
-\newblock
-  \url{https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#ros-1-slam}.
-\newblock accessed 2020-09-28.
+\bibitem[Seo17]{Woojin17}
+{\sc Seo, Woojin}: {\em Indoor Dead Reckoning Localization Using Ultrasonic
+  Anemometer with IMU}.
+\newblock Journal of Sensors, 2017:12, 2017.
 
 \bibitem[SM07]{Shah07}
 {\sc {Shah}, K.} \btxandlong{}\ {\sc Y.~{Meng}}: {\em Communication-Efficient
   Dynamic Task Scheduling for Heterogeneous Multi-Robot Systems}.
 \newblock \Btxinlong{}\ {\em 2007 International Symposium on Computational
   Intelligence in Robotics and Automation}, \btxpageslong{}\ 230--235, 2007.
+
+\bibitem[T3S]{T3SLAM}
+{\em {turtlebot3 SLAM}}.
+\newblock
+  \url{https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/}.
+\newblock accessed 2020-10-17.
 
 \end{thebibliography}

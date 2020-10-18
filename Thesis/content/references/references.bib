@@ -28,17 +28,77 @@
   annotate = {TFIDF},
 }
 
-@misc{move_base_node,
+@BOOK{Pyo17,
+  title     = {ROS Robot Programming (English)},
+  author    = {Hancheol Cho, Leon Jung, Darby Lim},
+  month     = {12},
+  year      = {2017},
+  publisher = {ROBOTIS},
+  totalpages= {487},
+  isbn      = {9791196230715},
+  url       = {\url{http://community.robotsource.org/t/download-the-ros-robot-programming-book-for-free/51}},
+}
+
+@misc{T3SLAM,
+   Howpublished = {\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/}},
+   Note = {accessed 2020-10-17},
+   Title = {{turtlebot3 SLAM}}
+}
+
+@misc{ROS,
+   Howpublished = {\url{https://www.ros.org}},
+   Note = {accessed 2020-10-14},
+   Title = {{ROS}}
+}
+
+@misc{GZ,
+   Howpublished = {\url{http://gazebosim.org/}},
+   Note = {accessed 2020-10-14},
+   Title = {{Gazebo Main Page}}
+}
+
+@misc{RVIZ,
+   Howpublished = {\url{http://wiki.ros.org/rviz}},
+   Note = {accessed 2020-10-17},
+   Title = {{Rviz}}
+}
+
+@misc{MOVEBASE,
    Howpublished = {\url{http://wiki.ros.org/move_base}},
    Note = {accessed 2020-09-25},
    Title = {{Move Base Node}}
 }
 
-@misc{slam,
-   Howpublished = {\url{https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#ros-1-slam}},
-   Note = {accessed 2020-09-28},
-   Title = {{SLAM}}
+@misc{DEADRECKONING,
+   Howpublished = {\url{https://en.wikipedia.org/wiki/Dead_reckoning}},
+   Note = {accessed 2020-10-14},
+   Title = {{Dead reckoning}}
 }
+
+@misc{ASEARCH,
+   Howpublished = {\url{https://en.wikipedia.org/wiki/A*_search_algorithm}},
+   Note = {accessed 2020-10-17},
+   Title = {{A* search algorithm}}
+}
+
+@misc{POTENTIAL,
+   Howpublished = {\url{http://www.cs.cmu.edu/~./motionplanning/lecture/Chap4-Potential-Field_howie.pdf}},
+   Note = {accessed 2020-10-17},
+   Title = {{potential field}}
+}
+
+@misc{PARTICLE,
+   Howpublished = {\url{https://en.wikipedia.org/wiki/Particle_filter}},
+   Note = {accessed 2020-10-17},
+   Title = {{Potential field}}
+}
+
+@misc{RRT,
+   Howpublished = {\url{https://en.wikipedia.org/wiki/Rapidly-exploring_random_tree}},
+   Note = {accessed 2020-10-17},
+   Title = {{RRT (Rapidly-exploring Random Tree)}}
+}
+
 
 @article{Ivan2017,
 author = {Gavran, Ivan and Majumdar, Rupak and Saha, Indranil},
@@ -73,6 +133,14 @@ eprint = { https://doi.org/10.1177/0278364913496484},
 abstract = { Task allocation is an important aspect of many multi-robot systems. The features and complexity of multi-robot task allocation (MRTA) problems are dictated by the requirements of the particular domain under consideration. These problems can range from those involving instantaneous distribution of simple, independent tasks among members of a homogenous team, to those requiring the time-extended scheduling of complex interrelated multi-step tasks for members of a heterogenous team related by several constraints. The existing widely used taxonomy for task allocation in multi-robot systems was designed for problems with independent tasks and does not deal with problems with interrelated utilities and constraints. While that taxonomy was a ground-breaking contribution to the MRTA literature, a survey of recent work in MRTA reveals that it is no longer a sufficient taxonomy, due to the increasing importance of interrelated utilities and constraints in realistic MRTA problems under consideration. Thus, in this paper, we present a new, comprehensive taxonomy, iTax, that explicitly takes into consideration the issues of interrelated utilities and constraints. Our taxonomy maps categories of MRTA problems to existing mathematical models from combinatorial optimization and operations research, and hence draws important parallels between robotics and these fields. }
 }
 
+@ARTICLE{Woojin17,
+author={ Seo, Woojin}, 
+journal={Journal of Sensors},   
+title={Indoor Dead Reckoning Localization Using Ultrasonic Anemometer with IMU},   
+year={2017},  
+volume={2017},  
+pages={12},
+}
 
 @ARTICLE{retire2017, 
  author={K. E. C. {Booth} and S. C. {Mohamed} and S. {Rajaratnam} and G. {Nejat} and J. C. {Beck}}, 
@@ -121,8 +189,58 @@ keywords = "Informationally structured environment, Intelligent space, Distribut
 abstract = "Daily life assistance is one of the most important applications for service robots. For comfortable assistance, service robots must recognize the surrounding conditions correctly, including human motion, the position of objects, and obstacles. However, since the everyday environment is complex and unpredictable, it is almost impossible to sense all of the necessary information using only a robot and sensors attached to it. In order to realize a service robot for daily life assistance, we have been developing an informationally structured environment using distributed sensors embedded in the environment. The present paper introduces a service robot system with an informationally structured environment referred to the ROS–TMS. This system enables the integration of various data from distributed sensors, as well as storage of these data in an on-line database and the planning of the service motion of a robot using real-time information about the surroundings. In addition, we discuss experiments such as detection and fetch-and-give tasks using the developed real environment and robot."
 }
 
-@ARTICLE{Dong2015,  author={D. {Lee} and S. A. {Zaheer} and J. {Kim}},  journal={IEEE Transactions on Automation Science and Engineering},   title={A Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task Allocation},   year={2015},  volume={12},  number={4},  pages={1469-1481},}
+@InProceedings{Afanasyev2015,
+author="Afanasyev, Ilya and Sagitov, Artur and Magid, Evgeni",
+editor="Battiato, Sebastiano and Blanc-Talon, Jacques and Gallo, Giovanni and Philips, Wilfried and Popescu, Dan and Scheunders, Paul",
+title="ROS-Based SLAM for a Gazebo-Simulated Mobile Robot in Image-Based 3D Model of Indoor Environment",
+booktitle="Advanced Concepts for Intelligent Vision Systems",
+year="2015",
+publisher="Springer International Publishing",
+address="Cham",
+pages="273--283",
+abstract="Nowadays robot simulators have robust physics engines, high-quality graphics, and convenient interfaces, affording researchers to substitute physical systems with their simulation models in order to pre-estimate the performance of theoretical findings before applying them to real robots. This paper describes Gazebo simulation approach to simultaneous localization and mapping (SLAM) based on Robot Operating System (ROS) using PR2 robot. The ROS-based SLAM approach applies Rao-Blackwellized particle filters and laser data to locate the PR2 robot in unknown environment and build a map. The real room 3D model was obtained from camera shots and reconstructed with Autodesk 123D Catch and MeshLab software. The results demonstrate the fidelity of the simulated 3D room to the obtained from the robot laser system ROS-calculated map and the feasibility of ROS-based SLAM with a Gazebo-simulated mobile robot to its usage in camera-based 3D environment. This approach will be further extended to ROS-based robotic simulations in Gazebo with a Russian anthropomorphic robot AR-601M.",
+isbn="978-3-319-25903-1"
+}
 
+@ARTICLE{Dong2015,  
+author={D. {Lee} and S. A. {Zaheer} and J. {Kim}},  
+journal={IEEE Transactions on Automation Science and Engineering},   
+title={A Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task Allocation},   
+year={2015},  
+volume={12},  
+number={4},  
+pages={1469-1481},
+}
+
+@ARTICLE{CHRISTODOULOPOULOS20091172,
+title = "A comparison of centralized and distributed meta-scheduling architectures for computation and communication tasks in Grid networks",
+journal = "Computer Communications",
+volume = "32",
+number = "7",
+pages = "1172 - 1184",
+year = "2009",
+issn = "0140-3664",
+doi = "https://doi.org/10.1016/j.comcom.2009.03.004",
+url = "http://www.sciencedirect.com/science/article/pii/S0140366409000954",
+author = "K. Christodoulopoulos and V. Sourlas and I. Mpakolas and E. Varvarigos",
+keywords = "Grid networks, Centralized vs. distributed architecture, Task scheduling, Routing and data scheduling, Online algorithms",
+abstract = "The management of Grid resources requires scheduling of both computation and communication tasks at various levels. In this study, we consider the two constituent sub-problems of Grid scheduling, namely: (i) the scheduling of computation tasks to processing resources and (ii) the routing and scheduling of the data movement in a Grid network. Regarding computation tasks, we examine two typical online task scheduling algorithms that employ advance reservations and perform full network simulation experiments to measure their performance when implemented in a centralized or distributed manner. Similarly, for communication tasks, we compare two routing and data scheduling algorithms that are implemented in a centralized or a distributed manner. We examine the effect network propagation delay has on the performance of these algorithms. Our simulation results indicate that a distributed architecture with an exhaustive resource utilization update strategy yields better average end-to-end delay performance than a centralized architecture."
+}
+
+@ARTICLE{KIM2016386,
+title = "A Realistic Decision Making for Task Allocation in Heterogeneous Multi-agent Systems",
+journal = "Procedia Computer Science",
+volume = "94",
+pages = "386 - 391",
+year = "2016",
+note = "The 11th International Conference on Future Networks and Communications (FNC 2016) / The 13th International Conference on Mobile Systems and Pervasive Computing (MobiSPC 2016) / Affiliated Workshops",
+issn = "1877-0509",
+doi = "https://doi.org/10.1016/j.procs.2016.08.059",
+url = "http://www.sciencedirect.com/science/article/pii/S1877050916318099",
+author = "Yongho Kim and Eric T. Matson",
+keywords = "Multi-robot Task Allocation (MOTA), Multi-agent Systems (MAS), Scheduling algorithms.",
+abstract = "Task allocation is one of the keys to maximize organizational benefits by handling as many tasks as possible. Many computational multi-agent systems use agent's capability for task allocation. When a task arrives at the queue to be delivered a task allocator will determine which takes the task by finding the best-capable agent. In real world situation, each agent should not only consider the new task with their capability, but also tasks that they are currently handling before sending their capability to the task allocator. This research study proposes a CPU-scheduling based algorithm to allow agents to perform rational decision making when they think that they can handle the new task while taking care of its current tasks. The result shows that applying algorithm provide a significant improvement of their performance."
+}
 
 @INPROCEEDINGS{Shah07, 
   author={K. {Shah} and Y. {Meng}}, 
@@ -130,7 +248,10 @@ abstract = "Daily life assistance is one of the most important applications for 
   title={Communication-Efficient Dynamic Task Scheduling for Heterogeneous Multi-Robot Systems},   
   year={2007},  
   volume={},  number={},  
-  pages={230-235},}
+  pages={230-235},
+  }
+
+  
 
 
 

@@ -8,41 +8,42 @@
 %	\item Lost Communication: a lost communication occurs when the conditions of the environment are not sufficient or the distance between sender and receiver is to hight to transmit information.
 %	\item Wait until rescue: when the robot loses its communication, the pre-designed state machine will stop the motors to keep the actual position. Energy safe mode will be enabled, at the same time that a channel transceiver daemon will send SOS messages every T and wait for reply during T sec. 
 %\end{itemize}
-In our system there are multiple robots that must handle various tasks. For example, visiting given rooms. To tackle this problem, a communication efficient task allocation system is designed. 
-This system allocate task according to system resources, including environment factors, robot status and task specifications. Once this information is attained, the task allocation system assign robot a set of task.
+A communication efficient task scheduling system is designed to help multiple robots handle various task. 
+This system schedule task according to system resources, including system environment information, robot status and task specifications. Once this information is attained, the task scheduling system sends robot a set of task.
 
 \begin{itemize}
-	\item \textsl{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as gathering measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
-	\item \textsl{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain actions\cite{Ivan2017}.
-	\item \textsl{Environment.} In this project, all robots are considered moving in an office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment factors, such as room locations and occupancy possibilities help task allocation.
+	\item \textbf{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as gathering measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
+	\item \textbf{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain actions\cite{Ivan2017}.
+	\item \textbf{Environment.} In this project, all robots are considered moving in an office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment factors, such as room locations and occupancy possibilities help task scheduling.
 \end{itemize}
 
 \section{Architecture Design}
 
 The architecture of the system consist of several parts: centralized pool, robot controller, navigation stack, charging station and system environment(Figure \ref{fig:system_architecture}). 
+
 \begin{itemize}
-	\item \textsl{Centralized Pool.} A centralized pool consist of several modules: multi-robot task allocation module, map information, database, execution and monitoring. The database and map information modules contain the environment information(Figure \ref{fig:database_er}). The execution and monitoring module interacts with robots. The multi-robot task allocation module allocate tasks to robots.
-	\item \textsl{Robot Controller.} A robot controller contains several modules: local task queue, execution and robot action. The local task queue stores tasks that the robot needs to complete sequentially. The execution module receives commands from centralized pool and decides when and which task the robot should run. The robot action module run tasks in local task queue when receives decision from execute module and interacts with enviroment and its navigation stack.
-	\item \textsl{Navigation stack.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. It makes robot move to desired positions using the navigation stack. Its advantages include optionally performing recovery behaviors when the robot perceives itself as stuck\cite{move_base_node}. 
+	\item \textbf{Centralized Pool.} A centralized pool consist of several modules: multi-robot task scheduling module, map information, database, execution and monitoring. The database stores dynamic indoor enviroment information such as measurement reuslt. The map information modules contain the static map information(Figure \ref{fig:database_er}). The execution and monitoring module interacts with robots. The multi-robot task scheduling module schedule tasks to robots.
+	\item \textbf{Robot Controller.} A robot controller contains several modules: local task queue, execution and robot action. The local task queue stores tasks that the robot needs to complete sequentially. The execution module receives commands from centralized pool and decides when and which task the robot should run. The robot action module run tasks in local task queue when receives decision from execute module and interacts with enviroment and its navigation stack.
+	\item \textbf{Navigation stack.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. It makes robot move to desired positions using the navigation stack. Its advantages include optionally performing recovery behaviors when the robot perceives itself as stuck\cite{MOVEBASE}. 
 \end{itemize} 
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{content/images/ch3/architecture.drawio.png}
-	\caption{System Architecture}
+	\caption{Multi-robot Task Scheduling Architecture}
 	\label{fig:system_architecture}
 \end{figure}
 
 \section{Environment and Gather Environment Infomation Approach}
 \subsection{System enviroment}
 \label{sec:system_enviroment}
-As is discussed in the previous section, the system environment is an office environment. The SLAM (Simultaneous Localization and Mapping) is a technique to draw a map by estimating current location in an arbitrary space \cite{slam}. Map (Figure \ref{fig:room_division}) is created by SLAM.
+As is discussed in the previous section, the system environment is an office environment. The SLAM (Simultaneous Localization and Mapping) is a technique to draw a map by estimating current location in an arbitrary space \cite{T3SLAM}. Map (Figure \ref{fig:room_division}) is created by SLAM.
 
 \paragraph{Important areas and coordinates:}
 \begin{itemize}
-	\item \textsl{Rooms.} The enviroment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinates of a point are in a region, it can be judged that the point is located in the corresponding room.
-	\item \textsl{Doors.} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by a ROS door simulator node, which broadcasts positions and door status periodically. The broadcast messages are received and filtered by robots.
-	\item \textsl{Charging Stations.} The positions of charging stations (Figure \ref{fig:positions_door_station}) are used by ROS charging station nodes. For details please refer to Section \ref{sec:charging_station}.
+	\item \textbf{Rooms.} The enviroment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinates of a point are in a region, it can be judged that the point is located in the corresponding room.
+	\item \textbf{Doors.} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by a ROS door simulator node, which broadcasts positions and door status periodically. The broadcast messages are received and filtered by robots.
+	\item \textbf{Charging Stations.} The positions of charging stations (Figure \ref{fig:positions_door_station}) are used by ROS charging station nodes. For details please refer to Chapter \ref{sec:charging_station}.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -60,21 +61,21 @@ As is discussed in the previous section, the system environment is an office env
 \end{figure}
 
 \subsection{Gather Environment Infomation Approach}
-The goal of this project is to allocate tasks to robots based on the information gathered about room occupancy. However, current robot sensing technology, including robots equipped with external sensors, is not good enough to gather information of whole office enviroment satisfactorily. 
+The goal of this project is to schedule tasks to robots based on the information gathered about room occupancy. However, current robot sensing technology, including robots equipped with external sensors, is not good enough to gather information of whole office enviroment satisfactorily. 
 For example, compared with office enviroment, the field within sensing range is rather narrow. Therefore, use of external enviroment information sources is essential to bridge the local knowledge gap.
 In this project, since distributed sensor network cost higher than robot and its network connections consume much energy, the fixed sensors capable of short-distance communication are installed in the enviroment. They can share their environment information with robots, thus robots don't need to equip with numerous sensors \cite{PYO2015148}.
 Robots interact with sensors while moving in the enviroment and report those enviroment information to centralized pool.
-The details about centralized pool storing and studying from enviroment information are discussed in section \ref{sec:task_allocation_procedure}.
+The details about centralized pool storing and studying from enviroment information are discussed in section \ref{sec:task_scheduling_procedure}.
 
 %\subsection{Environment Learning}
-%IoT system should be adopted in the system enviroment, which can provide enough enviroment information that help multi-robot task allocation system to make decisions. 
+%IoT system should be adopted in the system enviroment, which can provide enough enviroment information that help multi-robot task scheduling system to make decisions. 
 
 %\todo{More Advantages}
 
 \section{Tasks and Task Composition and Decomposition Approach}
 
 \subsection{Task Specification}
-Robots should execute tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and allocate tasks to robots based on the environmental information.  Therefore, three task names are defined: ``gather enviroment information task'' asks a robot gathers enviroment information from sensors, ``execute task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
+Robots should execute tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and schedule tasks to robots based on the environmental information.  Therefore, three task names are defined: ``gather enviroment information task'' asks a robot gathers enviroment information from sensors, ``execute task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
 The task specifications are stored in ``task table'' in database (Table \ref{tab:db_task_table}).
 
 
@@ -82,20 +83,20 @@ The task specifications are stored in ``task table'' in database (Table \ref{tab
 Tasks can be distinguished to ``simple tasks'' and ``Complex tasks''.  ``Simple tasks'' comprises a single action that can be performed by a single robot. A ``Complex tasks'' can be broken up or decomposed into multiple ``small tasks''. Those sub-tasks of a complex task need to be performed by the same robot.
 In this project, the centralized poll not only can create ``simple tasks'' according to task specifications (Table \ref{tab:db_task_table}), but also can analyze the dependencies of ``simple tasks'' and form a dependency chain to compose ``complex tasks''. The robot (robot controller) can decompose a ``Complex task'' to ``simple tasks'' and execute ``small tasks'' according to their dependencies.
 
-\section{Multi-robot Task Allocation Approach}
-The multi-robot task allocation module in the architecture should perform multi-robot task allocation. 
-The implementation of task allocation is shown in Section \ref{sec:task_allocation_procedure}. There are some general rules for multi-robot task allocation.
+\section{Multi-robot Task Scheduling Approach}
+The multi-robot task scheduling module in the architecture should perform multi-robot task scheduling. 
+The implementation of task scheduling is shown in Chapter \ref{sec:task_scheduling_procedure}. There are some general rules for multi-robot task scheduling.
 
 
 \begin{enumerate}
-	\label{sec:task_allocation_rule}
-	\item When the battery of robot belows 10\%, a charging task will be created and allocated to robot.
-	\item When the battery of robot aboves 10\%, firstly, ``simple exeucte tasks'' according to the task table in database are created. Secondly, ``complex execute tasks'' will be composed and one of them will be selcted and allocated to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
-    \item If there are no ``execute tasks'' in database or after ``execute tasks allocation'', the cost of tasks exceeds the threshold, a ``gather environment task'' will be created and allocated to robot.
+	\label{sec:task_scheduling_rule}
+	\item When the battery of robot belows 10\%, a charging task will be created and sent to robot.
+	\item When the battery of robot aboves 10\%, firstly, ``simple exeucte tasks'' according to the task table in database are created. Secondly, ``complex execute tasks'' will be composed and one of them will be selcted and sent to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
+    \item If there are no ``execute tasks'' in database or after ``execute tasks scheduling'', the cost of tasks exceeds the threshold, a ``gather environment task'' will be created and sent to robot.
 \end{enumerate}
 
 \subsection{Execute Task}
-As discussed in Section \ref{sec:task_allocation_rule}, one of the ``complex execute tasks'' should be selected for requesting robot. In order to select an ``execute task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex execute tasks'' with the lowest cost will be selected.
+As discussed in Chapter \ref{sec:task_scheduling_rule}, one of the ``complex execute tasks'' should be selected for requesting robot. In order to select an ``execute task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex execute tasks'' with the lowest cost will be selected.
 
 \begin{equation}
 	\label{eq:large_execute_task_cost} 
@@ -109,11 +110,11 @@ As discussed in Section \ref{sec:task_allocation_rule}, one of the ``complex exe
 
 \paragraph{Decision variables}
 \begin{itemize}
-\item \textsl{Task Priority.}  The priority is discussed Section \ref{sec:task_table}.
-\item \textsl{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the target point.
+\item \textbf{Task Priority.}  The priority is discussed Chapter \ref{sec:task_table}.
+\item \textbf{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the target point.
 	An example of ``measurement result'' table is shown in Table \ref{tab:db_measurement_result}, an example of ``open possibility'' table is shown in Table \ref{tab:db_open_possibilities}. 
-\item \textsl{Waiting Time. } The waiting time is the difference between the current simulation time and start time of the first task to be executed. $T_{waiting} = T_{first\_task} - T_{now}$
-\item \textsl{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``execute task'' that contains n simple task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
+\item \textbf{Waiting Time. } The waiting time is the difference between the current simulation time and start time of the first task to be executed. $T_{waiting} = T_{first\_task} - T_{now}$
+\item \textbf{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``execute task'' that contains n simple task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
 \end{itemize}
 
 
@@ -133,7 +134,7 @@ As discussed in Section \ref{sec:task_allocation_rule}, one of the ``complex exe
 
 
 \subsection{Environment Task}
-As is discussed in section \ref{sec:task_allocation_rule}, once there are no suitable tasks in centralized pool, the task allocation module should create a ``gather environment information task'' to gather more measurement results and further more improve the accuracy of ``open possibilities'' table.
+As is discussed in section \ref{sec:task_scheduling_rule}, once there are no suitable tasks in centralized pool, the task scheduling module should create a ``gather environment information task'' to gather more measurement results and further more improve the accuracy of ``open possibilities'' table.
 To create a ``gather environment information task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of doors. A ``gather environment information task'' to the door with the lowest cost will be created.
 
 \begin{equation}
@@ -148,15 +149,15 @@ To create a ``gather environment information task'', Equation \ref{eq:door_cost}
 
 \paragraph{Decision variables}
 \begin{itemize}
-	\item \textsl{Door Last Update Time.} The latest timestamp when the door is measured.
-	\item \textsl{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the front of the target door.
-	\item \textsl{Battery Consumption.} The battery consumption is related to the trajectory from robot to the front of the door. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
+	\item \textbf{Door Last Update Time.} The latest timestamp when the door is measured.
+	\item \textbf{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the front of the target door.
+	\item \textbf{Battery Consumption.} The battery consumption is related to the trajectory from robot to the front of the door. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
 \end{itemize}
 
 
 
 \subsection{Charging Task}
-As is discussed in section \ref{sec:task_allocation_rule}, once a robot sends task request to the centralized pool, the centralized pool should figure out whether this robot need charging, if yes it should create a ``charging task'' for requesting robot. 
+As is discussed in section \ref{sec:task_scheduling_rule}, once a robot sends task request to the centralized pool, the centralized pool should figure out whether this robot need charging, if yes it should create a ``charging task'' for requesting robot. 
 To create a ``charging task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of charging station. A ``charging task'' to the charging station with the lowest cost will be created.
 
 \begin{equation}	
@@ -170,7 +171,7 @@ To create a ``charging task'', Equation \ref{eq:door_cost} and following decisio
 
 \paragraph{Decision variables}
 \begin{itemize}
-	\item \textsl{Remain Time.} It describes how long will a charging station be free. 
-	\item \textsl{Battery Consumption.} Similar to ``execute task'' allocation, the battery consumption is related to the trajectory from robot to the charging station. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
+	\item \textbf{Remain Time.} It describes how long will a charging station be free. 
+	\item \textbf{Battery Consumption.} Similar to ``execute task'' scheduling, the battery consumption is related to the trajectory from robot to the charging station. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
 \end{itemize}
 

@@ -120,6 +120,26 @@
         {
             "rule": "ENGLISH_WORD_REPEAT_RULE",
             "sentence": "^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Experiment Duration Total Task Succedded Task Expired Task Failed Task 1 1 -1 -10 00:11:35 15 12 3 0 1 50 -50 -50 00:11:35 15 12 3 0 25 20 0 0 00:11:35 15 12 3 0 35 30 0 0 00:11:35 15 12 3 0 40 10 0 0 00:11:35 15 12 3 0 45 1 -1 -1 00:11:35 15 12 3 0 50 50 -50 -1 00:11:35 15 12 3 0 Best weight combinations with task interval 45s\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QIt has plugins such as “rqttftree”, “rqtplot” and “rqtgraph” rqttftree rqttftree is a type of rqt.\\E$"
+        },
+        {
+            "rule": "UPPERCASE_SENTENCE_START",
+            "sentence": "^\\Qrqt is an intergration of more than 30 Qt-based ROS GUI development tool.\\E$"
+        },
+        {
+            "rule": "UPPERCASE_SENTENCE_START",
+            "sentence": "^\\Qrqttftree of Multi-robot Scheduling System rqtgraph rqtgraph is a type of rqt.\\E$"
+        },
+        {
+            "rule": "UPPERCASE_SENTENCE_START",
+            "sentence": "^\\Qrqtgraph is a type of rqt.\\E$"
+        },
+        {
+            "rule": "UPPERCASE_SENTENCE_START",
+            "sentence": "^\\Qrqtgraph of Multi-robot Scheduling System\\E$"
         }
     ],
     "ltex.workspaceFolderDictionary": {
