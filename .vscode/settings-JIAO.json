@@ -1,0 +1,135 @@
+{
+    
+        "latex-workshop.view.pdf.viewer": "external",
+        "latex-workshop.view.pdf.external.viewer.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+        "latex-workshop.view.pdf.external.viewer.args": [
+            "0",
+            "%PDF%"
+        ],
+        "latex-workshop.view.pdf.external.synctex.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
+        "latex-workshop.view.pdf.external.synctex.args": [
+            "-r",
+            "-b",
+            "%LINE%",
+            "%PDF%",
+            "%TEX%",
+        ],
+    
+    "windows":{
+        "latex-workshop.view.pdf.external.synctex.command": "D:/Program Files (x86)/SumatraPDF/SumatraPDF.exe",
+        "latex-workshop.view.pdf.external.synctex.args": [
+            "-forward-search",
+            "%TEX%",
+            "%LINE%",
+            "-reuse-instance",
+            "-inverse-search",
+            "code \"D:\\Program Files (x86)\\Microsoft VS Code\\resources\\app\\out\\cli.js\" -r -g \"%f:%l\"",
+            "%PDF%",
+        ],
+    },
+
+    "ltex.ignoreRuleInSentence": [
+        {
+            "rule": "MORFOLOGIK_RULE_EN_US",
+            "sentence": "^\\QThe movebase node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot.\\E$"
+        },
+        {
+            "rule": "MORFOLOGIK_RULE_EN_US",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on execute task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on execute task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+            "sentence": "^\\QTask Attributes Start time Finish time Explanation The time when robot start moving The time when robot finished interacting with the target Task attributes part 2\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_BEGINNING_RULE",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 2 10:00:00 10:59:59 0.80 2 RanToCompletion 0 2020-06-01 9:00:00 Succedded Task Table in Database\\E$"
+        },
+        {
+            "rule": "PUNCTUATION_PARAGRAPH_END",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 2 10:00:00 10:59:59 0.80 2 RanToCompletion 0 2020-06-01 9:00:00 Succeeded Task Table in Database\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QWhen robot run an execute task, the robot moves to a given point ether in corridor or in the room.\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QThe execute task is determined by users but must be in the range of [2,4].\\E$"
+        },
+        {
+            "rule": "A_INFINITIVE",
+            "sentence": "^\\QThe execute module receive commands from centralized pool and decide when and which task the robot should perform.\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask Attribute Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task arributes part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator GatherEnvironmentInfo Door No 1 Centralized Pool Execute task Any point Dependent on Execute-task 2,3,4 User Charging Charging station No 5 Centralized Pool Task Specifications Part 1\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on \"execute task\" 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 2 0.80 2 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 Task Table in Database\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask Id Task Type Start Time Target Id Robot Id Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 2 5 1 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 22 2 2 RanToCompletion 0 2020-06-01 9:01:20 Succeeded 3 Gather environment information task 2020-06-01 9:02:00 2 2 1 Running 0 2020-06-01 9:02:40 Succeeded Task Table in Database\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size GatherEnvironmentInfo task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QTask typeTask Specifications Target Dependency Priority Generator Task Size Gather environment infomation task Door No 1 Centralized pool Small task Execute task Any point Dependent on “execute task” 2,3,4 User Small task (in database) or large task (in centralized pool) Charging Task Charging station No 5 Centralized Pool Small task Task Specifications\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\Q())Gazebo Gazebo ()FigufigureF gafig:gazebo_model\\E$"
+        },
+        {
+            "rule": "EN_UNPAIRED_BRACKETS",
+            "sentence": "^\\QThe coorporrdinates of doors, charin different colors ())FIgurei\\E$"
+        },
+        {
+            "rule": "CD_NN",
+            "sentence": "^\\QTask ID Task Type Start Time Target ID Robot ID Priority Status dependency Finish Time Description 1 Charging task 2020-06-01 9:00:00 18 1 5 RanToCompletion 0 2020-06-01 9:00:20 Succeeded 2 Execute task 2020-06-01 9:00:50 22 2 2 RanToCompletion 0 2020-06-01 9:01:20 Succeeded 3 Gather environment information task 2020-06-01 9:02:00 2 2 1 Running 0 2020-06-01 9:02:40 Succeeded Task Table in Database\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\QExperiment \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Experiment Duration Total Task Succedded Task Expired Task Failed Task 6 20 1 -1 -1 00:09:26 15 10 5 0 7 40 1 -1 -1 00:09:48 15 10 5 0 8 60 1 -1 -1 00:09:50 15 10 5 0 9 80 1 -1 -1 00:09:47 15 10 5 0 10 100 1 -1 -1 00:09:06 15 10 5 0 11 1 20 -1 -1 00:09:48 15 10 5 0 12 1 40 -1 -1 00:09:38 15 9 5 0 13 1 60 -1 -1 00:10:09 15 10 5 0 14 1 80 -1 -1 00:09:46 15 10 5 0 15 1 100 -1 -1 00:10:01 15 10 5 0 16 1 1 -20 -1 00:09:48 15 10 5 0 17 1 1 -40 -1 00:09:50 15 10 5 0 18 1 1 -60 -1 00:10:24 15 10 5 0 19 1 1 -80 -1 00:09:48 15 10 5 0 20 1 1 -100 -1 00:09:35 15 10 5 0 21 1 1 -1 -20 00:10:22 15 10 5 0 22 1 1 -1 -40 00:10:02 15 10 5 0 23 1 1 -1 -60 00:09:48 15 10 5 0 24 1 1 -1 -80 00:09:51 15 10 5 0 only one desition variable changed others unchanged\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Experiment Duration Total Task Succedded Task Expired Task Failed Task 1 1 -1 -3 00:09:05 15 10 5 0 1 1 -30 -1 00:09:05 15 10 5 0 1 20 -20 -1 00:09:05 15 10 5 0 1 25 -1 -1 00:09:05 15 10 5 0 5 1 -5 -5 00:09:05 15 10 5 0 Best weight combinations with task interval 30s\\E$"
+        },
+        {
+            "rule": "ENGLISH_WORD_REPEAT_RULE",
+            "sentence": "^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Experiment Duration Total Task Succedded Task Expired Task Failed Task 1 1 -1 -10 00:11:35 15 12 3 0 1 50 -50 -50 00:11:35 15 12 3 0 25 20 0 0 00:11:35 15 12 3 0 35 30 0 0 00:11:35 15 12 3 0 40 10 0 0 00:11:35 15 12 3 0 45 1 -1 -1 00:11:35 15 12 3 0 50 50 -50 -1 00:11:35 15 12 3 0 Best weight combinations with task interval 45s\\E$"
+        }
+    ],
+    "ltex.workspaceFolderDictionary": {
+        "en-US": [
+            "RanToCompletion"
+        ]
+    },
+    "ltex.workspaceFolderDisabledRules": {
+        "en-US": [
+           
+        ]
+    }
+}

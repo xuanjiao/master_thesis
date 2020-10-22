@@ -12,8 +12,7 @@ A level-1 auxiliary file: content/chapters/chapter7.aux
 The style file: geralpha.bst
 A level-1 auxiliary file: content/chapters/clause.aux
 Database file #1: content/references/references.bib
-Warning--I didn't find a database entry for "levensthein65:_binar"
-Warning--to sort, need author or key in ros
+Warning--to sort, need author or key in ROSWEB
 Warning--to sort, need author or key in RVIZ
 Warning--to sort, need author or key in GZ
 Warning--to sort, need author or key in T3SLAM
@@ -23,45 +22,45 @@ Warning--to sort, need author or key in POTENTIAL
 Warning--to sort, need author or key in PARTICLE
 Warning--to sort, need author or key in RRT
 Warning--to sort, need author or key in MOVEBASE
-You've used 26 entries,
+You've used 25 entries,
             2768 wiz_defined-function locations,
-            772 strings with 9841 characters,
-and the built_in function-call counts, 10392 in all, are:
-= -- 1062
-> -- 403
+            766 strings with 9650 characters,
+and the built_in function-call counts, 10343 in all, are:
+= -- 1049
+> -- 409
 < -- 7
-+ -- 144
-- -- 138
-* -- 795
-:= -- 1520
-add.period$ -- 67
-call.type$ -- 26
-change.case$ -- 125
-chr.to.int$ -- 26
-cite$ -- 46
-duplicate$ -- 445
-empty$ -- 872
-format.name$ -- 154
-if$ -- 2323
++ -- 145
+- -- 139
+* -- 803
+:= -- 1496
+add.period$ -- 63
+call.type$ -- 25
+change.case$ -- 120
+chr.to.int$ -- 25
+cite$ -- 45
+duplicate$ -- 444
+empty$ -- 864
+format.name$ -- 153
+if$ -- 2317
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 28
-newline$ -- 120
-num.names$ -- 50
-pop$ -- 214
+missing$ -- 26
+newline$ -- 115
+num.names$ -- 49
+pop$ -- 206
 preamble$ -- 1
-purify$ -- 177
+purify$ -- 170
 quote$ -- 0
-skip$ -- 386
+skip$ -- 394
 stack$ -- 0
-substring$ -- 505
-swap$ -- 132
+substring$ -- 523
+swap$ -- 147
 text.length$ -- 7
-text.prefix$ -- 2
+text.prefix$ -- 1
 top$ -- 0
-type$ -- 200
+type$ -- 196
 warning$ -- 10
-while$ -- 63
-width$ -- 31
-write$ -- 312
-(There were 11 warnings)
+while$ -- 65
+width$ -- 30
+write$ -- 298
+(There were 10 warnings)

@@ -8,95 +8,75 @@
 %	\item Lost Communication: a lost communication occurs when the conditions of the environment are not sufficient or the distance between sender and receiver is to hight to transmit information.
 %	\item Wait until rescue: when the robot loses its communication, the pre-designed state machine will stop the motors to keep the actual position. Energy safe mode will be enabled, at the same time that a channel transceiver daemon will send SOS messages every T and wait for reply during T sec. 
 %\end{itemize}
-A communication efficient task scheduling system is designed to help multiple robots handle various task. 
-This system schedule task according to system resources, including system environment information, robot status and task specifications. Once this information is attained, the task scheduling system sends robot a set of task.
+% A communication efficient task scheduling system is designed to help multiple robots handle various task. 
+% This system schedule task according to system resources, including system environment information, robot status and task specifications. Once this information is attained, the task scheduling system sends robot a set of task.
 
-\begin{itemize}
-	\item \textbf{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as gathering measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
-	\item \textbf{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain actions\cite{Ivan2017}.
-	\item \textbf{Environment.} In this project, all robots are considered moving in an office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment factors, such as room locations and occupancy possibilities help task scheduling.
-\end{itemize}
+% \begin{itemize}
+% 	\item \textbf{Robot.} Each robot is responsible for moving in 2-dimensional physical space as well as gathering measurement result from sensors. It has a rechargeable battery, and its level drops as robot moves and rotates.
+% 	\item \textbf{Tasks.} Each task requires one or more robots to traverse a path in the workspace and carry out certain activitys\cite{Ivan2017}.
+% 	\item \textbf{Environment.} In this project, all robots are considered moving in an office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. The environment factors, such as room locations and occupation possibilities help task scheduling.
+% \end{itemize}
+This chapter introduces the important concepts used in the task scheduling system. Chapter \ref{sec:architecture_design} introduces the architecture of this multi-robot system. Chapter \ref{sec:environment_and_gather_information_approach} describes the indoor office environment as well as how robot gather room occupation information. Chapter \ref{sec:task_explan} explains the definition of task as well as its composition and decomposition. Chapter \ref{sec:task_scheduling_approach} introduces the multi-robot task scheduling approach applied in the system architecture.
 
 \section{Architecture Design}
+\label{sec:architecture_design}
 
 The architecture of the system consist of several parts: centralized pool, robot controller, navigation stack, charging station and system environment(Figure \ref{fig:system_architecture}). 
 
 \begin{itemize}
-	\item \textbf{Centralized Pool.} A centralized pool consist of several modules: multi-robot task scheduling module, map information, database, execution and monitoring. The database stores dynamic indoor enviroment information such as measurement reuslt. The map information modules contain the static map information(Figure \ref{fig:database_er}). The execution and monitoring module interacts with robots. The multi-robot task scheduling module schedule tasks to robots.
-	\item \textbf{Robot Controller.} A robot controller contains several modules: local task queue, execution and robot action. The local task queue stores tasks that the robot needs to complete sequentially. The execution module receives commands from centralized pool and decides when and which task the robot should run. The robot action module run tasks in local task queue when receives decision from execute module and interacts with enviroment and its navigation stack.
+	\item \textbf{Centralized Pool.} A centralized pool consist of several modules: multi-robot task scheduling module, map information, database, execution and monitoring. The database stores dynamic indoor environment information such as measurement result. The map information modules contain the static map information(Figure \ref{fig:database_er}). The execution and monitoring module interacts with robots. The multi-robot task scheduling module schedule tasks to robots.
+	\item \textbf{Robot Controller.} A robot controller contains several modules: local task queue, execution and robot activity. The local task queue stores tasks that the robot needs to complete sequentially. The execution module receives commands from centralized pool and decides when and which task the robot should run. The robot activity module run tasks in local task queue when receives decision from execute module and interacts with environment and its navigation stack.
 	\item \textbf{Navigation stack.} The move\_base node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. It makes robot move to desired positions using the navigation stack. Its advantages include optionally performing recovery behaviors when the robot perceives itself as stuck\cite{MOVEBASE}. 
 \end{itemize} 
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{content/images/ch3/architecture.drawio.png}
-	\caption{Multi-robot Task Scheduling Architecture}
+	\caption{Multi-robot Task Scheduling Architecture.}
 	\label{fig:system_architecture}
 \end{figure}
 
-\section{Environment and Gather Environment Infomation Approach}
-\subsection{System enviroment}
-\label{sec:system_enviroment}
-As is discussed in the previous section, the system environment is an office environment. The SLAM (Simultaneous Localization and Mapping) is a technique to draw a map by estimating current location in an arbitrary space \cite{T3SLAM}. Map (Figure \ref{fig:room_division}) is created by SLAM.
+\section{Environment and Gather Information Approach}
+\label{sec:environment_and_gather_information_approach}
 
-\paragraph{Important areas and coordinates:}
-\begin{itemize}
-	\item \textbf{Rooms.} The enviroment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinates of a point are in a region, it can be judged that the point is located in the corresponding room.
-	\item \textbf{Doors.} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by a ROS door simulator node, which broadcasts positions and door status periodically. The broadcast messages are received and filtered by robots.
-	\item \textbf{Charging Stations.} The positions of charging stations (Figure \ref{fig:positions_door_station}) are used by ROS charging station nodes. For details please refer to Chapter \ref{sec:charging_station}.
-\end{itemize}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/room_division.png}
-	\caption{Room division}
-	\label{fig:room_division}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/positions_door_station.png}
-	\caption{Positions of Charging Stations (C1-C3) and Doors (D1-D17)}
-	\label{fig:positions_door_station}
-\end{figure}
-
-\subsection{Gather Environment Infomation Approach}
-The goal of this project is to schedule tasks to robots based on the information gathered about room occupancy. However, current robot sensing technology, including robots equipped with external sensors, is not good enough to gather information of whole office enviroment satisfactorily. 
-For example, compared with office enviroment, the field within sensing range is rather narrow. Therefore, use of external enviroment information sources is essential to bridge the local knowledge gap.
-In this project, since distributed sensor network cost higher than robot and its network connections consume much energy, the fixed sensors capable of short-distance communication are installed in the enviroment. They can share their environment information with robots, thus robots don't need to equip with numerous sensors \cite{PYO2015148}.
-Robots interact with sensors while moving in the enviroment and report those enviroment information to centralized pool.
-The details about centralized pool storing and studying from enviroment information are discussed in section \ref{sec:task_scheduling_procedure}.
+%\subsection{Gather Infomation Approach}
+The goal of this project is to schedule tasks to robots based on the information gathered about room occupation. However, current robot sensing technology, including robots equipped with external sensors, is not good enough to gather information of whole office environment satisfactorily. 
+For example, compared with office environment, the field within sensing range is rather narrow. Therefore, use of external environment information sources is essential to bridge the local knowledge gap.
+In this project, since distributed IoT network cost higher than robot and its network connections consume much energy, the fixed sensors capable of short-distance communication are installed in the environment. They can share their environment information with robots, thus robots don't need to equip with numerous sensors \cite{PYO2015148}.
+Robots interact with sensors while moving in the environment and report this environment information to centralized pool.
+The details about centralized pool storing and studying from environment information are discussed in section \ref{sec:task_scheduling_procedure}.
 
 %\subsection{Environment Learning}
-%IoT system should be adopted in the system enviroment, which can provide enough enviroment information that help multi-robot task scheduling system to make decisions. 
+%IoT system should be adopted in the system environment, which can provide enough environment information that help multi-robot task scheduling system to make decisions. 
 
 %\todo{More Advantages}
 
 \section{Tasks and Task Composition and Decomposition Approach}
+\label{sec:task_explan}
 
 \subsection{Task Specification}
-Robots should execute tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and schedule tasks to robots based on the environmental information.  Therefore, three task names are defined: ``gather enviroment information task'' asks a robot gathers enviroment information from sensors, ``execute task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
+Robots should execute tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and schedule tasks to robots based on the environmental information. Therefore, three task names are defined: ``gather information task'' asks a robot gathers environment information from sensors, ``execute task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
 The task specifications are stored in ``task table'' in database (Table \ref{tab:db_task_table}).
 
-
 \subsection{Task Composition and Decomposition}
-Tasks can be distinguished to ``simple tasks'' and ``Complex tasks''.  ``Simple tasks'' comprises a single action that can be performed by a single robot. A ``Complex tasks'' can be broken up or decomposed into multiple ``small tasks''. Those sub-tasks of a complex task need to be performed by the same robot.
+Tasks can be distinguished to ``simple tasks'' and ``Complex tasks''.  ``Simple tasks'' comprises a single target position that can be performed by a single robot. A ``Complex tasks'' can be broken up or decomposed into multiple ``small tasks''. Those sub-tasks of a complex task need to be performed by the same robot.
 In this project, the centralized poll not only can create ``simple tasks'' according to task specifications (Table \ref{tab:db_task_table}), but also can analyze the dependencies of ``simple tasks'' and form a dependency chain to compose ``complex tasks''. The robot (robot controller) can decompose a ``Complex task'' to ``simple tasks'' and execute ``small tasks'' according to their dependencies.
 
 \section{Multi-robot Task Scheduling Approach}
+\label{sec:task_scheduling_approach}
+
 The multi-robot task scheduling module in the architecture should perform multi-robot task scheduling. 
 The implementation of task scheduling is shown in Chapter \ref{sec:task_scheduling_procedure}. There are some general rules for multi-robot task scheduling.
 
 
 \begin{enumerate}
-	\label{sec:task_scheduling_rule}
-	\item When the battery of robot belows 10\%, a charging task will be created and sent to robot.
-	\item When the battery of robot aboves 10\%, firstly, ``simple exeucte tasks'' according to the task table in database are created. Secondly, ``complex execute tasks'' will be composed and one of them will be selcted and sent to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
+	\item When the battery of robot below 10\%, a charging task will be created and sent to robot.
+	\item When the battery of robot above 10\%, firstly, ``simple execute tasks'' according to the task table in database are created. Secondly, ``complex execute tasks'' will be composed and one of them will be selected and sent to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
     \item If there are no ``execute tasks'' in database or after ``execute tasks scheduling'', the cost of tasks exceeds the threshold, a ``gather environment task'' will be created and sent to robot.
 \end{enumerate}
 
 \subsection{Execute Task}
-As discussed in Chapter \ref{sec:task_scheduling_rule}, one of the ``complex execute tasks'' should be selected for requesting robot. In order to select an ``execute task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex execute tasks'' with the lowest cost will be selected.
+As discussed in Chapter \ref{sec:task_scheduling_approach}, one of the ``complex execute tasks'' should be selected for requesting robot. In order to select an ``execute task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex execute tasks'' with the lowest cost will be selected.
 
 \begin{equation}
 	\label{eq:large_execute_task_cost} 
@@ -134,7 +114,7 @@ As discussed in Chapter \ref{sec:task_scheduling_rule}, one of the ``complex exe
 
 
 \subsection{Environment Task}
-As is discussed in section \ref{sec:task_scheduling_rule}, once there are no suitable tasks in centralized pool, the task scheduling module should create a ``gather environment information task'' to gather more measurement results and further more improve the accuracy of ``open possibilities'' table.
+As is discussed in section \ref{sec:task_scheduling_approach}, once there are no suitable tasks in centralized pool, the task scheduling module should create a ``gather environment information task'' to gather more measurement results and further more improve the accuracy of ``open possibilities'' table.
 To create a ``gather environment information task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of doors. A ``gather environment information task'' to the door with the lowest cost will be created.
 
 \begin{equation}
@@ -157,7 +137,7 @@ To create a ``gather environment information task'', Equation \ref{eq:door_cost}
 
 
 \subsection{Charging Task}
-As is discussed in section \ref{sec:task_scheduling_rule}, once a robot sends task request to the centralized pool, the centralized pool should figure out whether this robot need charging, if yes it should create a ``charging task'' for requesting robot. 
+As is discussed in section \ref{sec:task_scheduling_approach}, once a robot sends task request to the centralized pool, the centralized pool should figure out whether this robot need charging, if yes it should create a ``charging task'' for requesting robot. 
 To create a ``charging task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of charging station. A ``charging task'' to the charging station with the lowest cost will be created.
 
 \begin{equation}	

@@ -20,24 +20,34 @@
 
 
 
-In the system, cost functions are importent because an accurate cost function can improve the efficiency of task scheduling. Followings are goals of experiments:
+%In the system, cost functions are importent because an accurate cost function can improve the efficiency of task scheduling. Followings are goals of experiments:
+This chapter introduces the experiments performed on the implementation. 
+Chapter \ref{sec:experiment_set_up} presents precondition of experiments.
+Chapter \ref{sec:sensor_simulatior} introduces the simulated sensors.
+Chapter \ref{sec:gather_info_task_experiments} presents the experiments in the case that the centralized pool assign only ``gather information tasks'' to robots.
+Chapter \ref{sec:execute_task_experiments} presents the experiment in the case that centralized pool assign only ``execute tasks'' to robots. 
+% \begin{itemize}
+% 	\item Evaluate the need of decision variables.
+% 	\item Find the best weight combinations in cost functions.
+% 	\item Evaluate the hypothesis that the more robots, the faster to complete a task set, the higher the completion rate.
+% %	\item Investigate how different weight combinations in cost functions affact the performance \cite{Shiqi}. 
+% \end{itemize}
 
-\begin{itemize}
-	\item Evaluate the need of decision variables.
-	\item Find the best weight combinations in cost functions.
-	\item Evaluate the hypothesis that the more robots, the faster to complete a task set, the higher the completion rate.
-%	\item Investigate how different weight combinations in cost functions affact the performance \cite{Shiqi}. 
-\end{itemize}
 
 \section{Experiment Setup}
+\label{sec:experiment_set_up}
+There are some preparation before performing experiments. Three ros launch files were created. The first launch file was used to create a simulation environment. Firstly it loaded a gazebo world model with an office environment (Figure \ref{fig:gazebo_model}). The start time of this world was set to ``2020-06-01 9:00:00''. Secondly it loaded 3 robot model as well as robot state publisher to simulates robot activity such as LDR sensor measurement.
+The second launch file was used to start the navigation stack (move\_base node). It also started map server to load map created by SLAM\cite{T3SLAM} and open the GUI of Rviz. The third launch file starts ROS node ``centralized pool'',``robot controller'', ``sensor simulator'' and ``charging station''. Then the MySQL database and Charging event in database were started.
 
-\begin{enumerate}
-    \item Run Gazebo and load office world model (Figure \ref{fig:gazebo_model}). 
-    \item Configure word property. For example, the simulation time were configured as ``2020-06-01 9:00:00''.
-    \item Use SLAM \cite{T3SLAM} to create a map for the office model(Figure \ref{fig:exp_map}).
-    \item Start SQL server and Charging event in database \ref{fig:charging_station_event}.
-    \item Start ROS nodes including ``centralized pool'', ``robot controller'', ``sensor simulatior'' and ``charging station''.
-\end{enumerate}
+% \begin{enumerate}
+
+    
+%     \item Create and open a Gazebo world with 3 robot model and a given indoor office world model  Configure the simulation 
+%     \item Run navigation stack as well as Rviz. The map created with SLAM \cite{T3SLAM} should be load to the scene of Rviz(Figure \ref{fig:exp_map}).
+%     \item Start SQL server and Charging event in database \ref{fig:charging_station_event}. Starts ``charging station'' node. The charging event as well as ``charging station'' simulates real charging station that can increase robot battery level by time.
+%     \item Start ROS node ``sensor simulatior'' node. This node simulates real sensors attached on doors and broadcasts door status \ref{sec:sensor_simulatior}.
+%     \item Start ROS nodes ``centralized pool'' and ``robot controller''.
+% \end{enumerate}
 
 \begin{figure}[htbp]
 	\centering
@@ -63,11 +73,11 @@ In this project, a sensor simulator node is used to publish measurement results.
 
 
 \paragraph{Door Status Generation}
-For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on timeslot 10:00:00-10:59:59), in 80\% possibility a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
+For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on time slot 10:00:00-10:59:59), in 80\% possibility a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
 
 
 \paragraph{Sensor Message Subscribe}
-The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with position outside the comminication range and keep sensor messages within the communication range. With this process, the sensor simulatior sends instant measurement result to robots within communication range. However, if the system is applied to the real world, instead of sending instant measurement result, the real world sensor could send a record with history measurement.
+The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with position outside the communication range and keep sensor messages within the communication range. With this process, the sensor simulator sends instant measurement result to robots within communication range. However, if the system is applied to the real world, instead of sending instant measurement result, the real world sensor could send a record with history measurement.
 
 \begin{figure}
 \centering
@@ -76,62 +86,63 @@ The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}.
 \label{fig:sensor_simulator}
 \end{figure}
 
-\section{Enviroment Task Evaluation Experiment}
-
+\section{Gather Information Task Evaluation Experiment}
+\label{sec:gather_info_task_experiments}
 
 \subsection{Experiment: Use Enumeration Method to Find the Best Weight Combinations}
-\label{sec:enviroment_experiment_enumerate}
-\paragraph{Experiment Introduction} To find the best weight combinations, 30 experiemnt are created with $W_{\mbox{battery consumption}} \in \{ 0,1,5,10 \},  W_{\mbox{update}} \in \{-10,-5,-1\}, W_{\mbox{possibility}} \in \{-10,-5,-1,0\}$. In addition, the conditions $W_{\mbox{update}}=0$ was not testable, because during the experiment centralized pool generate the same ``gather enviroment information tasks``, which let robots not moving and measuring their nearest door. Experiment Duration T = 10 min.
+\label{sec:gather_info_experiment_enumerate}
+\paragraph{Experiment Introduction} 
+To find the best weight combinations, 30 experiment are created with $W_{\mbox{battery consumption}} \in \{ 0,1,5,10 \},  W_{\mbox{update}} \in \{-10,-5,-1\}, W_{\mbox{possibility}} \in \{-10,-5,-1,0\}$. In addition, the conditions $W_{\mbox{update}}=0$ was not testable, because during the experiment centralized pool generate the same ``gather information tasks``, which let robots not moving and measuring their nearest door. Experiment Duration T = 10 min.
 
-\paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. When robot fully charged, the first experiment started (Figure \ref{tab:env_exp_timeline}). After that, the task scheduling module in centralized pool created a ``gather enviroment information task'' to each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering enviroment information.
+\paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. When robot fully charged, the first experiment started (Figure \ref{tab:env_exp_timeline}). After that, the task scheduling module in centralized pool created a ``gather information task'' to each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering information.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch5/env_exp_timeline.drawio.png}
-    \caption{Enviroment Task Experiment Timeline}
+    \caption{Gather Information Task Experiment Timeline}
     \label{tab:env_exp_timeline}
 \end{figure}
 
-\paragraph{Analysis design} The experiment start time was when all robot finshed charging and started request task (Figure \ref{tab:env_exp_timeline}). The experiment duraion is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
+\paragraph{Analysis design} The experiment start time was when all robot finished charging and started request task (Figure \ref{tab:env_exp_timeline}). The experiment duration is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
 
 \begin{itemize}
-    \item \textbf{Last update.} The ``last update'' factor is the time difference between experiment start time and minial value in ``last update'' column in door table (Table \ref{tab:db_doors}) when an experiment finished. For example, ``last update'' factor in experiment 1 (Figure \ref{fig:enviroment_experiment_enumerate})  is ``00:02:57''. It means that the door in the worst case not be measured since 2 minites 57 seconds after experiment start.
-    \item \textbf{Average Update Interal} The ``Average update Interal'' means the average interval of door update. For example, ``Average Update Interal'' factor in experiment 1 (Figure \ref{fig:enviroment_experiment_enumerate}) is ``00:01:00''. It means that on average, every door is updated every minute.
-    \item \textbf{Succedded task.} The ``Number of task'' factor  means the number of succeeded ``gather enviroment information'' task.
+    \item \textbf{Last update.} The ``last update'' factor is the time difference between experiment start time and minimal value in ``last update'' column in door table (Table \ref{tab:db_doors}) when an experiment finished. For example, ``last update'' factor in experiment 1 (Figure \ref{fig:gather_info_experiment_enumerate})  is ``00:02:57''. It means that the door in the worst case not be measured since 2 minutes 57 seconds after experiment start.
+    \item \textbf{Average Update Interval} The ``Average update interval'' means the average interval of door update. For example, ``Average Update Interval'' factor in experiment 1 (Figure \ref{fig:gather_info_experiment_enumerate}) is ``00:01:00''. It means that on average, every door is updated every minute.
+    \item \textbf{Succeeded task.} The ``Number of task'' factor  means the number of succeeded ``gather information'' task.
 \end{itemize}
 
-\paragraph{Experiemnt Result} 
-Figure \ref{fig:enviroment_experiment_enumerate} represent the experiemnt result.
+\paragraph{Experiment Result} 
+Figure \ref{fig:gather_info_experiment_enumerate} represent the experiment result.
 
-\paragraph{Expariment Analysis} 
+\paragraph{Experiment Analysis} 
 
-As shown in experiment result, all ``Minial Last Update'' value is from 1 min to 5 min, which is much less than experiment duraion (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of robot is small (about 0.2 per second), the experiemnt duraion (10min) was not long enough to let three robot pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The idealy solution was to give both task to one robot. 
+As shown in experiment result, all ``Minimal Last Update'' value is from 1 min to 5 min, which is much less than experiment duration (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of robot is small (about 0.2 per second), the experiment duration (10min) was not long enough to let three robot pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The ideally solution was to give both task to one robot. 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.9\textwidth]{content/images/ch5/enviroment_enumerate.png}
+    \includegraphics[width = 0.9\textwidth]{content/images/ch5/gather_info_enumerate.png}
     \caption{Experiment: Use enumeration method to find best weight combination}
     \text{Green: $W_{\mbox{battery}}$ Pink: $ W_{\mbox{possibility}}$ Yellow: $W_{\mbox{update}} $}
-    \label{fig:enviroment_experiment_enumerate}
+    \label{fig:gather_info_experiment_enumerate}
 \end{figure}
 
 
 \subsection{Experiment: Use Analysis to Find the Best Weight Combinations}
 
 \paragraph{Experiment Introduction} 
-As is discussed in last experiemnt (Chapter \ref{sec:enviroment_experiment_enumerate}), the experiment time was too short to allow the robot to explore each door. Therefore, the experiemnt duraion in this experiemnt was increased to 20 min.
-Firstly, we shuold find the best weight combination for ``weight battery'' and ``weight last update'', then find the third weight ``weight possibility''. Finally, the best combination of weight will be concluded.
- According to cost table (Figure \ref{fig:cost_table}), the update time value has a minial value of 6.986 and a maximal value of 336.986 (column 3), which are much larger than battery comsumption (column 2) and product of door open possibilities (column 4).
+As is discussed in last experiment (Chapter \ref{sec:gather_info_experiment_enumerate}), the experiment time was too short to allow the robot to explore each door. Therefore, the experiment duration in this experiment was increased to 20 min.
+Firstly, we should find the best weight combination for ``weight battery'' and ``weight last update'', then find the third weight ``weight possibility''. Finally, the best combination of weight will be concluded.
+ According to cost table (Figure \ref{fig:cost_table}), the update time value has a minimal value of 6.986 and a maximal value of 336.986 (column 3), which are much larger than battery consumption (column 2) and product of door open possibilities (column 4).
   Therefore, 18 experiments are created with $W_{\mbox{battery}}$
    = 0.1  and $W_{\mbox{battery}} \in \{1,5,10,15,20,25 \}$.
 
-\paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. When robot fully charged, the first experiment started (Figure \ref{tab:env_exp_timeline}). After that, the task scheduling module in centralized pool created a ``gather enviroment information task'' to each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering enviroment information.
+\paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. When robot fully charged, the first experiment started (Figure \ref{tab:env_exp_timeline}). After that, the task scheduling module in centralized pool created a ``gather information task'' to each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering information.
 
-\paragraph{Analysis design} The experiment start time was when all robot finshed charging and started request task (Figure \ref{tab:env_exp_timeline}). The experiment duraion is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
+\paragraph{Analysis design} The experiment start time was when all robot finished charging and started request task (Figure \ref{tab:env_exp_timeline}). The experiment duration is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
 \begin{itemize}
-    \item \textbf{Last update.} The ``last update'' factor is the time difference between experiment start time and minial value in ``last update'' column in door table (Table \ref{tab:db_doors}) when an experiment finished. For example, ``last update'' factor in experiment 1 (Figure \ref{fig:enviroment_experiment_enumerate}) is ``00:02:57''. It means that the door in the worst case not be measured since 2 minites 57 seconds after experiment start.
-    \item \textbf{Average Update Interal} The ``Average update Interal'' means the average interval of door update. For example, ``Average Update interal'' factor in experiment 1 is ``00:01:00''. It means that on average, every door is updated every 1 minute.
-    \item \textbf{Succedded task.} The ``Number of task'' factor  means the number of succeeded ``gather enviroment information'' task.
+    \item \textbf{Last update.} The ``last update'' factor is the time difference between experiment start time and minimal value in ``last update'' column in door table (Table \ref{tab:db_doors}) when an experiment finished. For example, ``last update'' factor in experiment 1 (Figure \ref{fig:gather_info_experiment_enumerate}) is ``00:02:57''. It means that the door in the worst case not be measured since 2 minutes 57 seconds after experiment start.
+    \item \textbf{Average Update Interval} The ``Average update interval'' means the average interval of door update. For example, ``Average Update interval'' factor in experiment 1 is ``00:01:00''. It means that on average, every door is updated every 1 minute.
+    \item \textbf{Succedded task.} The ``Number of task'' factor  means the number of succeeded ``gather information'' task.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -141,39 +152,39 @@ Firstly, we shuold find the best weight combination for ``weight battery'' and `
     \label{fig:cost_table}
 \end{figure}
 
-\paragraph{Expariment Result} The experiemnt results are shown in Figure \ref{fig:enviroment_experiment_two_value} and Figure \ref{fig:enviroment_experiment_three_value}
+\paragraph{Experiment Result} The experiment results are shown in Figure \ref{fig:gather_info_experiment_two_value} and Figure \ref{fig:gather_info_experiment_three_value}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch5/enviroment_change_weight_battery_only.png}
+    \includegraphics[width = 0.7\textwidth]{content/images/ch5/gather_info_change_weight_battery_only.png}
     \caption{Experiment: Change $W_{\mbox{battery}}$ under condition $W_{\mbox{update}} = 0.1$ and $W_{\mbox{possibility}}=0$}
-    \label{fig:enviroment_experiment_two_value}
+    \label{fig:gather_info_experiment_two_value}
 \end{figure}
 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch5/enviroment_change_weight_possibility_only.png}
+    \includegraphics[width = 0.7\textwidth]{content/images/ch5/gather_info_change_weight_possibility_only.png}
     \caption{Experiment: Change $W_{\mbox{possibility}}$ under condition $W_{\mbox{battery}}=15$ and $ W_{\mbox{update}}=0.1$}
-    \label{fig:enviroment_experiment_three_value}
+    \label{fig:gather_info_experiment_three_value}
 \end{figure}
 
-\paragraph{Expariment Analysis} 
-As shown in experiemnt result Figure \ref{fig:enviroment_experiment_two_value}, ``weight battery'' increased from 0 to 25, the ``average succedded experiment task number'' slighly increased from 45 to 50, but ``average update interval'' were floated in a small range around ``00:01:35''. Especially, as ``weight battery'' increased from 0 to 15, ``average last update'' showed an upward trend, and as ``weight battery'' increased from 15 to 25, ``average last update'' showed a downward trend, 
+\paragraph{Experiment Analysis} 
+As shown in experiment result Figure \ref{fig:gather_info_experiment_two_value}, ``weight battery'' increased from 0 to 25, the ``average succeeded experiment task number'' slightly increased from 45 to 50, but ``average update interval'' were floated in a small range around ``00:01:35''. Especially, as ``weight battery'' increased from 0 to 15, ``average last update'' showed an upward trend, and as ``weight battery'' increased from 15 to 25, ``average last update'' showed a downward trend, 
 therefore ``weight battery'' 15 and ``weight update'' 0.1 was the best combination. 
-This combination was used in next experiemnt set (Figure \ref{fig:enviroment_experiment_three_value}). From this experiemnt set, it was concluded that ``weight battery'' 15, ``weight update'' 0.1, ``weight possibility'' 0.1 and ``weight battery'' 15, ``weight update'' 0.1, ``weight possibility'' -0.3 were two best weight combinations for enviroment cost function.
+This combination was used in next experiment set (Figure \ref{fig:gather_info_experiment_three_value}). From this experiment set, it was concluded that ``weight battery'' 15, ``weight update'' 0.1, ``weight possibility'' 0.1 and ``weight battery'' 15, ``weight update'' 0.1, ``weight possibility'' -0.3 were two best weight combinations for the cost function.
 
 \section{Execute Task Evaluation Experiment}
-
+\label{sec:execute_task_experiments}
 \subsection{Experiment: Impact of Decision Variables}
 
 \paragraph{Experiment Introduction} 
 This set of experiments evaluated the need of four decision variables: battery consumption, waiting time, product of door open possibility and priority. 
 
 \paragraph{Sampling design}
-Table \ref{tab:db_task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, 3 robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
-When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same (Table \ref{tab:db_task_table}). In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+Table \ref{tab:db_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, 3 robots ran charging task (Task 1-3) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
+When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interval were the same (Table \ref{tab:db_task_table}). In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
 When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
-These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+These rules ensured that robot not only started at their initial positions but also processed same task set and not shut down because of power exhaustion.
 
 
 \begin{figure}[htbp]
@@ -234,17 +245,17 @@ Task ID & Task Name & Start Time    & Target ID & Robot ID &Priority & Task Stat
 \end{table}
 
 \paragraph{Analysis design}
-As is discussed in last paragraph, in each experiemnts, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+As is discussed in last paragraph, in each experiment, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
-There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_decision_variables} is an example of experiment result. 
 
 \paragraph{Experiment Result} 
-The experiment result (Table \ref{tab:exp_decision_variables}.) shows that in experiment 1, all 15 task were succesfully finsihed with minimalexperiment duraion. In experiment 2, 4, 5 mores than half of the task were expired. In experiment 3, all tasks were successfully finished but it took more time than experiment 1. 
-The experiment 6-24 (Table \ref{tab:only_one_desition_variable_changed} and Figure \ref{tab:only_one_desition_variable_changed}) evaluated each decision variable sepratelly. 
+The experiment result (Table \ref{tab:exp_decision_variables}.) shows that in experiment 1, all 15 task were successfully finished with minimal experiment duration. In experiment 2, 4, 5 mores than half of the task were expired. In experiment 3, all tasks were successfully finished but it took more time than experiment 1. 
+The experiment 6-24 (Table \ref{tab:only_one_decision_variable_changed} and Figure \ref{tab:only_one_decision_variable_changed}) evaluated each decision variable separately. 
 \paragraph{Experiment Analysis.} 
-Comparing experiment 1-5, it was concluded that the cost function with multiple decision variables had better performance than a cost function with single decition variable. However, according to experiment 6-24, the ``experiment duration'' changed very little when only one desition variable changed others unchanged, therefore how each decision variable affect the task scheduling is still unknown.
+Comparing experiment 1-5, it was concluded that the cost function with multiple decision variables had better performance than a cost function with single decision variable. However, according to experiment 6-24, the ``experiment duration'' changed very little when only one decision variable changed others unchanged, therefore how each decision variable affect the task scheduling is still unknown.
 
 \begin{table}[htb]
 \centering
@@ -259,7 +270,7 @@ Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door o
 4	& 0.00 &	 0.00 &	 -1.00 & 0.00 &	 00:18:41 &	 15 &	 5 &	 10 & 0	\\\hline	 
 5	& 0.00 &	 0.00 &	 0.00 &	 -1.00&	 00:17:21 &	 15 &	  3 &	 12 & 0	 \\	 \hline
 \end{tabular}}
-\caption{Runing execute task with single decision variable and multiple decision variables}
+\caption{Running execute task with single decision variable and multiple decision variables.}
 \label{tab:exp_decision_variables}
 \end{table}
 
@@ -267,7 +278,7 @@ Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door o
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
 \hline
-Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succedded Task &	Expired Task & Failed Task	  \\ \hline
+Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibility}}$	&  $W_{\mbox{priority}}$ & Experiment Duration &Total Task & Succeeded Task &	Expired Task & Failed Task	  \\ \hline
 6       & 20      & 1        & -1      & -1      & 00:09:26 & 15    & 10        & 5       & 0        \\ \hline
 7       & 40      & 1        & -1      & -1      & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
 8       & 60      & 1        & -1      & -1      & 00:09:50 & 15    & 10        & 5       & 0        \\ \hline
@@ -288,15 +299,15 @@ Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door o
 23      & 1       & 1        & -1      & -60     & 00:09:48 & 15    & 10        & 5       & 0        \\ \hline
 24      & 1       & 1        & -1      & -80     & 00:09:51 & 15    & 10        & 5       & 0        \\ \hline
 \end{tabular}}
-\caption{only one desition variable changed others unchanged}
-\label{tab:only_one_desition_variable_changed}
+\caption{only one decision variable changed others unchanged.}
+\label{tab:only_one_decision_variable_changed}
 \end{table}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.9\textwidth]{content/images/ch5/one_decision_variable.png}
-    \caption{Only one desition variable changed others unchanged}
-    \label{fig:only_one_desition_variable_changed}
+    \caption{Only one decision variable changed others unchanged.}
+    \label{fig:only_one_decision_variable_changed}
 \end{figure}
 
 \subsection{Experiment: Find the Best Weight Combinations}
@@ -304,17 +315,17 @@ Experiment & $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door o
 In addition to cost function, the task interval may affect experiment duration and experiment succeeded rate. Therefore, three set experiment are generated to find the best weight combinations. 
  
 \paragraph{Sampling design}
-Table \ref{tab:exp_task_table} shows "task table" in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, robots ran charging task (Task 1-3 in Table \ref{tab:exp_task_table}) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
-    When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same. In Table \ref{tab:exp_task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+Table \ref{tab:exp_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, robots ran charging task (Task 1-3 in Table \ref{tab:exp_task_table}) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
+    When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interval were the same. In Table \ref{tab:exp_task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
     When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
-    These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+    These rules ensured that robot not only started at their initial positions but also processed same task set and not shut down because of power exhaustion.
 
 
 \paragraph{Analysis design}
-In each experiemnt, 3 robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+In each experiment, 3 robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
-There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_decision_variables} is an example of experiment result. 
 
 \paragraph{Experiment Result} 
@@ -339,7 +350,7 @@ $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibili
 1 &	25&	-1 &	-1 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
 5 &	1 &	-5 &	-5 &	00:09:05 &	15 &	10 &	5 & 0 \\ \hline
 \end{tabular}}
-\caption{Best weight combinations with task interval 30s}
+\caption{Best weight combinations with task interval 30s.}
 \label{tab:exp_task_30s}
 \end{table}
 
@@ -359,7 +370,7 @@ $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibili
 45 & 1  & -1  & -1  & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
 50 & 50 & -50 & -1  & 00:11:35 & 15 & 12 & 3 & 0 \\ \hline
 \end{tabular}}
-\caption{Best weight combinations with task interval 45s}
+\caption{Best weight combinations with task interval 45s.}
 \label{tab:exp_task_45s}
 \end{table}
 
@@ -403,7 +414,7 @@ $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibili
 5.00    & 5.00     & -1.00   & -5.00   & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
 5.00    & 10.00    & -5.00   & -10.00  & 00:18:23 & 15    & 15  & 0  & 0    \\ \hline
 \end{tabular}}
-\caption{Best weight combinations with task interval 65s}
+\caption{Best weight combinations with task interval 65s.}
 \label{tab:exp_task_65s}
 \end{table}
 
@@ -414,17 +425,17 @@ $W_{\mbox{battery}}$ & $W_{\mbox{waiting time}}$ & $W_{\mbox{door open possibili
 In this set of experiments, how the number of robots affected task scheduling was evaluated. One of the best weight combination was selected: $ W_{\mbox{battery}} = 10,W_{\mbox{waiting time}} = 1,  W_{\mbox{possibility}} = -1, W_{\mbox{priority}} = -10 $. 
     
 \paragraph{Sampling design}
-When simulation started, robots ran charging task and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging staion 1, robot 2 charged at charging staion 2, robot 3 charged at charging staion 3. 
-When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interal were the same. In Table \ref{tab:db_task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
+When simulation started, robots ran charging task and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
+When robot fully charged, the first experiment started (Figure \ref{fig:execute_task_experiment_timeline}), and 15 ``execute tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task interval were the same. In Table \ref{tab:db_task_table} the task interval was 65 seconds. In different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
 When all robot finished tasks, the experiment would be finished and robots charged at previous charging station(Task 19-21).
-These rules ensured that robot not only started at their initial positions but also processed same task set and not shuted down because of power exhaustion.
+These rules ensured that robot not only started at their initial positions but also processed same task set and not shut down because of power exhaustion.
 
 
 \paragraph{Analysis design}
-As is discussed in last paragraph, in each experiemnts, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finshed charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+As is discussed in last paragraph, in each experiments, robots need to finish 15 ``execute tasks'' and 3 ``charging tasks''.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between experiment start time and experiment finished time.  
-There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Runing'', ``Error'', ``Canceled'', ``To rerun'' states. 
+There end state of ``execute tasks'' were evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_decision_variables} is an example of experiment result. 
 
 \paragraph{Result} The experiment result (Table \ref{tab:exp_robot_number}) showed that when one robot processed tasks, only 7 tasks were finished successfully; when two robots processed the same task set, 11 tasks were finished succesfully. Compared with experiment 1, experiment 2 tooks 102 seconds more but 2 more tasks were completed; when three robots processed the same task set, all 15 tasks were finished succesfully. Compared with experiment 2, the experiment duration is slightly increased but 4 more tasks were finished succesfully.
@@ -451,7 +462,7 @@ Average & 2 & 00:18:38 & 15	 &11	& 4	& 0 \\ \hline
 9 &3 &   00:18:57	& 15 & 15 & 0 & 0 \\ \hline
 Average &3 &   00:18:45	& 15 & 15 & 0 & 0 \\ \hline
 \end{tabular}}
-\caption{Result 4: Different number of robot processing the same task set}
+\caption{Result 4: Different number of robot processing the same task set.}
 \label{tab:exp_robot_number}
 \end{table}
 

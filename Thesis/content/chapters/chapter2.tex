@@ -10,19 +10,19 @@
 %\end{itemize}
 
 
-This Chapter introduced the background and state of the art on multi-robot task scheduling. Chapter \ref{sec:ros_concepts} introduces important concepts of ROS. Chapter \ref{sec:modeling_gazebo} introduces the 3D modeling of robot and environment in Gazebo. Chapter \ref{sec:navigation} introduces robot navigation. Chapter \ref{sec:centralized_method} introduces exist task scheduling methods. Chapter \ref{sec:distributed_method} introduces distributed methods. Chapter \ref{sec:cost_function} introduces the cost funtion methods.
+This Chapter introduced the background and state of the art on multi-robot task scheduling. Chapter \ref{sec:ros_concepts} introduces important concepts of ROS. Chapter \ref{sec:modeling_gazebo} introduces the 3D modeling of robot and environment in Gazebo. Chapter \ref{sec:navigation} introduces robot navigation. Chapter \ref{sec:exist_task_scheduling_methods} introduces exist task scheduling methods. Chapter \ref{sec:cost_function} introduces exist implementation of cost function.
 
 \section{Important Concepts of ROS}
 \label{sec:ros_concepts}
-The ROS Wiki \cite{ros} defines ROS as an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers.
+The ROS Wiki \cite{ROSWEB} defines ROS as an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers.
 In another word, it is a robot software platform that provides various development environments specialized for developing robot application programs\cite{Pyo17}.
 
 \subsection{Node}
-A ROS node is the smallest unit of processor running in ROS. In another word, it is one executeble program. In this project, some existing special nodes are used. For example ``move\_base'' node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. There are some nodes created for this project, and each node are created for different purpose, for example, one ``Robor controller'' node controls one robot. 
+A ROS node is the smallest unit of processor running in ROS. In another word, it is one executable program. In this project, some existing special nodes are used. For example ``move base'' node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. There are some nodes created for this project, and each node are created for different purpose, for example, one ``Robot controller'' node controls one robot. 
 
 \subsection{Communication Infrastructure}
-ROS has a built-in and well-tested messaging system. There are different methods to exchange messages.  ROS topic is a unidirectional anonymous communication. It is used when exanging data continuesly. The subscriber receives messages of publisher node only when both of them registered the same topic name. ROS service is bidirectional synchronous communication. The service client request a service and the service server responds to the request. The ROS action is a bidirectional asynchronous communication. It is used when it is difficult to use the service due to long response times after the request or when an intermediate feedback value is needed.
-The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}.  There are some utilization of message communication in this project. Chapter \ref{sec:sensor_simulatior} introduces the sensor simulation senario that utilizes ROS Topic method. Chapter \ref{sec:communication_protocols} introduces the communication protocols in this project that utilize ROS service method and ROS Action method.   
+ROS has a built-in and well-tested messaging system. There are different methods to exchange messages.  ROS topic is a unidirectional anonymous communication. It is used when exchange data continuously. The subscriber receives messages of publisher node only when both of them registered the same topic name. ROS service is bidirectional synchronous communication. The service client request a service and the service server responds to the request. The ROS action is a bidirectional asynchronous communication. It is used when it is difficult to use the service due to long response times after the request or when an intermediate feedback value is needed.
+The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}.  There are some utilization of message communication in this project. Chapter \ref{sec:sensor_simulatior} introduces the sensor simulation scenario that utilizes ROS Topic method. Chapter \ref{sec:communication_protocols} introduces the communication protocols in this project that utilize ROS service method and ROS Action method.   
 
 \begin{figure}
     \centering
@@ -35,15 +35,15 @@ The diagram of message communication is shown in Figure \ref{fig:ros_message_com
 ROS's core functionality is enhanced by a variety of tools and packages:
 
 \begin{itemize}
-    \item \textbf{Rviz.} Rviz\cite{RVIZ} is the 3D visualization tool of ROS. It can visualize information like the distance from a Laser Distance Sensor (LDS) to an obstable, image value obtained from a camera, Point Cloud Data (PCD) of the 3D distance sensor such as RealSense, Kinect, or Xtion. As is shown in Figure \ref{fig:rviz_gui}, multiple robot model and its path and laser data can be displayed.
+    \item \textbf{Rviz.} Rviz\cite{RVIZ} is the 3D visualization tool of ROS. It can visualize information like the distance from a Laser Distance Sensor (LDS) to an obstacle, image value obtained from a camera, Point Cloud Data (PCD) of the 3D distance sensor such as RealSense, Kinect, or Xtion. As is shown in Figure \ref{fig:Rviz_gui}, multiple robot model and its path and laser data can be displayed.
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width = 0.7\textwidth]{content/images/ch2/rviz_gui.png}
-        \caption{Rviz Example: Navigaion using TurtleBot 3 and Laser Distance Sensor (LDS)}
-        \label{fig:rviz_gui}
+        \includegraphics[width = 0.7\textwidth]{content/images/ch2/Rviz_gui.png}
+        \caption{Rviz Example: Navigation using TurtleBot 3 and Laser Distance Sensor (LDS)}
+        \label{fig:Rviz_gui}
     \end{figure}
 
-    \item \textbf{rqt.} rqt is an intergration of more than 30 Qt-based ROS GUI development tool. It has plugins such as ``rqt\_tf\_tree'', ``rqt\_plot'' and  ``rqt\_graph''
+    \item \textbf{rqt.} rqt is an integration of more than 30 Qt-based ROS GUI development tool. It has plugins such as ``rqt\_tf\_tree'', ``rqt\_plot'' and  ``rqt\_graph''
    
     \item \textbf{rqt\_tf\_tree.} rqt\_tf\_tree is a type of rqt. It is a tool for visualizing the tree of frames being broadcast over ROS. Figure \ref{fig:tf_tree} presents the relative coordinate transformation (tf) of multi-robot system. If the poses of Laser Distance Sensor (LDS) are considered as the poses of the robots, the pose information of each robot is connected in the order of odom $\rightarrow$ base\_footprint $\rightarrow$ base\_link $\rightarrow$ base\_scan.
     
@@ -62,7 +62,7 @@ ROS's core functionality is enhanced by a variety of tools and packages:
         \label{fig:rqt_graph}
     \end{figure}
 
-    \item \textbf{Gazebo.} Gazebo \cite{GZ} is the 3D simulation tool intergrated with ROS. The details of gezebo are introduced in Chapter \ref{sec:modeling_gazebo}.
+    \item \textbf{Gazebo.} Gazebo \cite{GZ} is the 3D simulation tool integrated with ROS. The details of gezebo are introduced in Chapter \ref{sec:modeling_gazebo}.
 \end{itemize}
 
 \section{TurtleBot3 Simulation Using Gazebo}
@@ -70,8 +70,8 @@ ROS's core functionality is enhanced by a variety of tools and packages:
 
 \subsection{Gazebo Simulator}
 Robot simulation is essential for robotics research, because it can pre-estimate the performance of robot algorithms before applying it to a real robot \cite{Afanasyev2015}. 
-The simulatior used in this project is Gazebo. Gazebo is a 3D dynamic indoor and outdoor multi-robot simulator intergrated with ROS, and it offers physics simulation at a much higher degree of fidelity, a suite of sensors, and interfaces for both users and programs \cite{GZ}. 
-Using Gazebo simulatior affords to create new 3D model with geometrical primitive or import existing simulated robots and environments. 
+The simulator used in this project is Gazebo. Gazebo is a 3D dynamic indoor and outdoor multi-robot simulator integrated with ROS, and it offers physics simulation at a much higher degree of fidelity, a suite of sensors, and interfaces for both users and programs \cite{GZ}. 
+Using Gazebo simulator affords to create new 3D model with geometrical primitive or import existing simulated robots and environments. 
 
 \subsection{TurtleBot3 Robot}
 The robot model used in this project is TurtleBot3 Burger. Because it is a small, affordable, programmable ROS-based mobile robot for use in research and prototyping. 
@@ -98,7 +98,7 @@ The simulated robot (Figure  \ref{fig:simulated_robot}) has a similar outfit. In
 \subsection{3D Modeling of Indoor Environment}
 
 In this project we selected a model exactly the same as the floor of the department as a trial 3D model (Figure \ref{fig:modeling_environment_gazebo}).
-This model is a typical office enviroment that contains a corridor along the central x-axis and 16 rooms located around the corridor. 
+This model is a typical office environment that contains a corridor along the central x-axis and 16 rooms located around the corridor. 
 
 \begin{figure}[htbp]
     \centering
@@ -112,10 +112,10 @@ This model is a typical office enviroment that contains a corridor along the cen
 
 There are essential technologies to realize autonomous robot navigation: 
 \begin{enumerate}
-    \item \textbf{Having map of the given enviroment.} In this project, SLAM(Simultaneous Localization Ana Mapping) is used to create a map of the given enviroment. Using SLAM, the robot explores the unknown spaces and detects its surrounding areas and estimates its current location as well as creating a map. The steps of executing virtual SLAM with TurtleBot3 is shown in Website \cite{T3SLAM}. Once the robot finish exploring the indoor enviroment, an occupancy grid map (OCM) is generated (Figure \ref{fig:occupancy_grid}).
-    \item \textbf{Measuring or estimating the pose of robot.} Pose is consists of position and orientation. The dead reckoning \cite{DEADRECKONING} is the most popular indoor pose estimation method for the robot. The amount of movement of robot is measured with the rotation of the wheel. However, the error between th calculated distance with wheel ratation and the actual travel distance increases over time. Therefore, the inertial measurement unit (IMU) sensor\cite{Woojin17} is used to measure triaxis angular velocities and triaxis acceleration to estimate the position of the mobile robot.  This inertial data can be used to compensate the error of position and orientation between calculated value and the actual value.
-    \item \textbf{Avoiding obstacles such as walls and furniture.} The laser-based distance sensor on robot are widely used in figuring out whether there are obstables including walls, furniture and other robots. The common laser-based distance sensor inludes LDS (Laser Distance Sensor), LDF (Laser Doppler flowmetry) and LiDAR (Light Detection And Ranging) and ultrasonic sensors and infrared distance sensors. The TurtleBot3 equips 360 Laser Distance Sensor LDS-01. The visualization of Laser data in Rviz is shown in Figure \ref{fig:rviz_gui}.
-    \item \textbf{Finding the optimal route calculation and driving.} It is important to find the optimized route to the distination. There are many algorithms that perform path searching and planning such as A* algorithm\cite{ASEARCH}, potential field\cite{POTENTIAL}, particle filte\cite{PARTICLE}, and RRT (Rapidly-exploring Random Tree)\cite{RRT}.
+    \item \textbf{Having map of the given environment.} In this project, SLAM(Simultaneous Localization Ana Mapping) is used to create a map of the given environment. Using SLAM, the robot explores the unknown spaces and detects its surrounding areas and estimates its current location as well as creating a map. The steps of executing virtual SLAM with TurtleBot3 is shown in Website \cite{T3SLAM}. Once the robot finish exploring the indoor environment, an occupancy grid map (OCM) is generated (Figure \ref{fig:occupancy_grid}).
+    \item \textbf{Measuring or estimating the pose of robot.} Pose is consists of position and orientation. The dead reckoning \cite{DEADRECKONING} is the most popular indoor pose estimation method for the robot. The amount of movement of robot is measured with the rotation of the wheel. However, the error between the calculated distance with wheel rotation and the actual travel distance increases over time. Therefore, the inertial measurement unit (IMU) sensor\cite{Woojin17} is used to measure triaxis angular velocities and triaxis acceleration to estimate the position of the mobile robot.  This inertial data can be used to compensate the error of position and orientation between calculated value and the actual value.
+    \item \textbf{Avoiding obstacles such as walls and furniture.} The laser-based distance sensor on robot are widely used in figuring out whether there are obstacles including walls, furniture and other robots. The common laser-based distance sensor includes LDS (Laser Distance Sensor), LDF (Laser Doppler flowmetry) and LiDAR (Light Detection And Ranging) and ultrasonic sensors and infrared distance sensors. The TurtleBot3 equips 360 Laser Distance Sensor LDS-01. The visualization of Laser data in Rviz is shown in Figure \ref{fig:Rviz_gui}.
+    \item \textbf{Finding the optimal route calculation and driving.} It is important to find the optimized route to the destination. There are many algorithms that perform path searching and planning such as A* algorithm\cite{ASEARCH}, potential field\cite{POTENTIAL}, particle filte\cite{PARTICLE}, and RRT (Rapidly-exploring Random Tree)\cite{RRT}.
     \begin{figure}[htbp]
         \centering
         \includegraphics[width = 0.7\textwidth]{content/images/ch2/occupancy_grid.png}
@@ -126,40 +126,54 @@ There are essential technologies to realize autonomous robot navigation:
 
 
 \section{Exist Task Scheduling Methods}
+\label{sec:exist_task_scheduling_methods}
 So far, the background information such as tools and important concepts of ROS are introduced. This Chapter discusses some popular methods of task scheduling. Those task scheduling methods can be divided into centralized methods and distributed methods.
 
 \subsection{Centralized Method vs. Distributed Method}
-In the case of centralized method, a centralized schedule collects all task requests and uses resource utilization information to schedule tasks. The centralized method is easy to manager and faster to repair in case of failure. However, the autonomy of the robots in pure centralized method is limited becaued all robots only execute commands from centralized scheduler and not determine what tasks to do \cite{NUNES201755}. In addition, since the centralized scheduler must compute all resources and tasks, it has less scalability which becomes the bottleneck in large-size network \cite{CHRISTODOULOPOULOS20091172}.
-Chapter \ref{sec:constraint_programming} introduces a centralized constraint programming method. 
+In the case of centralized method, a centralized schedule collects all task requests and uses resource utilization information to schedule tasks. The centralized method is easy to manager and faster to repair in case of failure. However, the autonomy of the robots in pure centralized method is limited becaued all robots only execute commands from centralized scheduler and not determine what tasks to do \cite{NUNES201755}. In addition, since the centralized scheduler must compute all resources and tasks, the centralized system is difficult to scale to large-size network \cite{CHRISTODOULOPOULOS20091172}.
+Chapter \ref{sec:constraint_programming} introduces a centralized constraint programming method. Chapter \label{sec:genetic_method} introduces a centralized method based on A* and Genetic Algorithm.
 
 In the case of distributed method, there are multiple distributed schedulers keep tracking the resource availability and use this information to perform task scheduling\cite{CHRISTODOULOPOULOS20091172}. This method distributes the associated computation overhead, as a result it eliminates the bottleneck caused by the centralized scheduler and improves the scalability and realiability and scalability if the network. The challenge in distribute method is the coordination of distribute schedulers as well as the required control plane overhead \cite{CHRISTODOULOPOULOS20091172}.
-Chapter \ref{sec:auction_method} introduces a distributed auction method and Chapter \ref{sec:distributed_capability_based_method} introduces a distributed capability-based method.
+Chapter \ref{sec:auction_method} introduces a distributed auction method. Chapter \ref{sec:global_unit_method} introduces a communication-efficient distributed method. 
 
 \subsection{Centralized Constraint Programming Method}
 \label{sec:constraint_programming}
+Booth has proposed a multi-robot system that support elderly residents in a retirement home setting in  \cite{retire2017}. The robots search for elderly residents in the environment in the morning, eliciting their availability and preferences for activities. The centralized scheduler then use constraint programming method to allocate these assistive activities over the day. Those problem-specific constrains includes robot energy consumption, activity priority, robot-user activity synchronization, user location, and user availability carlendar that identifies their busy intervals. Once this information is attained, the system allocate and schedule activities to robots for the day before executing the plan.
 
-Booth proposed a multi-robot system that support elderly residents in a retirement home setting in  \cite{retire2017}. The robots search for elderly residents in the enviroment in the morning, eliciting their availability and preferences for activities. The centralized scheduler then use constraint programming method to allocate these assistive activities over the day. Those problem-specific constrains includes robot energy consumption, activity priority, robot-user activity synchronization, user location, and user availability carlendar that identifies their busy intervals. Once this information is attained, the system allocate and schedule activities to robots for the day before executing the plan.
-
-In addition, there are other centralized methods such as centralized mixed-integer programming \cite{Korsah13}.
-
-\subsection{Distributed Capability-based Method}
-\label{sec:distributed_capability_based_method}
-Kim proposed a distributed capability-based method \cite{KIM2016386}. This method is designed to allow robots to perform resonable decision-making when they can handle the new task as well as tasks in its queue.
-In this method, the scheduler sends a query to all robots to get a list of capability for the tasks. Then it selct one robot with the best capablility to delegate, and then send instruction and deadline to the selected robot. Besides, the robot capability to a task varies from [0,1]. This value determins how well the robot can handle the new task by deadline while taking care of current tasks.
-
+\subsection{Centralized Method based on A* and Genetic Algorithm}
+\label{sec:genetic_method}
+Chun has proposed a centralized task scheduling and path-planning method based on A* and Genetic Algorithm \cite{Chun12}.
+In this research work, Genetic Algorithm is responsible for task scheduling to find the optimal solution for industrial plant inspection problems, and A* Algorithm is used to calculate the traveling cost and path-planning of a robot moving from one position to another, because it can consider more detail path conditions such as obstacles, furnitures and different terrain conditions. The traveling cost is one evaluation parameter of the fitness function in the GA, but in this research it is referred to the completion time. To be more precise, it is the time period of the first robot starting its tasks and the last robot finishing its tasks.
+The goal of the task scheduling method is to find an ordered set of tasks for robots in order to minimize the completion time while decreasing the total power consumption.
+Two Greedy algorithms are proposed for task assignment. The first one is to find one task for each robot which provides for the minimum completion time in each step in order to minimize the total completion time. The second one is to find only one robot-task pair which takes the minimum time in each step in order to decrease the total power consumption. 
 
 \subsection{Distributed Auction Method}
 \label{sec:auction_method}
-When system perform a long-term task alloacation process, the communication link between costumer agent and robots may be disconnected. This may couse a conflict or failed assignment. 
+When system perform a long-term task allocation process, the communication link between costumer agent and robots may be disconnected. This may cause a conflict or failed assignment. 
 Distributed methods are more suitable in this case as distribute the computation to individual agents \cite{NUNES201755}. 
-Dong-Hyun Lee proposed a resource-oriented, distributed auction algorithm \cite{Dong2015}. 
-The customer agents and robots with limited communication ranges construct an ad-hoc network tree. The customer agent becomes auctioneer and broadcasts an auction call to the task. The robots become bidders and submit their bid values to the customer agent. The bid values consider local information such as the tasks in robot task queue, robot's resource levels and estimated travel distance and time for multiple path. 
-Since each path consists of different charging stations, the robot's resource levels after completing a task and estimated travel time depends on the path. 
-After receiving all bid values, the agent assigns the task to the robot with the lowest bid value. 
-This senario has many advantages. It is more efficient communication overhead and energy efficiency. To be more precise, it not only avoids unexpected battery drain while robot processing task, but also let robots maintain high capacities. In addition, in distributed method, robots don't need to broadcast its information such as current position and battery levels frequently. Therefore, compared to centralized methods, distributed method not only avoids unnecessary communication but also improves robot autonomy \cite{Shah07}.
+Dong-Hyun Lee has proposed a resource-oriented, distributed auction algorithm \cite{Dong2015}. The customer agents and robots with limited communication ranges construct an ad-hoc network tree. The customer agent becomes auctioneer and broadcasts an auction call to the task. The robots become bidders and submit their bid values to the customer agent. The bid values consider local information such as the tasks in robot task queue, robot's resource levels and estimated travel distance and time for multiple path. Since each path consists of different charging stations, the robot's resource levels after completing a task and estimated travel time depends on the path. After receiving all bid values, the agent assigns the task to the robot with the lowest bid value. This senarios not only avoids unexpected battery drain while robot processing task, but also let robots maintain high capacities. 
 
+\subsection{Distributed Method with Global Unit}
+\label{sec:global_unit_method}
+Kashyap Shah proposed a communication-efficient distributed dynamic task scheduling system with a shared global unit \cite{Shah7}. Each robot can make its own decision through communicating with other robots as well as check and update the current task status in the global unit. Besides, this method considers two dynamic environment. 
+Firstly, some robots maybe no long be able to handle its current task because the task environment has changed. In this case the defective robot check the global unit and send a help message to robots which can handle the task. Secondly, some robot may fail under the dynamic environment. This robot failure will be detected by tracking the communication signal and its status in the global unit will be updated as failed to make sure no more tasks will be allocated to this robot. In addition, if the failed robot is running a task, its current task will be reassigned to another robot. 
 
 \section{Exist Quantities of Cost Function}
 \label{sec:cost_function}
-One of the most important steps when designing a multi-robot task scheduling algorithm is determin the costs of tasks. Jia summaries several physical quantities used in algorithm's cost in \cite{Jia2013ASA}. In their study it can be concluded that the most common used decision variables are estimated travel distance and time, as proposed in \cite{Dong2015}. Other kinds of decision variables involved are the number of traversals and energy consumed. 
-In addition, Korsah proposed a comprehensive taxonnomy of multi-robot task scheduling problems that explicitly takes into consideration the issues of interrelated utilities and constraints. In this taxonnomy, tasks are distinguished by decomposability and multi-agent-allocatability \cite{Korsah13}.
+One of the most important steps when designing a multi-robot task scheduling algorithm is calculating the costs of tasks. Jia summaries several physical quantities used in algorithm's cost in \cite{Jia2013ASA}. In their study it can be concluded that the most common used decision variables are estimated travel distance and time, as proposed in \cite{Dong2015}. Other kinds of decision variables involved are the number of traversals and energy consumed. 
+In addition, Korsah proposed a comprehensive taxonomy of multi-robot task scheduling problems that explicitly takes into consideration the issues of interrelated utilities and constraints. In this taxonomy, tasks are distinguished by decomposability and multi-agent-allocatability \cite{Korsah13}.
+In the case of Chun's method \cite{Chun12}, the cost is defined as completion time. There are a group of m robots $R = {R1,R2,...,Ri,...,Rm}$, a set of n tasks $T = {T1,T2,...,Tj,...,Tn}$ with relative weights ${w1, w2, ..., wj , ...wn}$. The cost $Cij$ of robot $Ri$ executing task $Tj$ is defined as the completion time which is the time span of the first robot starting its tasks and the last robot finishing its tasks.
+The cost function J is:
+
+\begin{equation}
+	\label{eq:large_execute_task_cost} 
+	\begin{aligned}
+    & J = max( \sum_{j=1}^n C_{1j}, \sum_{j=1}^n C_{1j},\dot,\sum_{j=1}^n C_{ij},\dot,\sum_{j=1}^n C_{mj})\\
+    &  C_{ij} = \left\{
+            \begin{array}{lr}
+            > 0, & \mbox{if robot Ri is allocated task Tj := 0}\\
+            :=0 &  \mbox{otherwise}
+             \end{array}
+        \right.
+	\end{aligned}
+\end{equation}

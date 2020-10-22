@@ -30,10 +30,22 @@
   tasks in Grid networks}.
 \newblock Computer Communications, 32(7):1172 -- 1184, 2009.
 
+\bibitem[CV10]{Coltin10}
+{\sc {Coltin}, B.} \btxandlong{}\ {\sc M.~{Veloso}}: {\em Mobile robot task
+  allocation in hybrid wireless sensor networks}.
+\newblock \Btxinlong{}\ {\em 2010 IEEE/RSJ International Conference on
+  Intelligent Robots and Systems}, \btxpageslong{}\ 2932--2937, 2010.
+
 \bibitem[DEA]{DEADRECKONING}
 {\em {Dead reckoning}}.
 \newblock \url{https://en.wikipedia.org/wiki/Dead_reckoning}.
 \newblock accessed 2020-10-14.
+
+\bibitem[ERP20]{Eijyne2020DevelopmentOA}
+{\sc Eijyne, Tan}, {\sc G~Rishwaraj} \btxandlong{}\ {\sc G~PonnambalamS}: {\em
+  Development of a task-oriented, auction-based task allocation framework for a
+  heterogeneous multirobot system}.
+\newblock Sadhana, 45:1--13, 2020.
 
 \bibitem[GMS17]{Ivan2017}
 {\sc Gavran, Ivan}, {\sc Rupak Majumdar} \btxandlong{}\ {\sc Indranil Saha}:
@@ -50,26 +62,11 @@
   (English)}.
 \newblock ROBOTIS, 12 2017.
 
-\bibitem[IGM97]{Ikeda1997}
-{\sc Ikeda, Mitsuru}, {\sc Shogo Go} \btxandlong{}\ {\sc Riichiro Mizoguchi}:
-  {\em Opportunistic Group Formation}.
-\newblock \Btxinlong{}\ {\em Proceedings of the Conference on Artificial
-  Intelligence in Education ({AI-ED})}, \btxpageslong{}\ 167--174, Amsterdam,
-  1997. IOS Press.
-
 \bibitem[JM13]{Jia2013ASA}
 {\sc Jia, Xiao} \btxandlong{}\ {\sc M.~Meng}: {\em A survey and analysis of
   task allocation algorithms in multi-robot systems}.
 \newblock 2013 IEEE International Conference on Robotics and Biomimetics
   (ROBIO), \btxpageslong{}\ 2280--2285, 2013.
-
-\bibitem[KM16]{KIM2016386}
-{\sc Kim, Yongho} \btxandlong{}\ {\sc Eric~T. Matson}: {\em A Realistic
-  Decision Making for Task Allocation in Heterogeneous Multi-agent Systems}.
-\newblock Procedia Computer Science, 94:386 -- 391, 2016.
-\newblock The 11th International Conference on Future Networks and
-  Communications (FNC 2016) / The 13th International Conference on Mobile
-  Systems and Pervasive Computing (MobiSPC 2016) / Affiliated Workshops.
 
 \bibitem[KSD13]{Korsah13}
 {\sc Korsah, G.~Ayorkor}, {\sc Anthony Stentz} \btxandlong{}\ {\sc
@@ -78,18 +75,22 @@
 \newblock The International Journal of Robotics Research, 32(12):1495--1512,
   2013.
 
+\bibitem[LK12]{Chun12}
+{\sc Liu, Chun} \btxandlong{}\ {\sc Andreas Kroll}: {\em A Centralized
+  Multi-Robot Task Allocation for Industrial Plant Inspection by Using A* and
+  Genetic Algorithms}.
+\newblock \Btxinlong{}\ {\sc Rutkowski, Leszek}, {\sc Marcin Korytkowski}, {\sc
+  Rafa{\l} Scherer}, {\sc Ryszard Tadeusiewicz}, {\sc Lotfi~A. Zadeh}
+  \btxandlong{}\ {\sc Jacek~M. Zurada}\ (\btxeditorslong{}): {\em Artificial
+  Intelligence and Soft Computing}, \btxpageslong{}\ 466--474, Berlin,
+  Heidelberg, 2012. Springer Berlin Heidelberg.
+
 \bibitem[LZK15]{Dong2015}
 {\sc {Lee}, D.}, {\sc S.~A. {Zaheer}} \btxandlong{}\ {\sc J.~{Kim}}: {\em A
   Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task
   Allocation}.
 \newblock IEEE Transactions on Automation Science and Engineering,
   12(4):1469--1481, 2015.
-
-\bibitem[MAdR02]{Middleton2002}
-{\sc Middleton, S.~E.}, {\sc H.~Alani} \btxandlong{}\ {\sc D.~C. de~Roure}:
-  {\em Exploiting Synergy between Ontologies and Recommender Systems}.
-\newblock \Btxinlong{}\ {\em Proceedings of the Semantic Web Workshop at the
-  WWW Conference}, Honolulu, HI, 2002.
 
 \bibitem[MOV]{MOVEBASE}
 {\em {Move Base Node}}.
@@ -122,8 +123,8 @@
   \url{http://www.cs.cmu.edu/~./motionplanning/lecture/Chap4-Potential-Field_howie.pdf}.
 \newblock accessed 2020-10-17.
 
-\bibitem[ros]{ros}
-{\em {ROS}}.
+\bibitem[ROS]{ROSWEB}
+{\em {ROS Website}}.
 \newblock \url{https://www.ros.org}.
 \newblock accessed 2020-10-14.
 
@@ -137,17 +138,12 @@
 \newblock \url{http://wiki.ros.org/rviz}.
 \newblock accessed 2020-10-17.
 
-\bibitem[Sal89]{salton89}
-{\sc Salton, Gerard}: {\em Automatic text processing --- the transformation,
-  analysis, and retrieval of information by computer}.
-\newblock Addison-Wesley series in computer science. Addison-Wesley, 1989.
-
 \bibitem[Seo17]{Woojin17}
 {\sc Seo, Woojin}: {\em Indoor Dead Reckoning Localization Using Ultrasonic
   Anemometer with IMU}.
 \newblock Journal of Sensors, 2017:12, 2017.
 
-\bibitem[SM07]{Shah07}
+\bibitem[SM07]{Shah7}
 {\sc {Shah}, K.} \btxandlong{}\ {\sc Y.~{Meng}}: {\em Communication-Efficient
   Dynamic Task Scheduling for Heterogeneous Multi-Robot Systems}.
 \newblock \Btxinlong{}\ {\em 2007 International Symposium on Computational
