@@ -26,6 +26,7 @@ The following functions are successfully implemented:
 (1) The fixed sensors can conduct the long-term room occupation measuring to keep the ``room occupation'' information up to date. 
 (2) The robots can initialize task scheduling procedures by requesting tasks in the centralized pool and then perform received tasks sequentially.
 (3) The centralized pool, which is a control system that can store global information and schedule tasks to robots according to the task scheduling algorithm. 
+In the simulated working environment, the multi-system operated stably for three days, and autonomously performed more than 5000 navigation tasks. This system can handle some unexpected problems. For example, failed tasks are reassigned to other robots.
 
 Also, a centralized task scheduling algorithm has been designed for the multi-robot system. This algorithm considers the robot status, the task specification as well as room occupation. As discussed in Chapter \ref{ch:evaluation}, the algorithm can improve the scheduling of tasks taking into account the number of tasks to be performed, decreasing the time of completion. 
 In theory, this algorithm can reduce energy consumption. But current experiments cannot prove this idea. Instead, real experiments are needed.

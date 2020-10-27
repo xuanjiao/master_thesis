@@ -21,15 +21,14 @@
 % An abstract\cite{Ikeda1997, levensthein65:_binar, Middleton2002, salton89} allows one to sift through copious amounts of papers for ones in which the researcher can have more confidence that they will be relevant to his research. Once papers are chosen based on the abstract, they must be read carefully to be evaluated for relevance. It is commonly surmised that one must not base reference citations on the abstract alone, but the entire merits of a paper.
 
 %Definition of the problem (the question(s) that you want to answer) and its purpose (Introduction).
-Since the advancement of robotics in the modern society with robots' reliability and high work quality, robots are being used together as a multi-robot system, providing advantage compared to a single robot \cite{Eijyne2020DevelopmentOA}. 
-Given an office building where people have different working schedules, if at least one person is in the office, the office is considered occupied.
-%Therefore, when multiple robot working in this environment, an efficient task scheduling algorithm is required, in order to 
-In this case, room occupation becomes an important evaluation parameter for task scheduling, which describes the possibility that the robot can enter the office.
-Although there are increasing amounts of research have been conducted in the area of task scheduling for multi-robot system \cite{Shah7}, unfortunately, current research work mainly on multi-robot cooperation dynamic environments and rarely address on adoption of Internet of Things technologies. 
-Therefore, I have considered adding more fixed sensors to in the whole office environment \cite{Coltin10}. 
-In addition, I have developed a multi-robot system for this office environment, which is able to schedule the robots to gather room occupation information from fixed sensors, in order to keep room occupation information up to date.
-Moreover, the system can acquire the room occupation information, and use it as one of evaluation parameters to schedule tasks, together with common evaluation parameters such as priority, battery consumption etc. 
-Besides, the system utilizes an efficient communication protocol to share the information among system components.
-I also pay particular attention to error handling to robust against robot failures. This system can minimize the total completion time of tasks while operating for a long period \cite{Chun12}. Simulation results demonstrate the efficiency and robustness of the task scheduling algorithm.
+
+Since the advancement of robotics in modern society, multi-robot systems are used in office environments to help people accomplish their goals. In addition to interacting with people, robots also need to learn from the surrounding environment to schedule their activities effectively. 
+In this research, the knowledge of room occupancy is applied to task scheduling by the robot system. Room occupation means the probability of someone in the office.  In other words, in a typical office environment,  if at least one person is in the office, the office is considered occupied. However, the perspective of individual robots cannot cover the entire office environment. But the knowledge of room occupation can be established by the Internet of Things (IoT) technologies.
+
+There are several requirements for obtaining room occupation for the entire office environment. First, it needs to operate for a long time. Second, it needs to keep the information as current as possible. Based on these requirements, I designed a method to obtain room occupation information. I considered installing BLE sensors on all doors. The robot needs to exchange information with sensors while performing navigation tasks and find sensors when there is no navigation task. To achieve this goal, I have designed a component called the central pool. The centralized pool is the global controller in the multi-robot system. It can receive room occupation information from the robots. 
+The centralized pool uses this information in two ways. It schedules the robot's navigation tasks according to the information and can also designate the robot to explore the room lacking the information.
+
+Simulation results demonstrate the efficiency and robustness of the multi-robot system. In the simulated working environment, the multi-system operated stably for three days, and autonomously performed more than 5000 navigation tasks. This system can handle some unexpected problems. For example, the robot drops tasks when it is not able to perform them. Other robots reuse those dropped tasks.
+
 
 \cleardoublepage

@@ -10,24 +10,23 @@
 %\end{itemize}
 
 
-This Chapter introduced the background and state of the art on multi-robot task scheduling. Chapter \ref{sec:ros_concepts} introduces important concepts of ROS. Chapter \ref{sec:modeling_gazebo} introduces the 3D modeling of robot and environment in Gazebo. Chapter \ref{sec:navigation} introduces robot navigation. Chapter \ref{sec:exist_task_scheduling_methods} introduces exist task scheduling methods. Chapter \ref{sec:cost_function} introduces exist implementation of cost function.
+This chapter introduced the background and state of the art on multi-robot task scheduling. Chapter \ref{sec:ros_concepts} introduces important concepts of ROS. Chapter \ref{sec:modeling_gazebo} introduces the 3D modeling of robot and environment in Gazebo. Chapter \ref{sec:navigation} introduces robot navigation. Chapter \ref{sec:exist_task_scheduling_methods} introduces exist task scheduling methods. Chapter \ref{sec:cost_function} introduces exist implementation of cost function.
 
 \section{Important Concepts of ROS}
 \label{sec:ros_concepts}
-The ROS Wiki \cite{ROSWEB} defines ROS as an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers.
-In another word, it is a robot software platform that provides various development environments specialized for developing robot application programs\cite{Pyo17}.
+ROS is a highly flexible open-source operating system for robot. It contains various development tools and libraries for developing robot software programs\cite{Pyo17}. It aims to simplify the difficulty and complexity of the process of creating software programs across robot platforms.
 
 \subsection{Node}
-A ROS node is the smallest unit of processor running in ROS. In another word, it is one executable program. In this project, some existing special nodes are used. For example ``move base'' node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. There are some nodes created for this project, and each node are created for different purpose, for example, one ``Robot controller'' node controls one robot. 
+A ROS node is one executable program. In this project, some existing special nodes are used. For example ``move base'' node provides a ROS interface for configuring, running, and interacting with the navigation stack on a robot. There are some nodes created for this project, and each node are created for different purpose, for example, one ``Robot controller'' node controls one robot. 
 
 \subsection{Communication Infrastructure}
 ROS has a built-in and well-tested messaging system. There are different methods to exchange messages.  ROS topic is a unidirectional anonymous communication. It is used when exchange data continuously. The subscriber receives messages of publisher node only when both of them registered the same topic name. ROS service is bidirectional synchronous communication. The service client request a service and the service server responds to the request. The ROS action is a bidirectional asynchronous communication. It is used when it is difficult to use the service due to long response times after the request or when an intermediate feedback value is needed.
-The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}.  There are some utilization of message communication in this project. Chapter \ref{sec:sensor_simulatior} introduces the sensor simulation scenario that utilizes ROS Topic method. Chapter \ref{sec:communication_protocols} introduces the communication protocols in this project that utilize ROS service method and ROS Action method.   
+The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}. The messaging system has been applied to this project. For instance, the sensor simulation scenario (Chapter \ref{sec:sensor_simulatior}) use ROS Topic method. The communication protocols (Chapter \ref{sec:communication_protocols}) is designed based on ROS Service method and ROS Action method.   
 
 \begin{figure}
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch2/ros_message_communication.png}
-    \caption{ROS Message Communication}
+    \caption{ROS Message Communication \cite{Pyo17}}
     \label{fig:ros_message_communication}
     \end{figure}
     
@@ -45,24 +44,24 @@ ROS's core functionality is enhanced by a variety of tools and packages:
 
     \item \textbf{rqt.} rqt is an integration of more than 30 Qt-based ROS GUI development tool. It has plugins such as ``rqt\_tf\_tree'', ``rqt\_plot'' and  ``rqt\_graph''
    
-    \item \textbf{rqt\_tf\_tree.} rqt\_tf\_tree is a type of rqt. It is a tool for visualizing the tree of frames being broadcast over ROS. Figure \ref{fig:tf_tree} presents the relative coordinate transformation (tf) of multi-robot system. If the poses of Laser Distance Sensor (LDS) are considered as the poses of the robots, the pose information of each robot is connected in the order of odom $\rightarrow$ base\_footprint $\rightarrow$ base\_link $\rightarrow$ base\_scan.
+    \item \textbf{rqt\_tf\_tree.} rqt\_tf\_tree is a type of rqt. It is a tool for visualizing the tree of topics being broadcast over ROS. Figure \ref{fig:tf_tree} presents the relative coordinate transformation (tf) of multi-robot system. If the poses of Laser Distance Sensor (LDS) are considered as the poses of the robots, the pose information of each robot is connected in the order of odom $\rightarrow$ base\_footprint $\rightarrow$ base\_link $\rightarrow$ base\_scan.
     
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width = 1.0\textwidth]{content/images/ch2/rqt_tree.png}
-        \caption{rqt\_tf\_tree of Multi-robot Scheduling System}
+        \includegraphics[width = 0.\textwidth]{content/images/ch2/rqt_tree.png}
+        \caption{Part of rqt\_tf\_tree of the multi-robot system}
         \label{fig:tf_tree}
         \end{figure}
        
-    \item \textbf{rqt\_graph.} rqt\_graph is a type of rqt. It is a graphical tool that presents the status of nodes and topics. Figure \ref{fig:rqt_graph} presents relation of nodes in Multi-robot Scheduling System.
+    \item \textbf{rqt\_graph.} rqt\_graph is a type of rqt. It is a graphical tool that presents the status of nodes and topics. Figure \ref{fig:rqt_graph} presents relation of nodes in multi-robot system.
     \begin{figure}[htbp]
         \centering
         \includegraphics[width = 0.7\textwidth]{content/images/ch2/rosgraph.png}
-        \caption{rqt\_graph of Multi-robot Scheduling System}
+        \caption{rqt\_graph of multi-robot system}
         \label{fig:rqt_graph}
     \end{figure}
 
-    \item \textbf{Gazebo.} Gazebo \cite{GZ} is the 3D simulation tool integrated with ROS. The details of gezebo are introduced in Chapter \ref{sec:modeling_gazebo}.
+    \item \textbf{Gazebo.} Gazebo \cite{GZ} is the 3D simulation tool integrated with ROS. The details of Gezebo are introduced in Chapter \ref{sec:modeling_gazebo}.
 \end{itemize}
 
 \section{TurtleBot3 Simulation Using Gazebo}
@@ -70,7 +69,8 @@ ROS's core functionality is enhanced by a variety of tools and packages:
 
 \subsection{Gazebo Simulator}
 Robot simulation is essential for robotics research, because it can pre-estimate the performance of robot algorithms before applying it to a real robot \cite{Afanasyev2015}. 
-The simulator used in this project is Gazebo. Gazebo is a 3D dynamic indoor and outdoor multi-robot simulator integrated with ROS, and it offers physics simulation at a much higher degree of fidelity, a suite of sensors, and interfaces for both users and programs \cite{GZ}. 
+The simulator used in this project is Gazebo. 
+Gazebo\cite{GZ} is a 3D robot simulator software based on physics simulation. It simulates the movement of one or multiple robots in complex indoor and outdoor environments.
 Using Gazebo simulator affords to create new 3D model with geometrical primitive or import existing simulated robots and environments. 
 
 \subsection{TurtleBot3 Robot}
