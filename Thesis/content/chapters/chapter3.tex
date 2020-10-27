@@ -55,7 +55,7 @@ The details about centralized pool storing and studying from environment informa
 \label{sec:task_explan}
 
 \subsection{Task Specification}
-Robots should execute tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and schedule tasks to robots based on the environmental information. Therefore, three task names are defined: ``gather information task'' asks a robot gathers environment information from sensors, ``execute task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
+Robots should navigation tasks in order to achieve the overall system goals: gather information and environmental information continuously for a long time and schedule tasks to robots based on the environmental information. Therefore, three task names are defined: ``gather information task'' asks a robot gathers environment information from sensors, ``navigation task'' asks a robot moves to a point and  ``charging task'' asks robot to refill its battery at charging station.
 The task specifications are stored in ``task table'' in database (Table \ref{tab:db_task_table}).
 
 \subsection{Task Composition and Decomposition}
@@ -71,20 +71,20 @@ The implementation of task scheduling is shown in Chapter \ref{sec:task_scheduli
 
 \begin{enumerate}
 	\item When the battery of robot below 10\%, a charging task will be created and sent to robot.
-	\item When the battery of robot above 10\%, firstly, ``simple execute tasks'' according to the task table in database are created. Secondly, ``complex execute tasks'' will be composed and one of them will be selected and sent to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
-    \item If there are no ``execute tasks'' in database or after ``execute tasks scheduling'', the cost of tasks exceeds the threshold, a ``gather environment task'' will be created and sent to robot.
+	\item When the battery of robot above 10\%, firstly, ``simple navigation tasks'' according to the task table in database are created. Secondly, ``complex navigation tasks'' will be composed and one of them will be selected and sent to robot. To ensure consistency, a ``complex task'' composed by only one ``simple task'' is allowed. 
+    \item If there are no ``navigation tasks'' in database or after ``navigation tasks scheduling'', the cost of tasks exceeds the threshold, a ``gather environment task'' will be created and sent to robot.
 \end{enumerate}
 
 \subsection{Execute Task}
-As discussed in Chapter \ref{sec:task_scheduling_approach}, one of the ``complex execute tasks'' should be selected for requesting robot. In order to select an ``execute task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex execute tasks'' with the lowest cost will be selected.
+As discussed in Chapter \ref{sec:task_scheduling_approach}, one of the ``complex navigation tasks'' should be selected for requesting robot. In order to select an ``navigation task'', the decision variables and Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex navigation tasks'' with the lowest cost will be selected.
 
 \begin{equation}
 	\label{eq:large_execute_task_cost} 
 	\begin{aligned}
 	& \mbox{W: Weight } \\
 	& \mbox{n: Number of doors} \\
-	& \mbox{Cost}_{\mbox{Large execute task}} = \frac{W_{\mbox{battery}} \times \mbox{Battery consumtion}}{n} + W_{\mbox{waiting}} \times \mbox{waiting time} \\
-	& + W_{\mbox{possibility}} \times \prod\limits_{i=1}^n \mbox{Door open possibility}  + W_{\mbox{priority}} \times \mbox{Priority}
+	& \mbox{Cost}_{\mbox{Large navigation task}} = \frac{W_{\mbox{battery}} \times \mbox{Battery consumtion}}{n} + W_{\mbox{waiting}} \times \mbox{waiting time} \\
+	& + W_{\mbox{probability}} \times \prod\limits_{i=1}^n \mbox{Door open probability}  + W_{\mbox{priority}} \times \mbox{Priority}
 	\end{aligned}
 \end{equation}
 
@@ -92,9 +92,9 @@ As discussed in Chapter \ref{sec:task_scheduling_approach}, one of the ``complex
 \begin{itemize}
 \item \textbf{Task Priority.}  The priority is discussed Chapter \ref{sec:task_table}.
 \item \textbf{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the target point.
-	An example of ``measurement result'' table is shown in Table \ref{tab:db_measurement_result}, an example of ``open possibility'' table is shown in Table \ref{tab:db_open_possibilities}. 
+	An example of ``measurement result'' table is shown in Table \ref{tab:db_measurement_result}, an example of ``open probability'' table is shown in Table \ref{tab:db_open_possibilities}. 
 \item \textbf{Waiting Time. } The waiting time is the difference between the current simulation time and start time of the first task to be executed. $T_{waiting} = T_{first\_task} - T_{now}$
-\item \textbf{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``execute task'' that contains n simple task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
+\item \textbf{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``navigation task'' that contains n simple task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
 \end{itemize}
 
 
@@ -123,7 +123,7 @@ To create a ``gather environment information task'', Equation \ref{eq:door_cost}
 	& \mbox{W: Weight } \\
 	& \mbox{n: Number of doors on trajectory} \\	
 	& \mbox{Cost}_{\mbox{door}} = \frac{W_{\mbox{battery}} \times \mbox{Battery consumtion}}{n} + W_{\mbox{time}} \times (T_{\mbox{last update}} - T_{\mbox{now}}) \\
-	& + W_{\mbox{possibility}} \times \prod\limits_{i=1}^n \mbox{Door open possibility}
+	& + W_{\mbox{probability}} \times \prod\limits_{i=1}^n \mbox{Door open probability}
 	\end{aligned}
 \end{equation}
 
@@ -152,6 +152,6 @@ To create a ``charging task'', Equation \ref{eq:door_cost} and following decisio
 \paragraph{Decision variables}
 \begin{itemize}
 	\item \textbf{Remain Time.} It describes how long will a charging station be free. 
-	\item \textbf{Battery Consumption.} Similar to ``execute task'' scheduling, the battery consumption is related to the trajectory from robot to the charging station. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
+	\item \textbf{Battery Consumption.} Similar to ``navigation task'' scheduling, the battery consumption is related to the trajectory from robot to the charging station. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
 \end{itemize}
 

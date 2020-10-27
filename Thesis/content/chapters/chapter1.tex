@@ -21,7 +21,7 @@
 
 \chapter{Introduction}
 Since the advancement of robotics in the modern society with robots' reliability and high work quality, robots are being used together as a multi-robot system, providing advantage compared to a single robot \cite{Eijyne2020DevelopmentOA}. 
-Multi-robot systems are widely employed in various applications such as healthcare facilities to assist elderly residents \cite{retire2017}, industrial plant inspection\cite{Chun12}.
+Multi-robot systems are widely employed in various applications such as healthcare facilities to assist elderly residents \cite{retire2017} and industrial plant inspection\cite{Chun12}.
 Thinking of an office building where people have different working schedules. If at least one person is in the office, the office is considered occupied. The robot working at this office environment should not only interact with people but also to avoid waste energy by moving to empty rooms. This requires the robots to learn from the office environment information and schedule their activities accordingly. 
 
 For a working robot, environment information is indispensable for efficiently perform activities. There are several types of environment information: (1) Information about its surrounding, such as the position of furniture, doors, walls, and other robots. (2) Information about room occupation which presents the probability of finding a person in the room. The latter may change during long-time operating. Therefore, the long-term room occupation measuring should be conducted to keep its value up to date.
@@ -33,12 +33,12 @@ Therefore, I have considered fixed sensors in the office environment. The fixed 
 I have developed a multi-robot system able to share the information among sensors, charging stations, robots and the centralized pool. The robot can start five kinds of interactions: 
 (1) As long as the robot enters the range of the sensor, they conduct a rapid exchange of room occupation information. 
 (2) The robot interacts with a charging station at the beginning and at the end of charging process. 
-(3) When the robot is idle, it autonomously requests a task from the centralized pool. The centralized pool then responds robot with a command of a simple task (task contains one target position) or a complex task (task which can be decomposed into multiple simple tasks). This command contains the when and where to perform activity(s). These activities include ``execute task'', ``charging'',``gather information'' etc. (Figure \ref{fig:system_architecture}).
+(3) When the robot is idle, it autonomously requests a task from the centralized pool. The centralized pool then responds robot with a command of a simple task (task contains one target position) or a complex task (task which can be decomposed into multiple simple tasks). This command contains the when and where to perform activity(s). These activities include ``navigation task'', ``charging'',``gather information'' etc. (Figure \ref{fig:system_architecture}).
 (4) While performing activities, the robot sends acquired room occupation data to the centralized pool. 
 (5) Once the robot finished all activities, the robot notifies the central pool that the task is succeeded and idle state again.
 
 
-I also have implemented a multi-robot task scheduling architecture in the centralized pool. The goal of multi-robot task scheduling is to find the optimal task for the robot in order to minimize the total cost. According to the application requirements, three cost function are designed to calculate cost for ``gather information task'', ``execute task'' and ``charging task''. The cost consider decision variable such as energy consumption, time, room occupation, priority etc. 
+I also have implemented a multi-robot task scheduling architecture in the centralized pool. The goal of multi-robot task scheduling is to find the optimal task for the robot in order to minimize the total cost. According to the application requirements, three cost function are designed to calculate cost for ``gather information task'', ``navigation task'' and ``charging task''. The cost consider decision variable such as energy consumption, time, room occupation, priority etc. 
 
 
 I also pay particular attention to error handling to robust against robot failures. 
@@ -62,7 +62,7 @@ In addition to the architecture I proposed herein, our system uses existing plat
 %A good introduction usually starts presenting a general view of the topic and continues focusing on the problem studied. Begin it clarifying the subject area of interest and establishing the context (remember to support it with related bibliography).
 Given an office building where people have different working schedules. If at least one person is in the office, the office is considered occupied.
 When multiple robot working in this environment, an efficient task scheduling algorithm is required, in order to minimize the completion time while decreasing the total power consumption \cite{Chun12}.
-In this case, room occupation becomes a valuable decision variables for task scheduling, which describes the possibility that the robot can enter the office.
+In this case, room occupation becomes a valuable decision variables for task scheduling, which describes the probability that the robot can enter the office.
 %However, the sensors attached to robot are typically highly not able to measure room occupation, because the vibrations of a robot body can cause damage to the sensors or incorrect measurement results.
 Although there are increasing amounts of research have been conducted in the area of task scheduling for multi-robot system \cite{Shah7}, unfortunately, current research work mainly on multi-robot cooperation dynamic environments and rarely address on adoption of Internet of Things technologies. 
 Therefore, I consider adding more fixed sensors to in the whole office environment \cite{Coltin10}, and implement a multi-robot system. This multi-robot system should be able to acquire the room occupation information, and use it as one of decision variables to schedule tasks. 
@@ -87,7 +87,7 @@ Therefore, I consider adding more fixed sensors to in the whole office environme
 %Moreover, I have implemented the multi-robot system to utilize room occupation as well as common factors (e.g. priority, battery consumption etc.) to schedule tasks. 
 
 %they didn't utilize room occupation information to schedule the tasks. 
-%The room occupation shows the possibility that the robot can enter the office. 
+%The room occupation shows the probability that the robot can enter the office. 
 
 \section{Problem definition}
 %Additionally, focuses the text on the relevant points of your investigation and problems that you want to solve, relating them with the first part.
@@ -126,8 +126,8 @@ I split the problem into three sub-problems:
 
 \section{Thesis Structure}
 %Present your work to the reader giving a brief overview of what is going to cover every chapter. Write only general concepts, no more than one or two sentences per chapter should be necessary. 
-Next chapter briefly introduces the background information and the relative work in both task scheduling and cost function.
-In chapter 3 I formally present the architecture of the multi-robot system as well as the approaches to schedule tasks. 
-In chapter 4 I describe the implementation of communication protocol and components in the multi-robot system.
+Next chapter briefly introduces the background information and the related work in both task scheduling and cost function.
+In Chapter 3 I formally present the architecture of the multi-robot system as well as the approaches to schedule tasks. 
+In Chapter 4 I describe the implementation of communication protocol and components in the multi-robot system.
 Chapter 5 introduces the experiments performed on the implementation. 
-Finally, in chapter 6 I interpret the results of the performed work.
+Finally, in Chapter 6 I interpret the results of the performed work.

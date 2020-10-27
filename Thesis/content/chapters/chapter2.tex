@@ -149,7 +149,7 @@ Two Greedy algorithms are proposed for task assignment. The first one is to find
 
 \subsection{Distributed Auction Method}
 \label{sec:auction_method}
-When system perform a long-term task allocation process, the communication link between costumer agent and robots may be disconnected. This may cause a conflict or failed assignment. 
+When system performs a long-term task allocation process, the communication link between costumer agent and robots may be disconnected. This may cause a conflict or failed assignment. 
 Distributed methods are more suitable in this case as distribute the computation to individual agents \cite{NUNES201755}. 
 Dong-Hyun Lee has proposed a resource-oriented, distributed auction algorithm \cite{Dong2015}. The customer agents and robots with limited communication ranges construct an ad-hoc network tree. The customer agent becomes auctioneer and broadcasts an auction call to the task. The robots become bidders and submit their bid values to the customer agent. The bid values consider local information such as the tasks in robot task queue, robot's resource levels and estimated travel distance and time for multiple path. Since each path consists of different charging stations, the robot's resource levels after completing a task and estimated travel time depends on the path. After receiving all bid values, the agent assigns the task to the robot with the lowest bid value. This senarios not only avoids unexpected battery drain while robot processing task, but also let robots maintain high capacities. 
 

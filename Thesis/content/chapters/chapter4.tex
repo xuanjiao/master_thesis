@@ -7,6 +7,8 @@ This chapter introduces the implementation of multi-robot system. Chapter \ref{s
 \label{sec:communication_protocols}
 
 Centralized pool, robots, charging stations and sensors need to share information with each other.
+To be more precise, the robot needs to exchange information with sensors while performing navigation tasks and find sensors when there is no navigation task. The scheduling of navigation tasks is implemented in a component called the central pool. The centralized pool is the global controller in the multi-robot system. It can receive and learn room occupation from the robot. Also, it can designate the robot to explore a room with too little information.
+
 To improve the communication efficiency, communication protocols are designed. 
 
 \subsection{Message about Measurement}
@@ -128,13 +130,13 @@ The centralized pool keep environment information in database to make decisions.
 \begin{itemize}
     \label{sec:task_table}
     \item \textbf{Column Task ID.} A unique task identification.
-    \item \textbf{Column Task Name.} Tasks names are ``gather enviroment information task '', ``execute task'' or ``charging task''.
+    \item \textbf{Column Task Name.} Tasks names are ``gather enviroment information task '', ``navigation tasks'' or ``charging task''.
     \item \textbf{Column Start Time.} The start time refers to when the robot should move towards the target. A starting time is given when the task is created. This time can be a time in the future or empty (no time limit). 
     \item \textbf{Column Finish Time.} The default value is empty. When the centralized pool receives task result, this column will be updated to the time when the centralized pool received the result.
     \item \textbf{Column Target ID.} Targets include doors, points and charging stations. When a robot run a ``gather environment information task'', it moves to the front of a door and interact with a sensor in the door position without entering the door. 
-    When robot run an ``execute task'', the robot moves to a given point ether in corridor or in the room. When robot runs a ``charging task'', it moves to a charging station and interact with this charging station.
+    When robot run an ``navigation tasks'', the robot moves to a given point ether in corridor or in the room. When robot runs a ``charging task'', it moves to a charging station and interact with this charging station.
     \item \textbf{Column Robot ID.} A unique robot identification.
-    \item \textbf{Column Priority.} Task priorities allow user to easily prioritize tasks to clearly plan what to do next. The ``charging tasks'' are given the highest priority of 5. The ``gather environment information tasks'' are given the lowest priority of 1. The ``execute tasks'' has priority between 2-4 in the ``created'' status. Once this task failed once, its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' (Figure \ref{fig:centralized_task_handle}).
+    \item \textbf{Column Priority.} Task priorities allow user to easily prioritize tasks to clearly plan what to do next. The ``charging tasks'' are given the highest priority of 5. The ``gather environment information tasks'' are given the lowest priority of 1. The ``navigation taskss'' has priority between 2-4 in the ``created'' status. Once this task failed once, its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' (Figure \ref{fig:centralized_task_handle}).
     \item \textbf{Column Task Status.} Task status are ``Created'', ``Succeeded'', ``Failed'', ``To rerun'', ``Error''. The difference between task status is discussed in Figure \ref{fig:centralized_task_handle}
     \item \textbf{Column Dependency.} If task B has a dependency of task A, task A needs to be preceded by tasks B. Those dependent tasks should be composed in the centralized pool.
     \item \textbf{Column Description.} The description of a succeeded task is ``succeeded''.  The description of a failed task is its failure reason.
@@ -251,7 +253,7 @@ The centralized pool keep environment information in database to make decisions.
 %measurements & Table \ref{tab:db_measurement_result}  & measurement result with timestamp \\ \hline
 %doors   & Table \ref{tab:db_doors} & door information \\ \hline
 %tasks & Table \ref{tab:db_task_table} & task specifications  \\ \hline 
-%exe\_rs  & Table \ref{tab:exp_decision_variables} & ``execute task'' experiment result \\ \hline
+%exe\_rs  & Table \ref{tab:exp_decision_variables} & ``navigation tasks'' experiment result \\ \hline
 %env\_rs & Table \ref{tab:enviroment_experiment_result} & ``gather enviroment information task'' experiment result \\ \hline
 %open\_possibilities & Table \ref{tab:db_open_possibilities} & open possibilities table for different time slots and weekdays \\ \hline
 %... & ... & ... \\ \hline
@@ -287,7 +289,7 @@ When the centralized pool receives a task feedback (Table \ref{tab:feedback_mess
 
 \paragraph{Handle Task Result.}
 When the centralized pool receives a task result (Table \ref{tab:result_message}), it updates status column in ``tasks'' table in database. 
-In order to make the robot complete the task as much as possible, every time when an ``execute task'' failed, its start time will be delayed and its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' 
+In order to make the robot complete the task as much as possible, every time when an ``navigation tasks'' failed, its start time will be delayed and its priority will be increased by 1 until it exceeds the maximum and is marked as ``Failed'' 
 (Figure \ref{fig:centralized_task_handle}).
 
 
@@ -301,7 +303,7 @@ In order to make the robot complete the task as much as possible, every time whe
         \item \textbf{Succeeded.} Robot successfully moved to the goal position and completed the task.
         \item \textbf{Error.} An error that cannot be corrected by itself occurred and the system requires manual restart. For example, a robot failed charging.
         \item \textbf{Failed.} A Task failed. Reasons of task failure includes: The robot was not able to move to goal positions or process robot action(\ref{fig:system_architecture}). 
-        \item \textbf{To rerun.} If an ``execute task'' failed, its priority was increased. The task is marked as ``to rerun task''  for a future scheduling by task scheduling module.
+        \item \textbf{To rerun.} If an ``navigation tasks'' failed, its priority was increased. The task is marked as ``to rerun task''  for a future scheduling by task scheduling module.
     \end{itemize}   
 \end{figure}
 
@@ -310,7 +312,7 @@ In order to make the robot complete the task as much as possible, every time whe
 
 \paragraph{Robot Process Tasks}
 When the task queue(Figure \ref{fig:system_architecture}) in a robot is empty, the robot requests a new task. If the robot gets a ``charging task'', it will move to the position of charging station(Figure \ref{fig:positions_door_station}) and interact with charging station node (Chapter \ref{sec:charging_station}).
-When a robot gets an ``execute task'' which is a complex task, it will move to all goals in order.
+When a robot gets an ``navigation tasks'' which is a complex task, it will move to all goals in order.
 When a robot gets a ``gather environment information'' task, it will move to the door's position.
 During task processing, the timer checks periodically the status of navigation stack. If any errors occurs, the robot send a ``failed'' result with description to the centralized pool.  
 When all tasks are completed without error, the robot will send ``Succeeded'' result to the centralized pool.
