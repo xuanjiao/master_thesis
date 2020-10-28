@@ -12,7 +12,6 @@ A level-1 auxiliary file: content/chapters/chapter7.aux
 The style file: geralpha.bst
 A level-1 auxiliary file: content/chapters/clause.aux
 Database file #1: content/references/references.bib
-Warning--to sort, need author or key in ROSWEB
 Warning--to sort, need author or key in RVIZ
 Warning--to sort, need author or key in GZ
 Warning--to sort, need author or key in T3SLAM
@@ -22,45 +21,45 @@ Warning--to sort, need author or key in POTENTIAL
 Warning--to sort, need author or key in PARTICLE
 Warning--to sort, need author or key in RRT
 Warning--to sort, need author or key in MOVEBASE
-You've used 25 entries,
+You've used 24 entries,
             2768 wiz_defined-function locations,
-            766 strings with 9650 characters,
-and the built_in function-call counts, 10343 in all, are:
-= -- 1049
-> -- 409
+            761 strings with 9610 characters,
+and the built_in function-call counts, 10070 in all, are:
+= -- 1019
+> -- 408
 < -- 7
 + -- 145
 - -- 139
-* -- 803
-:= -- 1496
-add.period$ -- 63
-call.type$ -- 25
-change.case$ -- 120
-chr.to.int$ -- 25
-cite$ -- 45
-duplicate$ -- 444
-empty$ -- 864
+* -- 789
+:= -- 1467
+add.period$ -- 60
+call.type$ -- 24
+change.case$ -- 117
+chr.to.int$ -- 24
+cite$ -- 42
+duplicate$ -- 431
+empty$ -- 832
 format.name$ -- 153
-if$ -- 2317
+if$ -- 2249
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 26
-newline$ -- 115
+newline$ -- 110
 num.names$ -- 49
-pop$ -- 206
+pop$ -- 194
 preamble$ -- 1
-purify$ -- 170
+purify$ -- 165
 quote$ -- 0
-skip$ -- 394
+skip$ -- 382
 stack$ -- 0
-substring$ -- 523
-swap$ -- 147
+substring$ -- 507
+swap$ -- 143
 text.length$ -- 7
 text.prefix$ -- 1
 top$ -- 0
-type$ -- 196
-warning$ -- 10
+type$ -- 188
+warning$ -- 9
 while$ -- 65
-width$ -- 30
-write$ -- 298
-(There were 10 warnings)
+width$ -- 29
+write$ -- 287
+(There were 9 warnings)

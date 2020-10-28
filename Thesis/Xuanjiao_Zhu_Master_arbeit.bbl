@@ -30,12 +30,6 @@
   tasks in Grid networks}.
 \newblock Computer Communications, 32(7):1172 -- 1184, 2009.
 
-\bibitem[CV10]{Coltin10}
-{\sc {Coltin}, B.} \btxandlong{}\ {\sc M.~{Veloso}}: {\em Mobile robot task
-  allocation in hybrid wireless sensor networks}.
-\newblock \Btxinlong{}\ {\em 2010 IEEE/RSJ International Conference on
-  Intelligent Robots and Systems}, \btxpageslong{}\ 2932--2937, 2010.
-
 \bibitem[DEA]{DEADRECKONING}
 {\em {Dead reckoning}}.
 \newblock \url{https://en.wikipedia.org/wiki/Dead_reckoning}.
@@ -61,6 +55,12 @@
 {\sc Hancheol~Cho, Leon~Jung, Darby~Lim}: {\em ROS Robot Programming
   (English)}.
 \newblock ROBOTIS, 12 2017.
+
+\bibitem[JL17]{Jeon17}
+{\sc {Jeon}, S.} \btxandlong{}\ {\sc J.~{Lee}}: {\em Performance analysis of
+  scheduling multiple robots for hospital logistics}.
+\newblock \Btxinlong{}\ {\em 2017 14th International Conference on Ubiquitous
+  Robots and Ambient Intelligence (URAI)}, \btxpageslong{}\ 937--940, 2017.
 
 \bibitem[JM13]{Jia2013ASA}
 {\sc Jia, Xiao} \btxandlong{}\ {\sc M.~Meng}: {\em A survey and analysis of
@@ -122,11 +122,6 @@
 \newblock
   \url{http://www.cs.cmu.edu/~./motionplanning/lecture/Chap4-Potential-Field_howie.pdf}.
 \newblock accessed 2020-10-17.
-
-\bibitem[ROS]{ROSWEB}
-{\em {ROS Website}}.
-\newblock \url{https://www.ros.org}.
-\newblock accessed 2020-10-14.
 
 \bibitem[RRT]{RRT}
 {\em {RRT (Rapidly-exploring Random Tree)}}.
