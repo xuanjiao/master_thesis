@@ -35,26 +35,69 @@ Chapter \ref{sec:navigation_task_experiments} presents the experiment in the cas
 % \end{itemize}
 
 
+
+\section{Office Environment Simulation}
+An office environment is used to evaluate the multi-robot system. This office environment contains a corridor along the central x-axis and 16 rooms located around the corridor (Figure \ref{fig:room_division}). 
+
+Each room is assumed to have one or multiple doors and each door is attached with a sensor. The sensors are simulated using ROS door simulator node (Chapter \ref{sec:sensor_simulatior}), which broadcasts positions and door status periodically. There is no robot limitation in these rooms, as long as the door of the room is opened, it can be entered by any robot. 
+There are no dynamic obstacles in this environment. Before each experiment, tasks are stored in table. The robots are expected to move to the positions where the tasks are located and complete the tasks.
+In this office environment, it is assumed that the people have different working schedule, which cause the room occupied and unoccupied regularly. 
+
+Robot has a rechargeable battery, and its level drops as robot moves and rotates. Therefore, charging stations are designed in the corridor. The positions of charging stations are used by ROS charging station nodes. For details please refer to Chapter\ref{sec:charging_station}.
+
+\begin{figure}[htbp]
+   \centering
+   \includegraphics[width = 0.9\textwidth]{content/images/ch5/door_station_points.png}
+   \caption{Experiment Map. C1-C3 are charging stations and D1-D17 are doors.}
+   \label{fig:exp_map}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{content/images/ch3/room_division.png}
+	\caption{Room division. The environment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinate of a point is in a region, it can be judged that the point is located in the corresponding room.}
+    \label{fig:room_division}
+\end{figure}
+
+\section{Sensor Simulation}
+\label{sec:sensor_simulatior}
+
+\paragraph{Sensor Message Publish}
+In this project, a sensor simulator node is used to publish measurement results. The door simulator publishes one message for each door periodically to a ROS topic ``sensor data''. The message contains door id, sensor position and door status(Table \ref{sec:measurement_message}). The door status are created according to open possibilities table (Table \ref{tab:db_open_possibilities}). 
+
+
+\paragraph{Generate Measuring Data}
+For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on time slot 10:00:00-10:59:59), in 80\% probability a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
+
+
+\paragraph{Sensor Message Subscribe}
+The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe to the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with a position outside the communication range and keep sensor messages within the communication range. With this process, the sensor simulator sends the instant measurement result to robots within the communication range. However, if the system is applied to the real world, instead of sending instant measurement results, the real-world sensor could send a record with history measurement.
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.7\textwidth]{content/images/ch4/sensor_simulator.drawio.png}
+\caption{Sensor Simulator}
+\label{fig:sensor_simulator}
+\end{figure}
+
+
+
 \section{Experiment Setup}
 There following are some preparation before performing experiments. 
 \label{sec:experiment_set_up}
 \begin{enumerate}
-\item \textbf{Create a Launch file for Simulation} Create a launch file. Firstly this file loaded a gazebo world model with an office environment (Figure \ref{fig:gazebo_model}). In this environment, the start time should set to ``2020-06-01 9:00:00''.  Secondly, it loaded three robot models as well as robot state publishers to simulates robot activity such as LDR sensor measurement.
+\item \textbf{Create a launch file for simulation} Create a launch file. Firstly this file loaded a gazebo world model with an office environment (Figure \ref{fig:gazebo_model}). In this environment, the start time should set to ``2020-06-01 9:00:00''.  Secondly, it loaded three robot models as well as robot state publishers to simulates robot activity such as LDR sensor measurement.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.7\textwidth]{content/images/ch5/gazebo_model.png}
     \caption{Gazebo Simulation}
     \label{fig:gazebo_model}
 \end{figure}
-\item \textbf{Create a Launch file for Navigation Stack.} Create the second launch file. This file started the navigation stack (move\_base node). It also started map server to load the map (Figure \ref{fig:exp_map}) created by SLAM\cite{T3SLAM} and open the GUI of Rviz. 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.9\textwidth]{content/images/ch5/door_station_points.png}
-    \caption{Experiment Map.}
-    \label{fig:exp_map}
-   \end{figure}
 
- \item \textbf{Create a Launch file for ROS nodes.} Create the third launch file to start ROS node ``centralized pool'',``robot controller'', ``sensor simulator'' and ``charging station''. 
+\item \textbf{Create a map using SLAM} In stall and execute SLAM packages, use one simulated robot explore the spaces in 3D office environment model. The detailed steps of executing virtual SLAM with TurtleBot3 are shown on the website \cite{T3SLAM}. The map \ref{fig:exp_map} The map created by SLAM is shown in Figure \ref{fig:exp_map}. 
+\item \textbf{Create a launch file for navigation stack.} Create the second launch file. This file started the navigation stack (move\_base node). It also started map server to load the map (Figure \ref{fig:exp_map}) created by SLAM\cite{T3SLAM} and open the GUI of Rviz. 
+
+ \item \textbf{Create a launch file for ROS nodes.} Create the third launch file to start ROS node ``centralized pool'',``robot controller'', ``sensor simulator'' and ``charging station''. 
  \item \textbf{Configure MySQL database.} Start MySQL database server on the computer and start the charging event in the database.
  \item \textbf{Design the database script to gather information experiment.} The script of gather information experiment is shown in Figure \ref{fig:env_exp_timeline}. This script had the following advantages. The first advantage was that this script prevented the initial position from affecting the experiment results. At the beginning of each experiment, all robots started from their initial position, which is the charging station. The second advantage was that the robot would charge after each experiment. This script ensures that the robot would not stop moving due to a lack of energy during the experiment. The third advantage was that each robot gathered the information for time T in each experiment. Also, after an experiment with T set to 15 minutes, about 200 measurement data and 40 task results would be gathered and stored in the database. 
  \begin{figure}[htbp]
@@ -76,33 +119,8 @@ There following are some preparation before performing experiments.
 \item \textbf{Connect the corresponding database script to the centralized pool.} When the centralized pool found that the current experiment should end, it should run the database script to automatically start the next experiment.
 \item \textbf{Set up experiment condition.} The weight values should be import to ``experiment result'' in database
 \item \textbf{Run the launch file.} After setting up, the user should run the three launch file. The experiment would keep running until all entities in ``experiment result'' table was filled.
-
-
 \end{enumerate}
 
-
-
-
-\section{Sensor Simulator}
-\label{sec:sensor_simulatior}
-
-\paragraph{Sensor Message Publish}
-In this project, a sensor simulator node is used to publish measurement results. The door simulator publishes one message for each door periodically to a ROS topic ``sensor data''. The message contains door id, sensor position and door status(Table \ref{sec:measurement_message}). The door status are created according to open possibilities table (Table \ref{tab:db_open_possibilities}). 
-
-
-\paragraph{Generate Measuring Data}
-For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on time slot 10:00:00-10:59:59), in 80\% probability a ``door open'' is generated and in 20\% a ``door closed'' is generated (Initialized Open Possibility is 0.80).
-
-
-\paragraph{Sensor Message Subscribe}
-The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe to the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with a position outside the communication range and keep sensor messages within the communication range. With this process, the sensor simulator sends the instant measurement result to robots within the communication range. However, if the system is applied to the real world, instead of sending instant measurement results, the real-world sensor could send a record with history measurement.
-
-\begin{figure}
-\centering
-\includegraphics[width = 0.7\textwidth]{content/images/ch4/sensor_simulator.drawio.png}
-\caption{Sensor Simulator}
-\label{fig:sensor_simulator}
-\end{figure}
 
 \section{Gather Information Task Experiment Result}
 \label{sec:gather_info_task_experiments}
@@ -127,7 +145,7 @@ Figure \ref{fig:gather_info_experiment_enumerate} represent the experiment resul
 
 \paragraph{Experiment Analysis} 
 
-As shown in the experiment result, all ``Minimal Last Update'' value is from 1 min to 5 min, which is much less than the experiment duration (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of the robot is small (about 0.2 per second), the experiment duration (10min) was not long enough to let three robots pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when the system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The ideal solution was to give both tasks to one robot. 
+As shown in the experiment result, all ``Minimal Last Update'' value is from 1 min to 5 min, which is much less than the experiment duration (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of the robot is small (about 0.2 per second), the experiment duration (10min) was not long enough to let three robots pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when the system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:exp_map}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The ideal solution was to give both tasks to one robot. 
 
 \begin{figure}[htbp]
  \centering

@@ -105,23 +105,6 @@ I split the problem into three sub-problems:
 
 %the system environment is an office environment. The SLAM (Simultaneous Localization and Mapping) is a technique to draw a map by estimating current location in an arbitrary space \cite{T3SLAM}. Map (Figure \ref{fig:room_division}) is created by SLAM.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/room_division.png}
-	\caption{Room division. The environment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinate of a point is in a region, it can be judged that the point is located in the corresponding room.}
-    \label{fig:room_division}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/positions_door_station.png}
-	\caption{Positions of Charging Stations (C1-C3) and Doors (D1-D17)}
-    \label{fig:positions_door_station}
-    \begin{itemize}
-        \item \textbf{Doors.} The positions of doors (Figure \ref{fig:positions_door_station}) are stored in database. There are used by a ROS door simulator node, which broadcasts positions and door status periodically. The broadcast messages are received and filtered by robots.
-        \item \textbf{Charging Stations.} The positions of charging stations (Figure \ref{fig:positions_door_station}) are used by ROS charging station nodes. For details please refer to Chapter \ref{sec:charging_station}.
-    \end{itemize}
-\end{figure}
 
 
 \section{Thesis Structure}

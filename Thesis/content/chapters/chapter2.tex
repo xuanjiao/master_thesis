@@ -8,14 +8,13 @@
 %	\item Definition of used protocols (How the data are collected, when, etc.)
 %\end{itemize}
 
-
 \chapter{Materials and Methods}
 
 This chapter introduced the background and state of the art on multi-robot task scheduling. Chapter \ref{sec:ros_concepts} introduces important concepts of ROS. Chapter \ref{sec:modeling_gazebo} introduces the 3D modeling of robot and environment in Gazebo. Chapter \ref{sec:navigation} introduces robot navigation. Chapter \ref{sec:exist_task_scheduling_methods} introduces previous task scheduling methods. Chapter \ref{sec:cost_function} introduces exist implementation of cost function.
 
 \section{Important Concepts of ROS}
 \label{sec:ros_concepts}
-ROS is a highly flexible open-source operating system for the robot. It contains various development tools and libraries for developing robot software programs\cite{Pyo17}. It aims to simplify the difficulty and complexity of the process of creating software programs across robot platforms.
+ROS is a highly flexible open-source operating system for the robot. It contains various development tools and libraries for developing robot software programs\cite{Pyo17}. It aims to simplify the difficulty and complexity of the process of creating software programs across robot platforms. In this project, ROS is used to archive core autonomous robot functions, including navigation, localization, and mapping.
 
 \subsection{Node}
 A ROS node is one executable program. In this project, some existing nodes are used. For instance, the `` move base'' node provides a ROS interface for configuring, running, and interacting with the robot's navigation stack. There are some nodes created for this project, and each node is created for different purposes. For example, one ``Robot controller'' node controls one robot. 
@@ -142,7 +141,8 @@ Booth has proposed a multi-robot system that supports elderly residents in a ret
 
 \subsection{Centralized Method based on A* and Genetic Algorithm}
 \label{sec:genetic_method}
-Chun has proposed a centralized task scheduling and path-planning method based on A* and Genetic Algorithm \cite{Chun12}. In this research work, the Genetic Algorithm is responsible for task scheduling to find the optimal solution for industrial plant inspection problems. A* Algorithm is used to calculate the traveling cost and path-planning of a robot moving from one position to another. It can consider more detailed path conditions such as obstacles, furniture, and terrain conditions. The traveling cost is one evaluation parameter of the fitness function in the Genetic Algorithm, but it is referred to as the completion time in this research. To be more precise, it is the period between the first robot starting its tasks and the last robot finishing its tasks.
+Chun has proposed a centralized task scheduling and path-planning method based on A* and Genetic Algorithm \cite{Chun12}.
+In this research work, the Genetic Algorithm is responsible for task scheduling to find the optimal solution for industrial plant inspection problems. A* Algorithm is used to calculate the traveling cost and path-planning of a robot moving from one position to another. It can consider more detailed path conditions such as obstacles, furniture, and terrain conditions. The traveling cost is one evaluation parameter of the fitness function in the Genetic Algorithm, but it is referred to as the completion time in this research. To be more precise, it is the period between the first robot starting its tasks and the last robot finishing its tasks.
 The goal of the task scheduling method is to find an ordered set of tasks for robots to minimize the completion time while decreasing the total power consumption.
 Two Greedy algorithms are proposed for task assignment. The first one is to find one task for each robot that provides for the minimum completion time in each step to minimize the total completion time. The second one is finding only one robot-task pair that takes the minimum time in each step to decrease the total power consumption. 
 
