@@ -21,45 +21,81 @@
 \chapter{Evaluation}
 \label{ch:evaluation}
 
+\section{Simulation}
+
+\subsection{Sensor Simulation}
+
+
+\subsection{Office Environment}
+
+\section{Experiment Procedure}
+
+\subsection{Gather Information Experiment}
+
+\subsection{Navigation Experiment}
+
+\section{Experiment Summery}
+
+
+
 This chapter introduces the experiments performed on the implementation. 
 Chapter \ref{sec:experiment_set_up} presents precondition of experiments.
 Chapter \ref{sec:sensor_simulatior} introduces the simulated sensors.
 Chapter \ref{sec:gather_info_task_experiments} presents the experiments in the case that the centralized pool assign only ``gather information tasks'' to robots.
-Chapter \ref{sec:navigation_task_experiments} presents the experiment in the case that centralized pool assign only ``navigation tasks'' to robots. 
-
-% \begin{itemize}
-% \item Evaluate the need for decision variables.
-% \item Find the best weight combinations in cost functions.
-% \item Evaluate the hypothesis that the more robots, the faster to complete a task set, the higher the completion rate.
-% % \item Investigate how different weight combinations in cost functions affect the performance \cite{Shiqi}. 
-% \end{itemize}
+Chapter \ref{sec:execute_task_experiments} presents the experiment in the case that centralized pool assign only ``navigation tasks'' to robots. 
 
 
+\section{Experiment Setup}
 
-\section{Office Environment Simulation}
-An office environment is used to evaluate the multi-robot system. This office environment contains a corridor along the central x-axis and 16 rooms located around the corridor (Figure \ref{fig:room_division}). 
-
-Each room is assumed to have one or multiple doors and each door is attached with a sensor. The sensors are simulated using ROS door simulator node (Chapter \ref{sec:sensor_simulatior}), which broadcasts positions and door status periodically. There is no robot limitation in these rooms, as long as the door of the room is opened, it can be entered by any robot. 
-There are no dynamic obstacles in this environment. Before each experiment, tasks are stored in table. The robots are expected to move to the positions where the tasks are located and complete the tasks.
-In this office environment, it is assumed that the people have different working schedule, which cause the room occupied and unoccupied regularly. 
-
-Robot has a rechargeable battery, and its level drops as robot moves and rotates. Therefore, charging stations are designed in the corridor. The positions of charging stations are used by ROS charging station nodes. For details please refer to Chapter\ref{sec:charging_station}.
-
+There following are some preparation before performing experiments. 
+\label{sec:experiment_set_up}
+\begin{enumerate}
+\item \textbf{Create a Launch file for Simulation} Create a launch file. Firstly this file loaded a gazebo world model with an office environment (Figure \ref{fig:gazebo_model}). In this environment, the start time should set to ``2020-06-01 9:00:00''. Secondly, it loaded three robot models as well as robot state publishers to simulates robot activity such as LDR sensor measurement.
 \begin{figure}[htbp]
-   \centering
-   \includegraphics[width = 0.9\textwidth]{content/images/ch5/door_station_points.png}
-   \caption{Experiment Map. C1-C3 are charging stations and D1-D17 are doors.}
-   \label{fig:exp_map}
+ \centering
+ \includegraphics[width = 0.7\textwidth]{content/images/ch5/gazebo_model.png}
+ \caption{Gazebo Simulation}
+ \label{fig:gazebo_model}
 \end{figure}
 
+\item \textbf{Create a Launch file for Navigation Stack.} Create the second launch file. This file started the navigation stack (move\_base node). It also started map server to load the map (Figure \ref{fig:exp_map}) created by SLAM\cite{T3SLAM} and open the GUI of Rviz.  
 \begin{figure}[htbp]
-	\centering
-	\includegraphics[width = 0.9\textwidth]{content/images/ch3/room_division.png}
-	\caption{Room division. The environment is divided into regions that represent rooms in the facility (Figure \ref{fig:room_division}). If the coordinate of a point is in a region, it can be judged that the point is located in the corresponding room.}
-    \label{fig:room_division}
-\end{figure}
+ \centering
+ \includegraphics[width = 0.9\textwidth]{content/images/ch5/door_station_points.png}
+ \caption{Experiment Map.}
+ \label{fig:exp_map}
+ \end{figure}
 
-\section{Sensor Simulation}
+ \item \textbf{Create a Launch file for ROS nodes.} Create the third launch file to start ROS node ``centralized pool'',``robot controller'', ``sensor simulator'' and ``charging station''. 
+ \item \textbf{Configure MySQL database.} Start MySQL database server on the computer and start the charging event in the database.
+ \item \textbf{Design the database script to gather information experiment.} The script of gather information experiment is shown in Figure \ref{fig:env_exp_timeline}. This script had the following advantages. The first advantage was that this script prevented the initial position from affecting the experiment results. At the beginning of each experiment, all robots started from their initial position, which is the charging station. The second advantage was that the robot would charge after each experiment. This script ensures that the robot would not stop moving due to a lack of energy during the experiment. The third advantage was that each robot gathered the information for time T in each experiment. After an experiment with T set to 15 minutes, about 200 measurement data and 40 task results would be gathered and stored in the database. 
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[width = 0.7\textwidth]{content/images/ch5/env_exp_timeline.drawio.png}
+ \caption{The script of gather information experiment.}
+ \label{fig:env_exp_timeline}
+ \end{figure}
+
+ \item \textbf{Design the database script to navigation experiment.} The script of gather information experiment is shown in Figure \ref{fig:nav_exp_timeline}.
+ This script had the following advantages. The first advantage was that this script prevented the initial position from affecting the experiment results. At the beginning of each experiment, all robots started from their initial position, which was the charging station. The second advantage was that the robot would charge after each experiment. This script ensured that the robot would not stop moving due to a lack of energy during the experiment. The third feature is that 15 navigation tasks with equal time intervals in each experiment will be generated. The number of successful tasks and the completion time of all tasks will be used to evaluate task scheduling performance.
+ Table \ref{tab:exp_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. 
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[width = 0.7\textwidth]{content/images/ch5/exe_exp_timeline.drawio.png}
+ \caption{The script of navigation experiment.}
+ \label{fig:nav_exp_timeline}
+ \end{figure}
+\item \textbf{Connect the corresponding database script to the centralized pool.} When the centralized pool found that the current experiment should end, it should run the database script to automatically start the next experiment.
+\item \textbf{Set up experiment condition.} The weight values should be import to ``experiment result'' in database
+\item \textbf{Run the launch file.} After setting up, the user should run the three launch file. The experiment would keep running until all entities in ``experiment result'' table was filled.
+
+
+\end{enumerate}
+
+
+
+
+\section{Sensor Simulator}
 \label{sec:sensor_simulatior}
 
 \paragraph{Sensor Message Publish}
@@ -71,7 +107,7 @@ For example, on monday (day of week is 2) at simulation time ``10:30:00'' (on ti
 
 
 \paragraph{Sensor Message Subscribe}
-The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe to the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message at the same time. Their distance filters filter sensor messages with a position outside the communication range and keep sensor messages within the communication range. With this process, the sensor simulator sends the instant measurement result to robots within the communication range. However, if the system is applied to the real world, instead of sending instant measurement results, the real-world sensor could send a record with history measurement.
+The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}. The robots (robot controller nodes) subscribe to the same ROS topic ``sensor data''. Every time the sensor simulator sends a message, all robots will receive this message simultaneously. Their distance filters filter sensor messages with a position outside the communication range and keep sensor messages within the communication range. With this process, the sensor simulator sends the instant measurement result to robots within the communication range. However, if the system is applied to the real world, the real-world sensor could send a record with history measurement instead of sending instant measurement data.
 
 \begin{figure}
 \centering
@@ -79,48 +115,6 @@ The process of sensor simulation is shown in Figure \ref{sec:sensor_simulatior}.
 \caption{Sensor Simulator}
 \label{fig:sensor_simulator}
 \end{figure}
-
-
-
-\section{Experiment Setup}
-There following are some preparation before performing experiments. 
-\label{sec:experiment_set_up}
-\begin{enumerate}
-\item \textbf{Create a launch file for simulation} Create a launch file. Firstly this file loaded a gazebo world model with an office environment (Figure \ref{fig:gazebo_model}). In this environment, the start time should set to ``2020-06-01 9:00:00''.  Secondly, it loaded three robot models as well as robot state publishers to simulates robot activity such as LDR sensor measurement.
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch5/gazebo_model.png}
-    \caption{Gazebo Simulation}
-    \label{fig:gazebo_model}
-\end{figure}
-
-\item \textbf{Create a map using SLAM} In stall and execute SLAM packages, use one simulated robot explore the spaces in 3D office environment model. The detailed steps of executing virtual SLAM with TurtleBot3 are shown on the website \cite{T3SLAM}. The map \ref{fig:exp_map} The map created by SLAM is shown in Figure \ref{fig:exp_map}. 
-\item \textbf{Create a launch file for navigation stack.} Create the second launch file. This file started the navigation stack (move\_base node). It also started map server to load the map (Figure \ref{fig:exp_map}) created by SLAM\cite{T3SLAM} and open the GUI of Rviz. 
-
- \item \textbf{Create a launch file for ROS nodes.} Create the third launch file to start ROS node ``centralized pool'',``robot controller'', ``sensor simulator'' and ``charging station''. 
- \item \textbf{Configure MySQL database.} Start MySQL database server on the computer and start the charging event in the database.
- \item \textbf{Design the database script to gather information experiment.} The script of gather information experiment is shown in Figure \ref{fig:env_exp_timeline}. This script had the following advantages. The first advantage was that this script prevented the initial position from affecting the experiment results. At the beginning of each experiment, all robots started from their initial position, which is the charging station. The second advantage was that the robot would charge after each experiment. This script ensures that the robot would not stop moving due to a lack of energy during the experiment. The third advantage was that each robot gathered the information for time T in each experiment. Also, after an experiment with T set to 15 minutes, about 200 measurement data and 40 task results would be gathered and stored in the database. 
- \begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch5/env_exp_timeline.drawio.png}
-    \caption{The script of gather information experiment.}
-    \label{fig:env_exp_timeline}
- \end{figure}
-
- \item \textbf{Design the database script to navigation experiment.} The script of gather information experiment is shown in Figure \ref{fig:nav_exp_timeline}.
- This script had the following advantages. The first advantage was that this script prevented the initial position from affecting the experiment results. At the beginning of each experiment, all robots started from their initial position, which was the charging station. The second advantage was that the robot would charge after each experiment. This script ensured that the robot would not stop moving due to a lack of energy during the experiment. The third feature is that 15 navigation tasks with equal time intervals in each experiment will be generated. The number of successful tasks and the completion time of all tasks will be used to evaluate the performance of task scheduling.
- Table \ref{tab:exp_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. 
- \begin{figure}[htbp]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{content/images/ch5/exe_exp_timeline.drawio.png}
-    \caption{The script of navigation experiment.}
-    \label{fig:nav_exp_timeline}
- \end{figure}
-\item \textbf{Connect the corresponding database script to the centralized pool.} When the centralized pool found that the current experiment should end, it should run the database script to automatically start the next experiment.
-\item \textbf{Set up experiment condition.} The weight values should be import to ``experiment result'' in database
-\item \textbf{Run the launch file.} After setting up, the user should run the three launch file. The experiment would keep running until all entities in ``experiment result'' table was filled.
-\end{enumerate}
-
 
 \section{Gather Information Task Experiment Result}
 \label{sec:gather_info_task_experiments}
@@ -130,7 +124,6 @@ There following are some preparation before performing experiments.
 \paragraph{Experiment Introduction} 
 To find the best weight combinations, 30 experiment are created with $W_{\mbox{energy consumption}} \in \{ 0,1,5,10 \}, W_{\mbox{update}} \in \{-10,-5,-1\}, W_{\mbox{probability}} \in \{-10,-5,-1,0\}$. In addition, the conditions $W_{\mbox{update}}=0$ was not testable, because during the experiment centralized pool generate the same ``gather information tasks``, which let robots not moving and measuring their nearest door. Experiment Duration T = 10 min.
 
-% \paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. When robot fully charged, the first experiment started (Figure \ref{fig:env_exp_timeline}). After that, the task scheduling module in the centralized pool created a ``gather information task'' for each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering information.
 
 \paragraph{Analysis design} The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:env_exp_timeline}). The experiment duration is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
 
@@ -145,12 +138,12 @@ Figure \ref{fig:gather_info_experiment_enumerate} represent the experiment resul
 
 \paragraph{Experiment Analysis} 
 
-As shown in the experiment result, all ``Minimal Last Update'' value is from 1 min to 5 min, which is much less than the experiment duration (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of the robot is small (about 0.2 per second), the experiment duration (10min) was not long enough to let three robots pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when the system started, robot 1 was in charging station 1 and got a task to door 3, while robot 2 was in charging station 2 and got a task to door 4. As shown in Figure \ref{fig:exp_map}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The ideal solution was to give both tasks to one robot. 
+As shown in the experiment result, all ``Minimal Last Update'' value is from 1 min to 5 min, much less than the experiment duration (10 min). It means some doors were not timely updated information. One possible reason is that the velocity of the robot is small (about 0.2 per second). The experiment duration (10min) was not long enough to let three robots pass to all doors. Another possible reason is that the robot's route is partially duplicated. For example, when the system started, robot 1 was at charging station 1 and got a task to door 3, while robot 2 was at charging station 2 and got a task to door 4. As shown in Figure \ref{fig:positions_door_station}, these two route are partially duplicated, both of them pass through door 1 and entered room 1 (Figure \ref{fig:room_division}). The ideal solution was to give both tasks to one robot. 
 
 \begin{figure}[htbp]
  \centering
  \includegraphics[width = 0.9\textwidth]{content/images/ch5/gather_info_enumerate.png}
- \caption{Use enumeration method to find best weight combination. The marks are labeled by weight combinations (energy consumption, waiting time, probability, priority)}
+ \caption{Experiment: Use enumeration method to find best weight combination}
  \text{Green: $W_{\mbox{battery}}$ Pink: $ W_{\mbox{probability}}$ Yellow: $W_{\mbox{update}} $}
  \label{fig:gather_info_experiment_enumerate}
 \end{figure}
@@ -164,8 +157,6 @@ Firstly, we should find the best weight combination for ``weight battery'' and `
  According to the cost table (Figure \ref{fig:cost_table}), the update time value has a minimal value of 6.986 and a maximal value of 336.986 (column 3), which are much larger than energy consumption (column 2) and product of door open possibilities (column 4).
  Therefore, 18 experiments are created with $W_{\mbox{battery}}$
  = 0.1 and $W_{\mbox{battery}} \in \{1,5,10,15,20,25 \}$.
-
-% \paragraph{Sampling Design} When simulation started, robots ran charging task (Task 1-3) at their charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. When robot fully charged, the first experiment started (Figure \ref{fig:env_exp_timeline}). After that, the task scheduling module in the centralized pool created a ``gather information task'' for each robot requested a task. After a constant experiment duration T, experiments were finished and robots went to their charging stations. These rules ensured that 1) Each Robot always started at an initial position. 2) Robots would not shut down because of power exhaustion. 3) Robots spent the same time gathering information.
 
 \paragraph{Analysis design} The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:env_exp_timeline}). The experiment duration is a constant value T. The experiment finish time $T_{\mbox{finish time}} = T_{\mbox{start time}} + T $. Some important factors are evaluated. 
 \begin{itemize}
@@ -185,14 +176,14 @@ Firstly, we should find the best weight combination for ``weight battery'' and `
 \begin{figure}[htbp]
  \centering
  \includegraphics[width = 0.7\textwidth]{content/images/ch5/gather_info_change_weight_battery_only.png}
- \caption{ Change $W_{\mbox{battery}}$ under condition $W_{\mbox{update}} = 0.1$ and $W_{\mbox{probability}}=0$}
+ \caption{Experiment: Change $W_{\mbox{battery}}$ under condition $W_{\mbox{update}} = 0.1$ and $W_{\mbox{probability}}=0$}
  \label{fig:gather_info_experiment_two_value}
 \end{figure}
 
 \begin{figure}[htbp]
  \centering
  \includegraphics[width = 0.7\textwidth]{content/images/ch5/gather_info_change_weight_probability_only.png}
- \caption{ Change $W_{\mbox{probability}}$ under condition $W_{\mbox{battery}}=15$ and $ W_{\mbox{update}}=0.1$}
+ \caption{Experiment: Change $W_{\mbox{probability}}$ under condition $W_{\mbox{battery}}=15$ and $ W_{\mbox{update}}=0.1$}
  \label{fig:gather_info_experiment_three_value}
 \end{figure}
 
@@ -201,23 +192,17 @@ As shown in experiment result Figure \ref{fig:gather_info_experiment_two_value},
 therefore ``weight battery'' 15 and ``weight update'' 0.1 was the best combination. 
 This combination was used in next experiment set (Figure \ref{fig:gather_info_experiment_three_value}). From this experiment set, it was concluded that ``weight battery'' 15, ``weight update'' 0.1, ``weight probability'' 0.1 and ``weight battery'' 15, ``weight update'' 0.1, ``weight probability'' -0.3 were two best weight combinations for the cost function.
 
-\section{Navigation Task Evaluation Experiment}
-\label{sec:navigation_task_experiments}
+\section{Execute Task Evaluation Experiment}
+\label{sec:execute_task_experiments}
 
 
-\subsection{ Find the Best Weight Combinations}
+\subsection{Experiment: Find the Best Weight Combinations}
 \paragraph{Experiment Introduction}
-In addition to the cost function, the task time interval may affect experiment duration and experiment succeeded rate. Therefore, three sets of experiments are generated to find the best weight combinations. 
- 
-% \paragraph{Sampling design}
-% Table \ref{tab:exp_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When simulation started, robots ran charging task (Task 1-3 in Table \ref{tab:exp_task_table}) and moved to corresponding charging station and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
-%  When robot fully charged, the first experiment started (Figure \ref{fig:navigation_task_experiment_timeline}), and 15 ``navigation tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task time interval was the same. In Table \ref{tab:exp_task_table} the task time interval was 65 seconds. In a different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
-%  When all robot finished tasks, the experiment would be finished and robots charged at the previous charging station(Task 19-21).
-%  These rules ensured that robots not only started at their initial positions but also processed the same task set and not shut down because of power exhaustion.
+The task time interval may affect experiment duration and experiment succeeded rate in addition to the cost function. Therefore, three sets of experiments are generated to find the best weight combinations. 
 
 \paragraph{Analysis design}
 In each experiment, 3 robots need to finish 15 ``navigation tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:navigation_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between the experiment start time and experiment finished time. 
 The end state of ``navigation tasks'' was evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_experiment_result} is an example of experiment result. 
@@ -279,23 +264,18 @@ It was concluded that the longer the task time interval, the higher the task suc
 \paragraph{Experiment Introduction} 
 In this set of experiments, how the number of robots affected task scheduling was evaluated. One of the best weight combination was selected: $ W_{\mbox{battery}} = 10,W_{\mbox{waiting time}} = 1, W_{\mbox{probability}} = -1, W_{\mbox{priority}} = -10 $. 
  
-% \paragraph{Sampling design}
-% When the simulation started, robots ran the charging task and moved to the corresponding charging station, and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
-% When robot fully charged, the first experiment started (Figure \ref{fig:navigation_task_experiment_timeline}), and 15 ``navigation tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task time interval was the same. In Table \ref{tab:db_task_table} the task time interval was 65 seconds. In a different experiment, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
-% When all robot finished tasks, the experiment would be finished and robots charged at the previous charging station(Task 19-21).
-% These rules ensured that robots not only started at their initial positions but also processed the same task set and not shut down because of power exhaustion.
 
 
 \paragraph{Analysis design}
 As is discussed in the last paragraph, in each experiment, robots need to finish 15 ``navigation tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:navigation_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between the experiment start time and experiment finished time. 
 The end state of ``navigation tasks'' was evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_experiment_result} is an example of experiment result. 
 
 \paragraph{Result} The experiment result is shown in Figure \ref{fig:different_number_of_robot}.
 
-\paragraph{Analysis} It is concluded that as the number of robots increased, the task success rate and experiment duration increased. As discussed in Chapter \ref{sec:task_scheduling_procedure}. This was because the robots requested tasks from the centralized pool separately. The more robots there were, the more tasks could be finished in an experiment. 
+\paragraph{Analysis} As discussed in Chapter \ref{sec:task_scheduling_procedure}, it is concluded that as the number of robots increased, the task success rate and experiment duration increased. The reason is that the robots requested tasks from the centralized pool separately. The more robots there were, the more tasks could be finished in an experiment. 
 On the other hand, on average, one robot could finish 7 tasks in 17 minutes and 40 seconds, two robots could finish 11 tasks in 18 minutes and 24 seconds, and 3 robots could finish 15 tasks in 18 minutes and 52 seconds. It could be inferred that the more robots, the higher the efficiency of task scheduling.
 
 \begin{figure}[htbp]
@@ -308,36 +288,28 @@ On the other hand, on average, one robot could finish 7 tasks in 17 minutes and 
 \subsection{Evaluation of how the algorithm improves navigation tasks scheduling}
 
 \paragraph{Experiment Introduction} 
-This set of experiments evaluated how the algorithm improves navigation task scheduling. Some experiments did not use the algorithm, and others used the designed algorithm and used the best weight combination. The results of the experiment will be analyzed to determine how much task scheduling can be improved by the designed algorithm.
-
-%the need of four decision variables: energy consumption, waiting time, the product of door probability, and priority. 
-
-% \paragraph{Sampling design}
-% Table \ref{tab:db_task_table} shows ``task table'' in database. At this point, robots finished task 4-21 in experiment 1 and finished 21-39 in experiment 2. When the simulation started, 3 robots ran the charging task (Task 1-3) and moved to the corresponding charging station, and started charging (Figure \ref{fig:charging_station_event}). For example, robot 1 charged at charging station 1, robot 2 charged at charging station 2, robot 3 charged at charging station 3. 
-% When robot fully charged, the first experiment started (Figure \ref{fig:navigation_task_experiment_timeline}), and 15 ``navigation tasks'' and 3 ``charging tasks'' were created (Task 4-21). Especially, in the same experiment, the task time interval was the same (Table \ref{tab:db_task_table}). In different experiments, the corresponding task had the same goal positions (Task 4 and 21, Task 4 and 22). 
-% When all robot finished tasks, the experiment would be finished and robots charged at the previous charging station(Task 19-21).
-% These rules ensured that robots not only started at their initial positions but also processed the same task set and not shut down because of power exhaustion.
+This set of experiments evaluated how the algorithm improves the scheduling of ``navigation task''. Some experiments did not use the algorithm, and others used the designed algorithm and used the best weight combination. The experiment results will be analyzed to determine how much the designed algorithm can improve task scheduling.
 
 
 \begin{figure}[htbp]
  \centering
  \includegraphics[width = 0.9\textwidth]{content/images/ch5/exe_exp_timeline.drawio.png}
- \caption{Navigation Task Experiment Timeline}
- \label{fig:navigation_task_experiment_timeline}
+ \caption{Execute Task Experiment Timeline}
+ \label{fig:execute_task_experiment_timeline}
 \end{figure}
 
 
 \paragraph{Analysis design}
 As is discussed in the last paragraph, in each experiment, robots need to finish 15 ``navigation tasks'' and 3 ``charging tasks''.
-The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:navigation_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
+The experiment start time was when all robot finished charging and started request task (Figure \ref{fig:execute_task_experiment_timeline}), and the experiment finish time was when the latest task is finished.
 The experiment duration was an important evaluation factor, which was the time difference between the experiment start time and experiment finished time. 
 The end state of ``navigation tasks'' was evaluated. In an experiment result table, the ``Succeeded'' column counted the tasks ended with ``Succeeded'' state, the ``Expired'' column counted the tasks ended with ``Succeeded'' state, the ``Failed'' column counted the tasks ended with ``Running'', ``Error'', ``Canceled'', ``To rerun'' states. 
 Table \ref{tab:exp_experiment_result} is an example of experiment result. 
 
 \paragraph{Experiment Result} 
 The experiment result is shown in Figure \ref{fig:improvement_evaluation}. In the first four experiments, the algorithm was not used because only one decision variable is considered. In the last experiment, the algorithm was used with the best weight combination.
- This experimental result shows the difference between using the algorithm and without using the algorithm. Compared with the case that only considered the task priority, the number of successful tasks was significant increased after using the algorithm. Compared with the situation that only waiting time are considered, all tasks were finished in both situation, but the duration of the experiment decreased. 
-%The experiment result (Table \ref{tab:exp_experiment_result}.) shows that in experiment 1, all 15 tasks were successfully finished with minimal experiment duration. In experiments 2, 4, 5 more than half of the tasks was expired. In experiment 3, all tasks were successfully finished but it took more time than experiment 1. 
+ This experimental Result shows the difference between using the algorithm and without using the algorithm. Compared with the case that only considered the task priority, the number of successful tasks significantly increased after using the algorithm. Compared with the situation that was only waiting time are considered, all tasks were finished in both situations, but the duration of the experiment decreased. 
+%The experiment result (Table \ref{tab:exp_experiment_result}.) shows that in experiment 1, all 15 tasks were successfully finished with minimal experiment duration. In experiments 2, 4, 5, more than half of the tasks was expired. In experiment 3, all tasks were successfully finished, but it took more time than experiment 1. 
 The experiment 6-24 (Figure \ref{fig:only_one_decision_variable_changed}) evaluated each decision variable separately.
 
 \begin{figure}[htbp]
@@ -349,13 +321,14 @@ The experiment 6-24 (Figure \ref{fig:only_one_decision_variable_changed}) evalua
 
 \paragraph{Experiment Analysis.} 
 
-The experimental results can preliminarily judge that this algorithm has a certain effect, but this effect is not particularly obvious, because the simulation experiment is limited. Following are the explanation of each decision variables:
+
+The experimental results can preliminarily judge that this algorithm has a certain effect, but this effect is not particularly obvious because the simulation experiment is limited. Following are the explanation of each decision variables:
 
 \begin{itemize}
- \item \textbf{Door Open probability.} The door open probability is used in the algorithm to make the robot more likely to go to an occupied room. As discussed in Chapter \ref{sec:limitations}, the robot can enter any room, even if its door is closed. This limitation caused the room occupancy rate to not affect the number of successful tasks and the experiment duration.
- \item \textbf{Task Priority.} Similarly, the priority of the task is applied by the algorithm in order to allow the higher priority tasks to be executed first. However, the task priority had little effect on the two evaluation criteria of the experiment: the number of successful tasks and the experiment duration. If further experiments are conducted, such as evaluating the completion of high-priority tasks, then how the priority affects task scheduling can be evaluated.
- \item \textbf{Energy consumption.} The energy consumption of the robot is considered to allow low-energy tasks to be executed first. But energy consumption had little effect on the two evaluation criteria of the experiment: the number of successful tasks and the experiment duration. As discussed in Chapter \ref{sec:limitations}, the energy consumption of robots in real experiments may be accurately estimated. Then further experiments can be conducted. For example, evaluating the energy consumption of each experiment, then how energy consumption affects task scheduling can be evaluated.
- \item \textbf{Waiting Time.} The waiting time of the robot is used in the algorithm to let the earliest tasks be executed first. As shown in Figure \ref{fig:improvement_evaluation}, the waiting time significantly optimizes task scheduling. In detail, after considering this decision variable, more tasks were successfully finished, and the experiment duration was decreased, in other words, the time required to complete all tasks was reduced. Therefore, the waiting time is an indispensable decision variable in the algorithm.
+ \item \textbf{Door Open probability.} The door open probability is used in the algorithm to make the robot more likely to go to an occupied room. As discussed in Chapter \ref{sec:limitations}, the robot can enter any room, even if its door is closed. This limitation caused the room occupancy rate not to affect the number of successful tasks and the experiment duration.
+ \item \textbf{Task Priority.} Similarly, the task's priority is applied by the algorithm to allow the higher priority tasks to be executed first. However, the task priority had little effect on the experiment's two evaluation criteria: the number of successful tasks and the experiment duration. If further experiments are conducted, such as evaluating the completion of high-priority tasks, then how the priority affects task scheduling can be evaluated.
+ \item \textbf{Energy consumption.} The energy consumption of the robot is considered to allow low-energy tasks to be executed first. But energy consumption had little effect on the experiment's two evaluation criteria: the number of successful tasks and the experiment duration. As discussed in Chapter \ref{sec:limitations}, the energy consumption of robots in real experiments may be accurately estimated. Then further experiments can be conducted. For example, evaluating each experiment's energy consumption, then how energy consumption affects task scheduling can be evaluated.
+ \item \textbf{Waiting Time.} The task's waiting time is used in the algorithm to let the earliest tasks be executed first. As shown in Figure \ref{fig:improvement_evaluation}, the waiting time significantly optimizes task scheduling. After considering this decision variable, more tasks were successfully finished, and the experiment duration was decreased. In other words, the time required to complete all tasks was reduced. Therefore, the waiting time is a crucial decision variable in the algorithm.
 \end{itemize}
 
 \begin{figure}[htbp]

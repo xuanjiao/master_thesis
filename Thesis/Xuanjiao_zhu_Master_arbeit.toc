@@ -1,0 +1,101 @@
+\babel@toc {ngerman}{}
+\babel@toc {ngerman}{}
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problem definition}{6}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Main Contributtions}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Thesis Structure}{8}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Materials and Methods}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Important Concepts of ROS}{9}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Node}{9}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Communication Infrastructure}{9}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}ROS Tools}{10}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}TurtleBot3 Simulation Using Gazebo}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Gazebo Simulator}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}TurtleBot3 Robot}{13}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}3D Modeling of the Indoor Environment}{13}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Robot Navigation and Virtual SLAM}{13}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Task Scheduling Methods}{15}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Centralized Method vs. Distributed Method}{15}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Centralized Constraint Programming Method}{16}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Centralized Method based on A* and Genetic Algorithm}{17}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Distributed Auction Method}{17}{subsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.4.5}Distributed Method with Global Unit}{18}{subsection.2.4.5}%
+\contentsline {section}{\numberline {2.5}Cost Function}{18}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Approach}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Architecture Design}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Gather Information Approach}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Task Composition and Decomposition Approach}{21}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Task Specification}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Task Composition and Decomposition}{21}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Multi-robot Task Scheduling Approach}{22}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Select Navigation Task}{22}{subsection.3.4.1}%
+\contentsline {paragraph}{\nonumberline Decision variables used to select navigation tasks.}{22}{section*.3}%
+\contentsline {subsection}{\numberline {3.4.2}Create Gather Information Task}{23}{subsection.3.4.2}%
+\contentsline {paragraph}{\nonumberline Decision variables used to create a gather information task}{24}{section*.4}%
+\contentsline {subsection}{\numberline {3.4.3}Create Charging Task}{24}{subsection.3.4.3}%
+\contentsline {paragraph}{\nonumberline Decision variables used to create a charging task.}{24}{section*.5}%
+\contentsline {chapter}{\numberline {4}Implementation}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Communication Protocols}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Message about Measurement}{27}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Message about Task}{28}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Message about Charging}{28}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Database}{29}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Procedure}{32}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Centralized Pool}{32}{subsection.4.3.1}%
+\contentsline {paragraph}{\nonumberline Handle task Request}{32}{section*.10}%
+\contentsline {paragraph}{\nonumberline Handle Task Feedback.}{34}{section*.11}%
+\contentsline {paragraph}{\nonumberline Handle Task Result.}{34}{section*.12}%
+\contentsline {subsection}{\numberline {4.3.2}Robot}{34}{subsection.4.3.2}%
+\contentsline {paragraph}{\nonumberline Robot Process Tasks}{34}{section*.14}%
+\contentsline {paragraph}{\nonumberline Robot Handle Messages}{34}{section*.15}%
+\contentsline {subsection}{\numberline {4.3.3}Charging Station}{34}{subsection.4.3.3}%
+\contentsline {paragraph}{\nonumberline Task Status Explanation}{36}{section*.13}%
+\contentsline {chapter}{\numberline {5}Evaluation}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Simulation}{41}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Sensor Simulation}{41}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Office Environment}{41}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Experiment Procedure}{41}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Gather Information Experiment}{41}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Navigation Experiment}{41}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Experiment Summery}{41}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Evaluation}{43}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Experiment Setup}{43}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Sensor Simulator}{46}{section.6.2}%
+\contentsline {paragraph}{\nonumberline Sensor Message Publish}{46}{section*.16}%
+\contentsline {paragraph}{\nonumberline Generate Measuring Data}{46}{section*.17}%
+\contentsline {paragraph}{\nonumberline Sensor Message Subscribe}{46}{section*.18}%
+\contentsline {section}{\numberline {6.3}Gather Information Task Experiment Result}{46}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Use Enumeration Method to Find the Best Weight Combinations}{46}{subsection.6.3.1}%
+\contentsline {paragraph}{\nonumberline Experiment Introduction}{46}{section*.19}%
+\contentsline {paragraph}{\nonumberline Analysis design}{47}{section*.20}%
+\contentsline {paragraph}{\nonumberline Experiment Result}{47}{section*.21}%
+\contentsline {paragraph}{\nonumberline Experiment Analysis}{47}{section*.22}%
+\contentsline {subsection}{\numberline {6.3.2}Use Analysis to Find the Best Weight Combinations}{48}{subsection.6.3.2}%
+\contentsline {paragraph}{\nonumberline Experiment Introduction}{48}{section*.23}%
+\contentsline {paragraph}{\nonumberline Analysis design}{48}{section*.24}%
+\contentsline {paragraph}{\nonumberline Experiment Result}{49}{section*.25}%
+\contentsline {paragraph}{\nonumberline Experiment Analysis}{49}{section*.26}%
+\contentsline {section}{\numberline {6.4}Execute Task Evaluation Experiment}{52}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Experiment: Find the Best Weight Combinations}{52}{subsection.6.4.1}%
+\contentsline {paragraph}{\nonumberline Experiment Introduction}{52}{section*.27}%
+\contentsline {paragraph}{\nonumberline Analysis design}{52}{section*.28}%
+\contentsline {paragraph}{\nonumberline Experiment Result}{52}{section*.29}%
+\contentsline {paragraph}{\nonumberline Analysis.}{52}{section*.30}%
+\contentsline {subsection}{\numberline {6.4.2}How the Number of Robots impact task scheduling}{53}{subsection.6.4.2}%
+\contentsline {paragraph}{\nonumberline Experiment Introduction}{53}{section*.31}%
+\contentsline {paragraph}{\nonumberline Analysis design}{53}{section*.32}%
+\contentsline {paragraph}{\nonumberline Result}{55}{section*.33}%
+\contentsline {paragraph}{\nonumberline Analysis}{55}{section*.34}%
+\contentsline {subsection}{\numberline {6.4.3}Evaluation of how the algorithm improves navigation tasks scheduling}{55}{subsection.6.4.3}%
+\contentsline {paragraph}{\nonumberline Experiment Introduction}{55}{section*.35}%
+\contentsline {paragraph}{\nonumberline Analysis design}{57}{section*.36}%
+\contentsline {paragraph}{\nonumberline Experiment Result}{57}{section*.37}%
+\contentsline {paragraph}{\nonumberline Experiment Analysis.}{57}{section*.38}%
+\contentsline {chapter}{\numberline {7}Discussion}{61}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Result}{61}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Limitations}{62}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Future Work}{63}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Acknowledgements}{65}{chapter.8}%
+\contentsline {chapter}{\nonumberline Bibliography}{67}{chapter*.42}%

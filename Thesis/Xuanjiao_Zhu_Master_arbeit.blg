@@ -21,45 +21,48 @@ Warning--to sort, need author or key in POTENTIAL
 Warning--to sort, need author or key in PARTICLE
 Warning--to sort, need author or key in RRT
 Warning--to sort, need author or key in MOVEBASE
-You've used 24 entries,
+Warning--to sort, need author or key in BLEWeb
+Warning--to sort, need author or key in ZigBeeWeb
+Warning--to sort, need author or key in ANTWeb
+You've used 28 entries,
             2768 wiz_defined-function locations,
-            761 strings with 9610 characters,
-and the built_in function-call counts, 10070 in all, are:
-= -- 1019
-> -- 408
+            784 strings with 10065 characters,
+and the built_in function-call counts, 11226 in all, are:
+= -- 1141
+> -- 430
 < -- 7
-+ -- 145
-- -- 139
-* -- 789
-:= -- 1467
-add.period$ -- 60
-call.type$ -- 24
-change.case$ -- 117
-chr.to.int$ -- 24
-cite$ -- 42
-duplicate$ -- 431
-empty$ -- 832
-format.name$ -- 153
-if$ -- 2249
++ -- 151
+- -- 145
+* -- 864
+:= -- 1617
+add.period$ -- 71
+call.type$ -- 28
+change.case$ -- 131
+chr.to.int$ -- 28
+cite$ -- 52
+duplicate$ -- 480
+empty$ -- 954
+format.name$ -- 160
+if$ -- 2520
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 26
-newline$ -- 110
-num.names$ -- 49
-pop$ -- 194
+missing$ -- 28
+newline$ -- 129
+num.names$ -- 52
+pop$ -- 233
 preamble$ -- 1
-purify$ -- 165
+purify$ -- 187
 quote$ -- 0
-skip$ -- 382
+skip$ -- 424
 stack$ -- 0
-substring$ -- 507
-swap$ -- 143
+substring$ -- 565
+swap$ -- 152
 text.length$ -- 7
 text.prefix$ -- 1
 top$ -- 0
-type$ -- 188
-warning$ -- 9
-while$ -- 65
-width$ -- 29
-write$ -- 287
-(There were 9 warnings)
+type$ -- 220
+warning$ -- 12
+while$ -- 69
+width$ -- 34
+write$ -- 332
+(There were 12 warnings)

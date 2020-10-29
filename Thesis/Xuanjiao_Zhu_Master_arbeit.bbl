@@ -1,6 +1,11 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{NMMG17}
 
+\bibitem[ANT]{ANTWeb}
+{\em {ANT Website}}.
+\newblock \url{https://www.thisisant.com}.
+\newblock accessed 2020-010-26.
+
 \bibitem[ASE]{ASEARCH}
 {\em {A* search algorithm}}.
 \newblock \url{https://en.wikipedia.org/wiki/A*_search_algorithm}.
@@ -15,6 +20,11 @@
   \btxandlong{}\ {\sc Paul Scheunders}\ (\btxeditorslong{}): {\em Advanced
   Concepts for Intelligent Vision Systems}, \btxpageslong{}\ 273--283, Cham,
   2015. Springer International Publishing.
+
+\bibitem[BLE]{BLEWeb}
+{\em {BLE Website}}.
+\newblock \url{https://en.wikipedia.org/wiki/Bluetooth_Low_Energy}.
+\newblock accessed 2020-10-26.
 
 \bibitem[BMR{\etalchar{+}}17]{retire2017}
 {\sc {Booth}, K. E.~C.}, {\sc S.~C. {Mohamed}}, {\sc S.~{Rajaratnam}}, {\sc
@@ -85,6 +95,12 @@
   Intelligence and Soft Computing}, \btxpageslong{}\ 466--474, Berlin,
   Heidelberg, 2012. Springer Berlin Heidelberg.
 
+\bibitem[LS18]{Li8334565}
+{\sc {Li}, H.} \btxandlong{}\ {\sc A.~V. {Savkin}}: {\em Wireless Sensor
+  Network Based Navigation of Micro Flying Robots in the Industrial Internet of
+  Things}.
+\newblock IEEE Transactions on Industrial Informatics, 14(8):3524--3533, 2018.
+
 \bibitem[LZK15]{Dong2015}
 {\sc {Lee}, D.}, {\sc S.~A. {Zaheer}} \btxandlong{}\ {\sc J.~{Kim}}: {\em A
   Resource-Oriented, Decentralized Auction Algorithm for Multirobot Task
@@ -149,5 +165,10 @@
 \newblock
   \url{https://emanual.robotis.com/docs/en/platform/turtlebot3/simulation/}.
 \newblock accessed 2020-10-17.
+
+\bibitem[Zig]{ZigBeeWeb}
+{\em {ZigBee Website}}.
+\newblock \url{https://en.wikipedia.org/wiki/Zigbee}.
+\newblock accessed 2020-010-26.
 
 \end{thebibliography}
