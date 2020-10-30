@@ -87,88 +87,54 @@ The implementation of task scheduling is shown in Chapter \ref{sec:task_scheduli
 
 \subsection{Select Navigation Task}
 \label{sec:select_navigation_task}
-When one of the ``complex navigation tasks'' should be selected for robot, In order to select an ``navigation task'', the decision variables are considered. 
-\paragraph{Decision variables used to select navigation tasks.}
-\begin{itemize}
-\item \textbf{Task Priority.} The priority is discussed Chapter \ref{sec:task_table}.
-\item \textbf{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the target point.
- An example of ``measurement result'' table is shown in Table \ref{tab:db_measurement_result}, an example of ``open probability'' table is shown in Table \ref{tab:db_open_possibilities}. 
-\item \textbf{Waiting Time. } The waiting time is the difference between the current simulation time and start time of the first task to be executed. $T_{waiting} = T_{first\_task} - T_{now}$
-\item \textbf{Battery Consumption.} The Battery Consumption is related to robot trajectory. For a Large ``navigation task'' that contains n simple task, Equation \ref{eq:battery_consumption} can be used to calculate battery consumption. The centralized pool will send the task with the lowest cost to this robot.
-\end{itemize}
-
-Equation \ref{eq:large_execute_task_cost} are used to calculate the cost. The ``complex navigation tasks'' with the lowest cost will be selected.
-
+When one of the ``complex navigation tasks'' should be selected for robot, 
+Before selecting a ``complex navigation task'', the cost of  all complex navigation tasks need to be calculated, using the Equation \ref{eq:complex_navigation_task_cost}
 \begin{equation}
- \label{eq:large_execute_task_cost} 
- \begin{aligned}
- & \mbox{W: Weight } \\
- & \mbox{n: Number of doors} \\
- & \mbox{Cost}_{\mbox{Large navigation task}} = \frac{W_{\mbox{battery}} \times \mbox{Battery consumtion}}{n} + W_{\mbox{waiting}} \times \mbox{waiting time} \\
- & + W_{\mbox{probability}} \times \prod\limits_{i=1}^n \mbox{Door open probability} + W_{\mbox{priority}} \times \mbox{Priority}
- \end{aligned}
-\end{equation}
+\label{eq:complex_navigation_task_cost}
+ C_{1} = W_{1} \times E + W_{2} \times T + W_{3} \times D + W_{4} \times P
+ \end{equation}
+In Equation \ref{eq:complex_navigation_task_cost}, $C_{1}$  is the cost of the complex navigation task. $E$ is the estimated energy consumption on the path from the robot position to the front of the door. $E$ can be calculated using Equation \ref{eq:energy_consumption}. $T$ is the waiting time. It is the difference between the current time and the start time of the complex navigation task. $D$ is the product of the door open probability of a set of doors.  The robot will pass through this set of doors when moving from its position to the target position. $P$ is the priority of the task. The decision variables for creating the charging task include the energy consumption, the waiting time,  the door open probability product, and the door's last update time. $W_{1}$ is the weight of energy consumption. $W_{2}$ is the weight of waiting time. $W_{3}$ is the weight of the door open probability product. $W_{4}$ is the weight of the task priority. A ``navigation task'' with the lowest cost will be selected.
 
 
-
-
-\begin{equation}
-\begin{aligned}
-\label{eq:battery_consumption}
-& \mbox{B:Battery consumption } \\
-& \mbox{W: Weight } \\
-& \mbox{m: Number of waypoint } \\
-& \mbox{n: Number of simple task} \\
-& B_{\mbox{complex task}} = \sum_{\mbox{task}_1}^{\mbox{task}_n} B_{\mbox{trajectory}} \\
-& = \sum_{t = \mbox{task}_1}^{\mbox{task}_n} \sum_{\mbox{waypoint}_1}^{\mbox{waypoint}_m} [W_{\mbox{position}} \times \mbox{position variation}+W_{\mbox{angle}} \times \mbox{angle variation}]\\
-& = \sum_{t = \mbox{task}_1}^{\mbox{task}_n} \sum_{p = \mbox{waypoint}_1}^{\mbox{waypoint}_m} [ W_{\mbox{position}} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
-& + W_{\mbox{angle}} \times 2 \times \arccos(w_p)] 
-\end{aligned}
-\end{equation}
 
 
 \subsection{Create Gather Information Task}
 \label{sec:create_gather_information_task}
-Robot can perform ``gather environment information task'' to gather more measurement results and furthermore improve the accuracy of ``open possibilities'' table.
-To create a ``gather environment information task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of doors. A ``gather environment information task'' to the door with the lowest cost will be created.
-\paragraph{Decision variables used to create a gather information task}
-\begin{itemize}
- \item \textbf{Door Last Update Time.} The latest timestamp when the door is measured.
- \item \textbf{Product of Door Open Possibility.} The product of open possibilities of doors on trajectory: All doors that the robot will pass through when moving from its location to the front of the target door.
- \item \textbf{Battery Consumption.} The battery consumption is related to the trajectory from the robot to the front of the door. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
-\end{itemize}
-
+Robot can perform ``gather information task'' to gather more measurement data and furthermore improve the accuracy of ``open probability'' table.
+Before generating a ``gather information task'', the cost of each door needs to be calculated, using the Equation \ref{eq:door_cost}
 \begin{equation}
- \label{eq:door_cost}
- \begin{aligned}
- & \mbox{W: Weight } \\
- & \mbox{n: Number of doors on trajectory} \\ 
- & \mbox{Cost}_{\mbox{door}} = \frac{W_{\mbox{battery}} \times \mbox{Battery consumtion}}{n} + W_{\mbox{time}} \times (T_{\mbox{last update}} - T_{\mbox{now}}) \\
- & + W_{\mbox{probability}} \times \prod\limits_{i=1}^n \mbox{Door open probability}
- \end{aligned}
-\end{equation}
-
-
+\label{eq:door_cost}
+ C_{2} = W_{5} \times E + W_{6} \times D + W_{7}\times (U - T)
+ \end{equation}
+In Equation \ref{eq:door_cost}, $C_{2}$  is the cost of the door. $E$ is the estimated energy consumption on the path from the robot position to the front of the door. $E$ can be calculated using Equation \ref{eq:energy_consumption}. $D$ is the product of the door open probability of a set of doors.  The robot will pass through this set of doors when moving from its location to the front of the target door. $U$ is the last update time of the door. To be more precise, it is the latest timestamp when the door is measured. $T$ is the current timestamp. 
+The decision variables for creating the gather information task include energy consumption and the door open probability product, and the last update time of the door. $W_{5}$ is the weight of energy consumption. $W_{6}$ is the weight of the door open probability product. $W_{7}$ is the weight of last update time. A ``gather information task'' to the door with the lowest cost will be created.
 
 
 
 \subsection{Create Charging Task}
 \label{sec:create_charging_task}
 Once a robot sends task requests to the centralized pool, the centralized pool should determine whether this robot needs charging. If yes, it should create a ``charging task'' for the robot. 
-To create a ``charging task'', Equation \ref{eq:door_cost} and following decision variables are used to calculate the costs of charging station. A ``charging task'' to the charging station with the lowest cost will be created.
-
-
-\paragraph{Decision variables used to create a charging task.}
-\begin{itemize}
- \item \textbf{Remain Time.} It describes how long will a charging station be free. 
- \item \textbf{Battery Consumption.} Similar to ``navigation task'' scheduling, the battery consumption is related to the trajectory from robot to the charging station. Equation \ref{eq:battery_consumption} can be used to calculate battery consumption.
-\end{itemize}
-
-\begin{equation} 
+Before generating a charging task, the cost of each charging station needs to be calculated, using Equation \ref{eq:charging_station_cost}.
+\begin{equation}
 \label{eq:charging_station_cost}
+ C_{3} = W_{8} \times E + W_{9} \times R 
+\end{equation}
+In Equation \ref{eq:charging_station_cost}, $C_{3}$ is the cost of the charging station. $E$ is the estimated energy consumption on the way the robot moves from the current position to the charging station. $E$ can be calculated using Equation \ref{eq:energy_consumption}. If a robot is charging at the charging station, $R$ is the remaining time of the charging process. If the charging station is idle, then $R=0$. In other words, the decision variables for creating the gather information task include energy consumption and remaining time. $W_{8}$ is the weight of energy consumption. $W_{9} $ is the weight of remaining time. A ``charging task'' to the charging station with the lowest cost will be created.
+
+
+\paragraph{The equation to calculating energy consumption for a trajectory.}
+
+In Equation \ref{eq:energy_consumption}, $E_{1}$ is the total energy consumption. $E_{1}$ is the energy consumption of a trajectory.
+$S$ is the position variation. $A$ is the angle variation. $p$ is the waypoint. $m$ is the total number of waypoints. $t$ is the simple task. $n$ is the total number of simple tasks. $w$ is the last component in a quaternion (x,y,z,w). $W_{10}$ is the weight of position variation. $W_{11}$ is the weight of angle variation. 
+
+
+\begin{equation}
 \begin{aligned}
- & \mbox{W: Weight } \\
- & \mbox{Cost}_{\mbox{charging station}} = \frac{W_{\mbox{battery}} \times \mbox{battery consumtion}}{n} + W_{\mbox{time}} \times T_{\mbox{remain}}
+\label{eq:energy_consumption}
+& E_{1} = \sum_{1}^{n} E_{2} \\
+& = \sum_{t = 1}^{n} \sum_{p = 1}^{m} [W_{10} \times S+W_{11} \times A\\
+& = \sum_{t = 1}^{n} \sum_{p = 1}^{m}[ W_{10} \times \sqrt{(x_p-x_{p-1} )^2+(y_p-y_{p-1} )^2} \\
+& + W_{11} \times 2 \times \arccos(w_p)] 
 \end{aligned}
 \end{equation}
 

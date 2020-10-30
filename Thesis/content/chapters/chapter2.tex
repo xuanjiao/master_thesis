@@ -21,7 +21,7 @@ A ROS node is one executable program. In this project, some existing nodes are u
 
 \subsection{Communication Infrastructure}
 ROS has a built-in and well-tested messaging system. There are different methods of exchanging messages. ROS topic is a unidirectional anonymous communication. It is used when exchange data continuously. The subscriber receives messages of publisher node only when both of them registered the same topic name. ROS service is bidirectional synchronous communication. The service client requests a service, and the service server responds to the request. The ROS action is a bidirectional asynchronous communication. It is mainly used in two cases. The first case is when it is difficult to use the service due to long response times after the request. The second case is when an intermediate feedback value is needed.
-The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}. The messaging system has been applied to this project. For instance, the sensor simulation scenario (Chapter \ref{sec:sensor_simulatior}) use ROS Topic method. The communication protocols (Chapter \ref{sec:communication_protocols}) are designed based on the ROS Service method and the ROS Action method. 
+The diagram of message communication is shown in Figure \ref{fig:ros_message_communication}. The messaging system has been applied to this project. For instance, the sensor simulation scenario (Chapter \ref{sec:sensor_simulation}) use ROS Topic method. The communication protocols (Chapter \ref{sec:communication_protocols}) are designed based on the ROS Service method and the ROS Action method. 
 
 \begin{figure}
  \centering

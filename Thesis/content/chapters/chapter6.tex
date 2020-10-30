@@ -12,47 +12,37 @@
 % \end{itemize}
 
 % write about limitations on sensor simulator: sensor sends a table of measuring data. 
+
 \chapter{Discussion}
 
 
 \section{Result}
 \label{sec:conclusion}
-Task scheduling is a significant research area in the multi-robot system. This research focuses on exploiting knowledge of room occupation for the scheduling of navigation tasks of robots in office environments,
-decreasing the time of completion and energy consumption. With the information of room occupation, on the one hand, it can prevent the robot from wasting energy to go to empty rooms, and on the other hand, it can make the robot try to find people to interact with. 
+This thesis focuses on exploiting knowledge of room occupation for the scheduling of navigation tasks of robots in office environments,
+decreasing the time of completion and energy consumption. With the information of room occupation, on the one hand, it can prevent the robot from wasting energy to go to empty rooms, and on the other hand, it can make the robot can find people to interact with more quickly. The multi-robot system I implemented can gather room occupation information while performing navigation tasks over a long period. One set of experiments lasted 80 hours, the multi-system operated stably, thousands of navigation tasks were completed, and tens of thousands of measurement data were obtained. 
 
-%This algorithm helps the task scheduling procedure in the centralized pool, which is a centralized control system.
-I have implemented a multi-robot system based on the simulated environment in Gazebo. 
-The following functions are successfully implemented:
-(1) The fixed sensors can conduct the long-term room occupation measuring to keep the ``room occupation'' information up to date. 
-(2) The robots can initialize task scheduling procedures by requesting tasks in the centralized pool and then perform received tasks sequentially.
-(3) The centralized pool, which is a control system that can store global information and schedule tasks to robots according to the task scheduling algorithm. 
-In the simulated working environment, the multi-system operated stably for three days, and autonomously performed more than 5000 navigation tasks. This system can handle some unexpected problems. For example, failed tasks are reassigned to other robots.
-
-Also, a centralized task scheduling algorithm has been designed for the multi-robot system. This algorithm considers the robot status, the task specification as well as room occupation. As discussed in Chapter \ref{ch:evaluation}, the algorithm can improve the scheduling of tasks taking into account the number of tasks to be performed, decreasing the time of completion. 
-In theory, this algorithm can reduce energy consumption. But current experiments cannot prove this idea. Instead, real experiments are needed.
-
+Also, the multi-robot task scheduling approach I designed was evaluated.
+A series of experimental results showed that using multiple evaluation parameters to perform task scheduling was more efficient than using a single parameter. Failed tasks have been reassigned to other robots. The scheduling of tasks has been improved, decreasing total completion time and increasing the total number of completed tasks. With this approach, the room occupation information gathered was more recent.
 \section{Limitations}
 \label{sec:limitations} 
 
 The simulation has the following problems, and these problems should be solved in future realistic experiments.
 
 \subsection*{Sensor Problem}
+The simulated sensors are not specific objects in the Gazebo simulation scene. Instead, there are simulated by a ROS node called ``sensor simulator'', because ROS nodes can use ROS build-in messaging system. As discussed in Chapter \ref{sec:sensor_simulation}, the ``sensor simulator'' publishes measurement data while robots immediately received and filter these data by its position. This is a one-way process: once the measuring data are received by the robot and filtered out, they are deleted. As a result, the robot simulator sends instant measuring data to robots in the range. However, these simulated data cannot perfectly imitate the real room occupancy situation. This limitation impacts the experimental results because the robot collects different amounts of data from different sensors.
 
-The simulated sensors are not specific objects in the Gazebo simulation scene, instead, there are simulated by a ROS node called ``sensor simulator'', because ROS nodes can use ROS build-in messaging system. As shown in Figure \ref{fig:sensor_simulator}, the ``sensor simulator'' publishes measurement data while robots immediately received and filter these data by its position. This is a one-way process: once the measuring data are received by the robot and filtered out, they are deleted. 
-As a result, the robot simulator sends instant measuring data to robots in the range. 
-Besides, these instant measuring data are generated according to a given schedule in the database. However, these simulated data cannot perfectly imitate the real room occupancy situation.
-
-In real experiments, an IoT device should replace the simulated sensor. This device should contain the following components:
+In real office environments, an IoT device should replace the simulated sensor. This device should contain the following components:
  \begin{itemize}
  \item An accelerometer sensor to measure door open/close status. Optional are other sensors, such as light sensors and infrared sensors. Those sensors are useful in measuring room occupation. 
- \item Enough RAM or an SD card module to store the background measuring data.
- \item A wireless communication module such as BLE or ZigBee. Once the IoT device finds a robot in its communication range, it should send the robot measuring data over a while.
+ \item Enough RAM or an SD card module to store the measuring data.
+ \item A wireless communication module such as BLE or ZigBee. Once the IoT device finds a robot in its communication range, it should send the robot measuring data.
  \end{itemize}
  
 \subsection*{Door Problem}
-The doors in the simulated environment are always open. As a result, even if the instant measuring data is ``door closed'', the robot can successfully enter the rooms and run the task. The task will almost only fail due to timeouts. For example, the robot is not able to communicate with its navigation stack, or several robots are entangled for a long time.
-However, in real experiments, 
-The reason for the failure of the task includes that the robot hits an obstacle, the robot is damaged, and the battery runs out. 
+There was no door installed at the exits of rooms in the office environment. As a result, even if the instant measuring data is ``door closed'', the robot can successfully enter the rooms and successfully finish the task. In a real office environment, the robot needs to stop after being blocked by a closed door, and the current navigation tasks need to be canceled or done again. 
+
+Besides, in a simulated office environment, the multi-robot system can receive information about the robots and the environment and make decisions based on the information. Therefore, this experiment can be carried out in a real environment in the future.  This system can receive valid task results. The room occupation will become a critical evaluation parameter because it can affect the task success rate. 
+
 
 \subsection*{Battery Problem}
 The estimation of the power consumption is not accurate enough. 
@@ -61,12 +51,13 @@ In the real world, the robot has a real battery, which will drop according to ma
 
 
 \section{Future Work}
-This research can be further explored in several aspects. 
+This thesis can be further explored in several aspects. 
 \begin{itemize}
-	\item A similar multi-robot system in the real world could be implemented. The setup of IoT devices and doors and the estimation of robot energy consumption are discussed in Chapter \ref{sec:limitations}. 
-	\item More types of tasks can be considered, such as delivery tasks. The delivery task includes picking up multiple goods and putting down the same amount of goods. 
-	\item Tasks can be given with different task duration, to be more precise, the difference between the estimated end timestamp and the estimated start timestamp. In this case, the task duration could be one of the decision variables, because tasks can be finished in a shorter time should be executed first. Furthermore, robots can go to the nearby charging station during the task execution. In this case, when calculating the task duration or task energy consumption of the path, the time or energy consumption required for charging should be included in the task duration and task energy consumption. The advantage of this method is that it allows the robot to maintain sufficient energy to execute the task. 
-	\item There are other methods to enhance this algorithm, such as using machine learning. Machine learning can learn discrete measurement data about room occupation, and finally, obtain a room occupation table for continuous-time in each working day. Besides, a mobile or web user interface could be developed. With this interface, the user can specify that some rooms as occupied at specific times according to their working schedule. The user can also monitor the status of the robot, its current position, and battery level and receive an alert of the robot failure.
+ \item A similar multi-robot system in the real world could be implemented. The setup of IoT devices and doors and the estimation of robot energy consumption are discussed in Chapter \ref{sec:limitations}. 
+ \item More types of tasks can be considered, such as delivery tasks. The delivery task includes picking up multiple goods and putting down the same amount of goods. 
+ \item Tasks can be given with different task duration, to be more precise, the difference between the estimated end timestamp and the estimated start timestamp. In this case, the task duration could be one of the decision variables because tasks can be finished in a shorter time should be executed first. Furthermore, robots can go to the nearby charging station during the task execution. In this case, when calculating the task duration or task energy consumption of the path, the time or energy consumption required for charging should be included in the task duration and task energy consumption. This method allows the robot to maintain sufficient energy to execute the task.
+ \item There are other methods to enhance this algorithm, such as using machine learning. Machine learning can learn discrete measurement data about room occupation, and finally, obtain a room occupation table for continuous-time in each working day. 
+ \item A mobile or web user interface could be developed. With this interface, the user can specify that some rooms are occupied according to their working schedule. The user can also monitor the status of the robot, its current position, and the battery level.
 \end{itemize}
 
 
